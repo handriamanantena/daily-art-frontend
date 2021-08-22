@@ -3,15 +3,16 @@
 
 
 .gallery {
-    @apply flex flex-row flex-wrap justify-center;
+    @apply flex flex-row flex-wrap justify-center space-y-0;
     height: 100%;
-    width: 80%;
+    /*width: 80%;*/
 }
 
-.grid {
-    display: flex;
-    align-items: center;
-    justify-content: center;
+.frame {
+    @apply flex;
+    /*display: flex;*/
+  /*  align-items: center;*/
+   /* justify-content: center;*/
     /*flex-wrap: wrap;*/
     /*max-width: 1500px;*/
     /*max-height: 1050px;
@@ -19,21 +20,25 @@
    /* margin-top: 3rem;*/
 }
 
-.frame {
-    @apply grid;
-    /*height: 100%;*/
+.imageFrame {
+    height: 250px;
+    @apply rounded-3xl;
+    /*max-height: 500px;
+    min-height: 500px;*/
+    /*padding: 5px;*/
 }
 
-.imageFrame {
-    max-height: 100px;
-    min-height: 100px;
-    /*padding: 5px;*/
+@screen sm {
+    .imageFrame {
+        height: 500px;
+    }
 }
 
 
 .card {
-    margin: 1rem;
-    padding: 2.5%;
+    @apply ml-1 mr-1 mt-2 mb-2;
+    /*margin: 0.25rem;*/
+    /*padding: 2.5%;*/
     text-align: left;
     color: inherit;
     text-decoration: none;

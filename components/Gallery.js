@@ -21,7 +21,7 @@ class Gallery extends React.Component {
         return (
             <div className={ gallery.gallery }>
                 { this.photo.map((value, index) => {
-                    return <div className={[gallery.frame]}>
+                    return <div className={[gallery.frame]} key={index} >
                         <a className={gallery.card}>
                             <img className={gallery.imageFrame} src={this.photo[index]}/>
                         </a>
