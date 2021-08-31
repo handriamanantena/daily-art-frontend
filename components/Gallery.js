@@ -1,4 +1,3 @@
-import styles from '../styles/Home.module.css'
 import gallery from '../styles/Gallery.module.css'
 import React from 'react';
 import Image from 'next/image'
@@ -7,31 +6,18 @@ import Image from 'next/image'
 class Gallery extends React.Component {
     constructor(props) {
         super(props);
-       // this.state = {
-        this.photo  = [  "/img.png",
-            "/img.png",
-            "/img.png",
-            "/img.png",
-            "/img.png",
-            "/img.png",
-            "/img.png",
-            "/img.png",
-            "/img.png",
-            "/img.png",
-            "/img.png",
-            "/img.png"];
-       // }
     }
     render() {
         return (
             <div className={ gallery.gallery }>
-                { this.photo.map((value, index) => {
-                    return <div className={[gallery.frame]} key={index} >
+                { this.props.pictures.map((value, index) => {
+                    console.log(value)
+                    return <div className={[gallery.frame]} key={value} >
                         <a className={gallery.card}>
                             <Image className={gallery.imageFrame}
                                    width={1035}
                                    height={1228}
-                                   src={this.photo[index]}/>
+                                   src={value.url}/>
                         </a>
                     </div>
                 })
