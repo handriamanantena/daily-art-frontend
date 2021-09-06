@@ -7,17 +7,18 @@ class Gallery extends React.Component {
     constructor(props) {
         super(props);
     }
+
     render() {
         return (
-            <div className={ gallery.gallery }>
+            <div className={ gallery.gallery } key='random'>
                 { this.props.pictures.map((value, index) => {
-                    console.log(value)
-                    return <div className={[gallery.frame]} key={value} >
-                        <a className={gallery.card}>
+                    return <div className={[gallery.frame]} key={value.url} >
+                        <a className={gallery.card} key={value.url}>
                             <Image className={gallery.imageFrame}
                                    width={1035}
                                    height={1228}
-                                   src={value.url}/>
+                                   src={value.url}
+                                   key={value.url}/>
                         </a>
                     </div>
                 })

@@ -1,9 +1,24 @@
 import Gallery from "../components/Gallery";
 import { promises as fs } from 'fs'
 import path from 'path';
+import React from 'react';
 
 
 function DailyArt({ pictures }) {
+   React.useEffect(() => {
+      const handleScroll = e => {
+         console.log('scroll')
+         if ((window.innerHeight + window.scrollY) >= document.body.offsetHeight) {
+            console.log('bottom')
+            return (<Gallery pictures = {pictures} ></Gallery>)
+         }
+      }
+      document.addEventListener("scroll", handleScroll, { passive: true })
+      return () => {
+         // This cleans up the event handler when the component unmounts.
+         document.removeEventListener("scroll", handleScroll)
+      }
+   }, [])
    return (<Gallery pictures = {pictures} ></Gallery>)
 }
 
@@ -24,9 +39,8 @@ export async function getStaticProps() {
          content: fileContents,*/
       }
    })
-   // By returning { props: { pictures } }, the Blog component
+   // By returning { props: { pictures } }, the DailyArt component
    // will receive `pictures` as a prop at build time
-   console.log("dailyart" + await Promise.all(pictures))
    return {
       props: {
          pictures: await Promise.all(pictures),
@@ -35,4 +49,4 @@ export async function getStaticProps() {
 }
 
 
-export default DailyArt
+export default DailyArt;
