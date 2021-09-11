@@ -18,7 +18,9 @@ class Gallery extends React.Component {
                                    width={1035}
                                    height={1228}
                                    src={url}
-                                   key={value._id}/>
+                                   key={value._id}
+                                   quality={100}/>
+                            <p className={ gallery.pictureName}>{value.pictureName}</p>
                         </a>
                     </div>
                 })
