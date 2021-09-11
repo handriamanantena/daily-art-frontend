@@ -2,6 +2,7 @@ import Gallery from "../components/Gallery";
 /*import { promises as fs } from 'fs'
 import path from 'path';*/
 import React from 'react';
+import gallery from "../styles/Gallery.module.css";
 
 
 function DailyArt({ galleries }) {
@@ -9,6 +10,7 @@ function DailyArt({ galleries }) {
       const handleScroll = e => {
          console.log('scroll')
          if ((window.innerHeight + window.scrollY) >= document.body.offsetHeight) {
+            console.log('bottom')
             console.log('bottom')
             console.log('bottom')
             let newGallery = galleries[0]
@@ -26,9 +28,13 @@ function DailyArt({ galleries }) {
    }, [])
   /* const [gallery, setUsers] = useState([])*/
 
-   return (galleries.map((gallery, i) => {
-      return <Gallery pictures = {gallery.pictures} key = {i}/>
-   }))
+   return (<div className={ gallery.gallery}>
+            {
+                (galleries.map((gallery, i) => {
+                  return <Gallery pictures = {gallery.pictures} key = {i}/>
+               }))
+            }
+         </div>);
 
 }
 
