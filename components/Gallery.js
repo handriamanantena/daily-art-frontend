@@ -9,16 +9,19 @@ class Gallery extends React.Component {
     }
 
     render() {
+        let host = 'http://192.168.0.130:3001/file/'
         return (
-            <div className={ gallery.gallery } key='random'>
+            <div className={ gallery.gallery }>
                 { this.props.pictures.map((value, index) => {
-                    return <div className={[gallery.frame]} key={value.url} >
-                        <a className={gallery.card} key={value.url}>
+                    let url = encodeURI(host + value.url)
+                    console.log(value._id)
+                    return <div className={[gallery.frame]} key={value._id} >
+                        <a className={gallery.card} key={value._id}>
                             <Image className={gallery.imageFrame}
                                    width={1035}
                                    height={1228}
-                                   src={value.url}
-                                   key={value.url}/>
+                                   src={url}
+                                   key={value._id}/>
                         </a>
                     </div>
                 })
