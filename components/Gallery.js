@@ -12,7 +12,6 @@ class Gallery extends React.Component {
         let host = 'http://192.168.0.130:3001/file/'
         return this.props.pictures.map((value, index) => {
                     let url = encodeURI(host + value.url)
-                    console.log(value._id)
                     return <div className={[gallery.frame]} key={value._id} >
                         <a className={gallery.card} key={value._id}>
                             <Image className={gallery.imageFrame}
