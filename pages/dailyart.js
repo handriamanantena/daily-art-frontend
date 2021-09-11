@@ -1,11 +1,12 @@
 import Gallery from "../components/Gallery";
-import React, {useEffect, useState} from 'react';
+import React, {useEffect, useState, useRef} from 'react';
 import gallery from "../styles/Gallery.module.css";
 
 let page = 0
+let isLoading = false
 
 function DailyArt({ galleries }) {
-
+   const divRef = useRef()
    let [galleryList, setGalleryList] = useState(galleries)
    useEffect(() => {
       window.addEventListener("scroll", handleScroll)
@@ -13,7 +14,24 @@ function DailyArt({ galleries }) {
          window.removeEventListener("scroll", handleScroll)
       }
    })
-   let isLoading = false
+
+   useEffect(() => {
+      if(divRef.current) {
+         let height = divRef.current.offsetHeight;
+         console.log(height)
+         if(height <= window.innerHeight + window.pageYOffset) {
+            console.log('inside')
+            getNextGallery(page).then((gallery) => {
+               if(gallery.pictures) {
+                  page += 1
+                  galleries.push(gallery)
+                  setGalleryList([... galleries])
+               }
+            })
+         }
+      }
+   })
+
    const handleScroll =  async () => {
       if ((window.innerHeight + window.pageYOffset) >= document.body.offsetHeight && !isLoading) {
          console.log(page)
@@ -28,7 +46,7 @@ function DailyArt({ galleries }) {
          })
       }
    }
-   return (<div className={ gallery.gallery}>
+   return (<div className={ gallery.gallery} ref={divRef}>
             {
                 (galleryList.map((gallery) => {
                   return <Gallery pictures = {gallery.pictures} key = {gallery.page}/>
@@ -37,6 +55,7 @@ function DailyArt({ galleries }) {
          </div>);
 
 }
+
 
 async function getNextGallery(page) {
    const host = 'http://192.168.0.130:3001'
