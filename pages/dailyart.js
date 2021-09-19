@@ -30,14 +30,9 @@ function DailyArt({ galleries }) {
       if ((window.innerHeight + window.pageYOffset) >= document.body.offsetHeight && !isLoading) {
          console.log(page)
          setIsLoading(true)
-         getNextGallery(page).then((gallery) => {
-            if(gallery.pictures) {
-               console.log('inside 5')
-               setPage(page => page + 1)
-               galleries.push(gallery)
-               setGalleryList([... galleries])
-               setIsLoading(false)
-            }
+         await getPictures(page, setPage, galleries, setGalleryList).then(value => {
+            console.log(value)
+            setIsLoading(false)
          })
       }
    }
@@ -53,14 +48,6 @@ function DailyArt({ galleries }) {
          </div>);
 
 }
-
-
-async function getNextGallery(page) {
-   const host = 'http://192.168.0.130:3001'
-   const res = await fetch(host + "/pictures?page=" + page);
-   return await res.json()
-}
-
 
 
 export async function getStaticProps() {
