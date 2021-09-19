@@ -5,32 +5,6 @@
     font-weight: 900;
 }
 
-
-.gallery {
-    @apply flex flex-row flex-wrap justify-center space-y-0;
-    margin: 30px;
-}
-
-@screen sm {
-    .gallery {
-        width: 600px;
-        margin: auto;
-    }
-}
-
-
-@screen md {
-    .gallery {
-        width: 768px;
-    }
-}
-
-@screen lg {
-    .gallery {
-        width: 1024px;
-    }
-}
-
 .frame {
     @apply flex flex-col;
     width: 50%;

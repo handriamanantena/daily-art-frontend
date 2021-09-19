@@ -1,6 +1,6 @@
 import Gallery from "../components/Gallery";
 import React, {useEffect, useState, useRef} from 'react';
-import gallery from "../styles/Gallery.module.css";
+import dailyArt from '../styles/DailyArt.module.css'
 
 let page = 0
 let isLoading = false
@@ -46,12 +46,15 @@ function DailyArt({ galleries }) {
          })
       }
    }
-   return (<div className={ gallery.gallery} ref={divRef}>
+   return (<div>
+            <h1 className={ dailyArt.simpleArtTitle }>Simple Art</h1>
+            <div className={ dailyArt.dailyArt} ref={divRef}>
             {
                 (galleryList.map((gallery) => {
                   return <Gallery pictures = {gallery.pictures} key = {gallery.page}/>
                }))
             }
+            </div>
          </div>);
 
 }

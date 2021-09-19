@@ -1,0 +1,30 @@
+
+.dailyArt {
+    @apply flex flex-row flex-wrap justify-center space-y-0;
+    margin: 30px;
+}
+
+@screen sm {
+    .dailyArt {
+        width: 600px;
+        margin: auto;
+    }
+}
+
+
+@screen md {
+    .dailyArt {
+        width: 768px;
+    }
+}
+
+@screen lg {
+    .dailyArt {
+        width: 1024px;
+    }
+}
+
+.simpleArtTitle {
+    text-align: center;
+    font-size: 4rem;
+}
