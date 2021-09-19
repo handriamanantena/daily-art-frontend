@@ -1,6 +1,7 @@
 import Gallery from "../components/Gallery";
 import React, {useEffect, useState, useRef} from 'react';
 import dailyArt from '../styles/DailyArt.module.css'
+import { getPictures } from '../common/GetPictures'
 
 function DailyArt({ galleries }) {
    const divRef = useRef()
@@ -16,21 +17,7 @@ function DailyArt({ galleries }) {
 
    useEffect(() => {
       console.log('inside 1')
-      if(divRef.current) {
-         console.log('inside 2')
-         let height = divRef.current.offsetHeight;
-         if(height <= window.innerHeight + window.pageYOffset) {
-            console.log('inside 3')
-            getNextGallery(page).then((gallery) => {
-               if(gallery.pictures) {
-                  console.log('inside 4')
-                  setPage(page => page + 1)
-                  galleries.push(gallery)
-                  setGalleryList([... galleries])
-               }
-            })
-         }
-      }
+      getPictures(divRef, page, setPage, galleries, setGalleryList)
    }, [galleryList])
 
    const handleScroll =  async () => {
