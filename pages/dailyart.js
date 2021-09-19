@@ -15,9 +15,15 @@ function DailyArt({ galleries }) {
       }
    })
 
-   useEffect(() => {
+   useEffect( async () => {
       console.log('inside 1')
-      getPictures(divRef, page, setPage, galleries, setGalleryList)
+      if(divRef.current) {
+         console.log('inside 2')
+         let height = divRef.current.offsetHeight;
+         if(height <= window.innerHeight + window.pageYOffset) {
+             await getPictures(page, setPage, galleries, setGalleryList)
+         }
+      }
    }, [galleryList])
 
    const handleScroll =  async () => {
