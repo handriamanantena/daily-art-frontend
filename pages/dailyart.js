@@ -2,12 +2,11 @@ import Gallery from "../components/Gallery";
 import React, {useEffect, useState, useRef} from 'react';
 import dailyArt from '../styles/DailyArt.module.css'
 
-let page = 0
-let isLoading = false
-
 function DailyArt({ galleries }) {
    const divRef = useRef()
    let [galleryList, setGalleryList] = useState(galleries)
+   let [page, setPage] = useState(1)
+   let [isLoading, setIsLoading] = useState(false)
    useEffect(() => {
       window.addEventListener("scroll", handleScroll)
       return () => {
@@ -16,32 +15,35 @@ function DailyArt({ galleries }) {
    })
 
    useEffect(() => {
+      console.log('inside 1')
       if(divRef.current) {
+         console.log('inside 2')
          let height = divRef.current.offsetHeight;
-         console.log(height)
          if(height <= window.innerHeight + window.pageYOffset) {
-            console.log('inside')
+            console.log('inside 3')
             getNextGallery(page).then((gallery) => {
                if(gallery.pictures) {
-                  page += 1
+                  console.log('inside 4')
+                  setPage(page => page + 1)
                   galleries.push(gallery)
                   setGalleryList([... galleries])
                }
             })
          }
       }
-   })
+   }, [galleryList])
 
    const handleScroll =  async () => {
       if ((window.innerHeight + window.pageYOffset) >= document.body.offsetHeight && !isLoading) {
          console.log(page)
-         isLoading = true
+         setIsLoading(true)
          getNextGallery(page).then((gallery) => {
             if(gallery.pictures) {
-               page += 1
+               console.log('inside 5')
+               setPage(page => page + 1)
                galleries.push(gallery)
                setGalleryList([... galleries])
-               isLoading = false
+               setIsLoading(false)
             }
          })
       }
@@ -69,6 +71,7 @@ async function getNextGallery(page) {
 
 
 export async function getStaticProps() {
+   console.log('static props')
    const host = 'http://192.168.0.130:3001'
    const res = await fetch(host + "/pictures?date=2021-09");
    const gallery = await res.json()
