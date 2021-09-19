@@ -2,12 +2,14 @@ import Gallery from "../components/Gallery";
 import React, {useEffect, useState, useRef} from 'react';
 import dailyArt from '../styles/DailyArt.module.css'
 import { getPictures } from '../common/GetPictures'
+import { getNextGallery } from "../common/api/pictures";
 
 function DailyArt({ galleries }) {
    const divRef = useRef()
    let [galleryList, setGalleryList] = useState(galleries)
    let [page, setPage] = useState(1)
    let [isLoading, setIsLoading] = useState(false)
+
    useEffect(() => {
       window.addEventListener("scroll", handleScroll)
       return () => {
@@ -51,10 +53,7 @@ function DailyArt({ galleries }) {
 
 
 export async function getStaticProps() {
-   console.log('static props')
-   const host = 'http://192.168.0.130:3001'
-   const res = await fetch(host + "/pictures?date=2021-09");
-   const gallery = await res.json()
+   const gallery = await getNextGallery(0)
    let galleries = []
    galleries.push(await gallery)
    return {
