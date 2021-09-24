@@ -1,0 +1,100 @@
+
+$pictureGrowScale: 5;
+
+.title {
+    font-size: 50px;
+    font-weight: 900;
+}
+
+.frame {
+    @apply flex flex-col;
+    width: 50%;
+}
+
+@screen sm {
+    .frame {
+        width: 30%;
+    }
+}
+
+@screen lg {
+    .frame {
+        width: 25%;
+    }
+}
+
+
+.imageFrame {
+    @apply rounded-t-lg;
+}
+
+.card {
+    @apply ml-1 mr-1 mt-1 z-50;
+    @extend .hoverBlueRed;
+    color: inherit;
+    text-decoration: none;
+    /*border: 1px solid #eaeaea;*/
+    border-radius: 10px;
+    /*transition: color 0.15s ease, border-color 0.15s ease;*/
+}
+
+.hoverBlueRed {
+    @apply transition duration-500 bg-blue-600 hover:bg-red-600 transform hover:-translate-y-1 hover:scale-105;
+}
+
+
+/*.card:hover,
+.card:focus,
+.card:active {
+    color: #0070f3;
+    border-color: #0070f3;
+}*/
+
+/*.card h2 {
+    margin: 0 0 1rem 0;
+    font-size: 1.5rem;
+}*/
+
+.pictureName {
+    @apply ml-1 mb-2;
+    font-size: 1.25em;
+    line-height: 1;
+}
+
+/*.growPicture {
+    animation: grow 3s;
+    z-index: 100;
+}
+
+@keyframes grow {
+    from {
+        transform: scale(1);
+    }
+    to {
+        transform: scale($pictureGrowScale);
+    }
+}*/
+
+.alert-enter {
+    opacity: 0;
+    transform: scale(0.9);
+}
+.alert-enter-active {
+    opacity: 1;
+    transform: translateX(0);
+    transition: opacity 300ms, transform 300ms;
+}
+
+.alertEnterDone {
+    transform: scale(5);
+    z-index: 100;
+}
+
+.alert-exit {
+    opacity: 1;
+}
+.alert-exit-active {
+    opacity: 0;
+    transform: scale(0.9);
+    transition: opacity 300ms, transform 300ms;
+}

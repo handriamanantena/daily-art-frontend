@@ -1,6 +1,7 @@
-import gallery from '../styles/Gallery.module.css'
-import React, {useState} from 'react';
+import gallery from '../styles/Gallery.module.scss'
+import React, {useEffect, useRef, useState} from 'react';
 import Image from 'next/image'
+import { CSSTransition } from 'react-transition-group'
 
 
 class Gallery extends React.Component {
@@ -24,15 +25,42 @@ class Gallery extends React.Component {
 function ShowPictures({picture}) {
     let host = 'http://192.168.0.130:3001/file/'
     let url = encodeURI(host + picture.url)
-    return  (<a className={gallery.card} key={picture._id}>
-        <Image className={gallery.imageFrame}
-               width={1035}
-               height={1228}
-               src={url}
-               key={picture._id}
-               quality={100}/>
-        <p className={ gallery.pictureName}>{picture.pictureName}</p>
-    </a>);
+    const nodeRef = React.useRef(null)
+    /*let [pictureSizeCss, setPictureSizeCss] = useState(gallery.card)
+    let [growPicture, setGrowPicture] = useState()*/
+    const [zoomPic, setIsZoomPic] = useState(false);
+
+    let image = useRef()
+    /*useEffect(() => {
+        window.addEventListener( "click", onClick)
+        return () => {
+            window.removeEventListener("click", onClick)
+        }
+    })*/
+
+    let clickPicture = () => {
+       setIsZoomPic(true)
+        console.log('change grow')
+    }
+
+    return (
+        <CSSTransition nodeRef={nodeRef} in={zoomPic} timeout={200} classNames={{
+            enterActive: gallery.alertEnterActive,
+            enterDone: gallery.alertEnterDone,
+            exitActive: gallery.alertExitActive
+        }} >
+            <div ref={nodeRef} className={gallery.card} onClick={() => clickPicture()}>
+                <a key={picture._id}>
+                    <Image className={gallery.imageFrame}
+                           width={picture.width}
+                           height={picture.height}
+                           src={url}
+                           key={picture._id}
+                           quality={100}/>
+                    <p className={gallery.pictureName}>{picture.pictureName}</p>
+                </a>
+            </div>
+        </CSSTransition>);
 }
 
 
