@@ -1,34 +1,27 @@
-import gallery from '../styles/Gallery.module.scss'
-import React, {useEffect, useRef, useState} from 'react';
-import { ShowPictures } from './ShowPictures'
-
-class Gallery extends React.Component {
-    constructor(props) {
-        super(props);
-    }
-
-    render() {
-        return this.props.pictures.map((value, index) => {
-                    return <div className={[gallery.frame]} key={value.id} >
-                        <ShowPictures picture={value}> </ShowPictures>
-                    </div>
-                })
-        ;
-    }
+import React, {useRef, useState} from "react";
+import {CSSTransition} from "react-transition-group";
+import gallery from "../styles/Gallery.module.scss";
+import Image from "next/image";
 
 
-}
-
-/*function ShowPictures({picture}) {
+function ShowPictures({picture}) {
     let host = 'http://192.168.0.130:3001/file/'
     let url = encodeURI(host + picture.url)
     const nodeRef = React.useRef(null)
+    /*let [pictureSizeCss, setPictureSizeCss] = useState(gallery.card)
+    let [growPicture, setGrowPicture] = useState()*/
     const [zoomPic, setIsZoomPic] = useState(false);
 
     let image = useRef()
+    /*useEffect(() => {
+        window.addEventListener( "click", onClick)
+        return () => {
+            window.removeEventListener("click", onClick)
+        }
+    })*/
 
     let clickPicture = () => {
-       setIsZoomPic(true)
+        setIsZoomPic(true)
         console.log('change grow')
     }
 
@@ -50,7 +43,4 @@ class Gallery extends React.Component {
                 </a>
             </div>
         </CSSTransition>);
-}*/
-
-
-export default Gallery;
+}

@@ -1,7 +1,7 @@
 import Gallery from "../components/Gallery";
 import React, {useEffect, useState, useRef} from 'react';
 import dailyArt from '../styles/DailyArt.module.css'
-import { getPictures } from '../common/GetPictures'
+import { getPicturesByPage } from '../common/GetPictures'
 import { getNextGallery } from "../common/api/pictures";
 
 function DailyArt({ galleries }) {
@@ -23,7 +23,7 @@ function DailyArt({ galleries }) {
          console.log('inside 2')
          let height = divRef.current.offsetHeight;
          if(height <= window.innerHeight + window.pageYOffset) {
-             await getPictures(page, setPage, galleries, setGalleryList)
+             await getPicturesByPage(page, setPage, galleries, setGalleryList)
          }
       }
    }, [galleryList])
@@ -32,7 +32,7 @@ function DailyArt({ galleries }) {
       if ((window.innerHeight + window.pageYOffset) >= document.body.offsetHeight && !isLoading) {
          console.log(page)
          setIsLoading(true)
-         await getPictures(page, setPage, galleries, setGalleryList).then(value => {
+         await getPicturesByPage(page, setPage, galleries, setGalleryList).then(value => {
             console.log(value)
             setIsLoading(false)
          })

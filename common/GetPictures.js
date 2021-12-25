@@ -1,7 +1,7 @@
-import { getNextGallery } from "./api/pictures";
+import { getNextGallery, getPictures, getPictureById } from "./api/pictures";
 
 
-async function getPictures(page, setPage, galleries, setGalleryList) {
+async function getPicturesByPage(page, setPage, galleries, setGalleryList) {
     console.log('inside 3')
     console.log(page)
     getNextGallery(page).then((gallery) => {
@@ -14,4 +14,13 @@ async function getPictures(page, setPage, galleries, setGalleryList) {
     })
 }
 
-export {getPictures}
+async function getAllPictures() {
+    let pictures = await getPictures()
+    return pictures
+}
+
+async function getPicture(id) {
+    return await getPictureById(id)
+}
+
+export {getPicturesByPage, getAllPictures, getPicture}
