@@ -1,0 +1,18 @@
+
+
+/*@screen xl {
+    .pictures {
+        @apply float-left;
+    }
+}*/
+
+.pictures {
+    /*@apply flex flex-row;
+    margin: 30px;*/
+    display: flex;
+}
+
+.gallery {
+
+
+}
