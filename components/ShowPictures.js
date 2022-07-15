@@ -5,7 +5,7 @@ import Image from "next/image";
 import Link from 'next/link'
 
 function ShowPictures({picture}) {
-    let host = 'http://192.168.0.130:3001/file/'
+    let host = process.env.REACT_APP_PICTURES_API_HOST + process.env.REACT_APP_PICTURES_API_PORT + '/file/'
     let url = encodeURI(host + picture.url)
 
     return (
