@@ -6,24 +6,6 @@ $pictureGrowScale: 5;
     font-weight: 900;
 }
 
-.frame {
-    @apply flex flex-col;
-    width: 50%;
-}
-
-@screen sm {
-    .frame {
-        width: 30%;
-    }
-}
-
-@screen lg {
-    .frame {
-        width: 25%;
-    }
-}
-
-
 .imageFrame {
     @apply rounded-t-lg;
 }
