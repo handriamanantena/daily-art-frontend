@@ -21,3 +21,13 @@ a {
 * {
   box-sizing: border-box;
 }
+
+@layer base {
+  h1 {
+    @apply text-[25px] font-bold;
+  }
+  h2 {
+    @apply text-xl font-bold;
+  }
+  /* ... */
+}

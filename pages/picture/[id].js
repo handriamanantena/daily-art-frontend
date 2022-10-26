@@ -6,20 +6,29 @@ import Image from "next/image";
 import Gallery from "../../components/Gallery";
 import { getNextGallery } from "../../common/api/pictures";
 import id from "../../styles/id.module.css"
+import styles from "../../styles/Home.module.css";
+import {PictureInfo} from "../../components/PictureInfo"
 
 function Id({ picture, previewGallery }) {
 
     let host = process.env.REACT_APP_PICTURES_API_HOST + process.env.REACT_APP_PICTURES_API_PORT + '/file/'
     let url = encodeURI(host + picture.url)
 
-    return (<div className={id.pictures}>
-            <Image
-                   width={picture.width}
-                   height={picture.height}
-                   src={url}
-                   key={picture.id}
-                   quality={100}/>
-            <Gallery pictures={previewGallery.pictures} key = {0}/>
+    return (<div>
+                <div>
+                    <div className="flex justify-center">
+                        <Image
+                            width={picture.width}
+                            height={picture.height}
+                            src={url}
+                            key={picture.id}
+                            quality={100}/>
+                    </div>
+                    <PictureInfo picture={picture}></PictureInfo>
+                </div>
+                <div>
+                    <Gallery pictures={previewGallery.pictures} key = {0}/>
+                </div>
     </div>);
 
 }
