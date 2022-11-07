@@ -5,6 +5,7 @@ import {login} from "../../common/Login"
 function GoogleButton (){
 
     useEffect(() => {
+
         /* global google */
         google.accounts.id.initialize({
             client_id: process.env.GOOGLE_CLIENT_ID,
