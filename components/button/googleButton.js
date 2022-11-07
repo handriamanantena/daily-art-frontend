@@ -5,7 +5,6 @@ import {login} from "../../common/Login"
 function GoogleButton (){
 
     useEffect(() => {
-
         /* global google */
         google.accounts.id.initialize({
             client_id: process.env.GOOGLE_CLIENT_ID,
@@ -19,9 +18,10 @@ function GoogleButton (){
     });
 
     async function handleCredentialResponse(response) {
-        console.log("Encoded JWT ID token: " + response.credential);
-        console.log(jwt_decode(response.credential))
-        await login(response.credential)
+        console.debug("Encoded JWT ID token: " + response.credential);
+        console.debug(jwt_decode(response.credential))
+        let loginResponse = await login(response.credential)
+        console.debug(loginResponse)
     }
 
     return (<div id="googleButton"></div>);
