@@ -16,3 +16,8 @@ fast reload:  npx next dev
 
 1. next build
 2. next start
+
+### Check Tailwind version
+
+npm view tailwindcss version
+
