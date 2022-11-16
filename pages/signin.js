@@ -2,6 +2,7 @@ import LogIn from "../components/forum/Login";
 import LogInOptions from "../components/forum/LoginOptions";
 import Head from "next/head";
 import GoogleButton from "../components/button/googleButton";
+import Welcome from "../components/Welcome";
 
 function Signin() {
 
@@ -12,7 +13,7 @@ function Signin() {
             <script src="https://accounts.google.com/gsi/client" async defer></script>
         </Head>
         <div class="flex items-center h-screen justify-center align-middle">
-            <LogIn></LogIn>
+            <Welcome welcomePage="login" welcomeTitle="Log In"></Welcome>
         </div>
     </div>);
 }

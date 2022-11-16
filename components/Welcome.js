@@ -1,6 +1,7 @@
 import Image from "next/image";
 import ArtistCredentials from "./forum/ArtistCredentials";
 import {useState} from "react";
+import LogInOptions from "./forum/LoginOptions";
 
 export default function Welcome(props) {
 
@@ -74,5 +75,6 @@ export default function Welcome(props) {
         return (<div>
             <h2>{props.welcomeTitle}</h2>
             <ArtistCredentials {...additonalProps}></ArtistCredentials>
+            <LogInOptions></LogInOptions>
             </div>);
 }
