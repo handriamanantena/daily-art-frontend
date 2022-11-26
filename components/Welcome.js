@@ -6,8 +6,13 @@ import LogInOptions from "./forum/LoginOptions";
 export default function Welcome(props) {
 
 
-    const onPasswordKeyDown = (event) => {
 
+
+    let [passwordContent, setPasswordStrength] = useState(1);
+
+    let onKeyDown = (event) => {
+        setPasswordStrength(passwordContent + 1);
+        console.log(passwordContent);
     }
 
     const handleLogin = async (event) => {
@@ -56,8 +61,9 @@ export default function Welcome(props) {
         passwordFlavourText: "",
         onSubmit: handleLogin,
         passwordContent: "",
-        onPasswordKeyDown: onPasswordKeyDown,
-        artistInfoInputType: 'text'
+        onKeyDown: onKeyDown,
+        artistInfoInputType: 'text',
+        welcomeTitle: props.welcomeTitle
     }
     if(props.welcomePage == 'join') {
         additonalProps = {
@@ -65,15 +71,15 @@ export default function Welcome(props) {
             artistPasswordTitle: "Choose a password",
             passwordFlavourText: "Min 6 characters, numbers & letters",
             onSubmit: handleJoin,
-            passwordContent: "",
-            onPasswordKeyDown: onPasswordKeyDown,
-            artistInfoInputType: 'email'
+            passwordContent: passwordContent,
+            onKeyDown: onKeyDown,
+            artistInfoInputType: 'email',
+            welcomeTitle: props.welcomeTitle
         }
         
     }
 
-        return (<div>
-            <h2>{props.welcomeTitle}</h2>
+        return (<div className="bg-white">
             <ArtistCredentials {...additonalProps}></ArtistCredentials>
             <LogInOptions></LogInOptions>
             </div>);

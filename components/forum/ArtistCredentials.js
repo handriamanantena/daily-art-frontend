@@ -1,17 +1,20 @@
+import CredentialInputsd from "../input/CredentialInputs";
+import CredentialInput from "../input/CredentialInputs";
 
-export default function ArtistCredentials({artistInfoTitle, artistPasswordTitle,
-                                              passwordFlavourText, onSubmit, passwordContent, onPasswordKeyDown, artistInfoInputType}) {
+export default function ArtistCredentials({welcomeTitle, artistInfoTitle, artistPasswordTitle,
+                                              passwordFlavourText, onSubmit, passwordContent, onKeyDown, artistInfoInputType}) {
 
-    return (<div className="flex-col bg-cyan-500 shadow-lg shadow-cyan-500/50">
+    return (<div className="flex-col shadow-lg">
         <form onSubmit={onSubmit} className="grid grid-cols-1 place-content-cente w-[440px] p-10">
-            <label htmlFor="userName">{artistInfoTitle}</label>
-            <input type={artistInfoInputType} id="userName" name="userName" required/>
-            <label htmlFor="password">{artistPasswordTitle}</label>
+            <h2 className="font-extrabold">{welcomeTitle}</h2>
+            <label htmlFor="userName" className="mt-10 mb-1">{artistInfoTitle}</label>
+            <CredentialInput type={artistInfoInputType} id="userName" name="userName" required onKeyDown={onKeyDown}></CredentialInput>
+            <span className="h-5 flex"/>
+            <label htmlFor="password" className="mb-1">{artistPasswordTitle}</label>
             <div>
-                <input type="password" id="password" name="password" required onKeyDown={onPasswordKeyDown}/>
-                <span>{passwordContent}</span>
+                <CredentialInput type="password" id="password" name="password" required onKeyDown={onKeyDown} passwordContent={passwordContent}></CredentialInput>
             </div>
-            <label>{passwordFlavourText}</label>
+            <label className="text-gray-400 text-xs">{passwordFlavourText}</label>
 
             <button type="submit">Log In</button>
         </form>
