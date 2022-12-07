@@ -1,8 +1,7 @@
-import CredentialInputsd from "../input/CredentialInputs";
 import CredentialInput from "../input/CredentialInputs";
 
 export default function ArtistCredentials({welcomeTitle, artistInfoTitle, artistPasswordTitle,
-                                              passwordFlavourText, onSubmit, passwordContent, onKeyDown, artistInfoInputType}) {
+                                              passwordFlavourText, onSubmit, passwordStrength, onKeyDown, artistInfoInputType}) {
 
     return (<div className="flex-col shadow-lg">
         <form onSubmit={onSubmit} className="grid grid-cols-1 place-content-cente w-[440px] p-10">
@@ -12,7 +11,7 @@ export default function ArtistCredentials({welcomeTitle, artistInfoTitle, artist
             <span className="h-5 flex"/>
             <label htmlFor="password" className="mb-1">{artistPasswordTitle}</label>
             <div>
-                <CredentialInput type="password" id="password" name="password" required onKeyDown={onKeyDown} passwordContent={passwordContent}></CredentialInput>
+                <CredentialInput type="password" id="password" name="password" required onKeyDown={onKeyDown} passwordStrength={passwordStrength}></CredentialInput>
             </div>
             <label className="text-gray-400 text-xs">{passwordFlavourText}</label>
 

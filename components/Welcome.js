@@ -8,11 +8,21 @@ export default function Welcome(props) {
 
 
 
-    let [passwordContent, setPasswordStrength] = useState(1);
-
+    let [passwordStrength, setPasswordStrength] = useState("");
     let onKeyDown = (event) => {
-        setPasswordStrength(passwordContent + 1);
-        console.log(passwordContent);
+        let passwordContent = event.target.value
+        if(passwordContent.trim() == 0 ||  passwordContent.length <= 5) {
+            setPasswordStrength("WEAK");
+        }
+        else if(passwordContent.length <=7) {
+            setPasswordStrength("LOW");
+        }
+        // at least 1 number, 1 lower case, 1 capital and 1 special character
+        else if(passwordContent.length >= 8 &&
+            passwordContent.match("^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#$%&]).*$") != null) {
+            setPasswordStrength("GOOD");
+        }
+
     }
 
     const handleLogin = async (event) => {
@@ -60,7 +70,7 @@ export default function Welcome(props) {
         artistPasswordTitle: "Password",
         passwordFlavourText: "",
         onSubmit: handleLogin,
-        passwordContent: "",
+        passwordStrength: "",
         onKeyDown: onKeyDown,
         artistInfoInputType: 'text',
         welcomeTitle: props.welcomeTitle
@@ -71,7 +81,7 @@ export default function Welcome(props) {
             artistPasswordTitle: "Choose a password",
             passwordFlavourText: "Min 6 characters, numbers & letters",
             onSubmit: handleJoin,
-            passwordContent: passwordContent,
+            passwordStrength: passwordStrength,
             onKeyDown: onKeyDown,
             artistInfoInputType: 'email',
             welcomeTitle: props.welcomeTitle
