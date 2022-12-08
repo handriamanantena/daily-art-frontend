@@ -13,7 +13,12 @@ function GoogleButton (){
         });
         google.accounts.id.renderButton(
             document.getElementById("googleButton"),
-            { theme: "outline", size: "large" }  // customization attributes
+            {
+                theme: "filled_blue",
+                size: "large",
+                width: "304",
+                shape: "pill"
+            }  // customization attributes
         );
     });
 
@@ -27,9 +32,9 @@ function GoogleButton (){
     return (
         <Fragment>
             <Head>
-                <script src="https://accounts.google.com/gsi/client" async defer></script>
+                <script src="https://accounts.google.com/gsi/client" async defer/>
             </Head>
-            <div id="googleButton"></div>
+            <div id="googleButton"/>
         </Fragment>
         );
 
