@@ -3,7 +3,10 @@ import Gallery from "../Gallery";
 import jwt_decode from "jwt-decode";
 import {login} from "../../common/Login"
 import Head from "next/head";
+import { useRouter } from 'next/router'
+
 function GoogleButton (){
+    const router = useRouter()
 
     useEffect(() => {
         /* global google */
@@ -26,6 +29,7 @@ function GoogleButton (){
         console.debug("Encoded JWT ID token: " + response.credential);
         console.debug(jwt_decode(response.credential))
         let loginResponse = await login(response.credential)
+        await router.push("/dailyart");
         console.debug(loginResponse)
     }
 
