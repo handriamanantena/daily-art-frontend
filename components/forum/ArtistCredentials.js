@@ -5,7 +5,7 @@ export default function ArtistCredentials({welcomeTitle, artistInfoTitle, artist
                                               passwordFlavourText, onSubmit, passwordStrength, onKeyDown, artistInfoInputType}) {
 
     return (<Fragment>
-        <form onSubmit={onSubmit} className="grid grid-cols-1 place-content-cente w-[440px] p-10">
+        <form onSubmit={onSubmit} className="grid grid-cols-1 w-96 px-10 pt-10">
             <h2 className="font-extrabold">{welcomeTitle}</h2>
             <label htmlFor="userName" className="mt-10 mb-1">{artistInfoTitle}</label>
             <CredentialInput type={artistInfoInputType} id="userName" name="userName" required/>

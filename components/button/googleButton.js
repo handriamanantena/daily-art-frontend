@@ -1,7 +1,8 @@
-import React, {useEffect} from 'react';
+import React, {Fragment, useEffect} from 'react';
 import Gallery from "../Gallery";
 import jwt_decode from "jwt-decode";
 import {login} from "../../common/Login"
+import Head from "next/head";
 function GoogleButton (){
 
     useEffect(() => {
@@ -23,7 +24,14 @@ function GoogleButton (){
         console.debug(loginResponse)
     }
 
-    return (<div id="googleButton"></div>);
+    return (
+        <Fragment>
+            <Head>
+                <script src="https://accounts.google.com/gsi/client" async defer></script>
+            </Head>
+            <div id="googleButton"></div>
+        </Fragment>
+        );
 
 }
 
