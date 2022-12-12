@@ -1,5 +1,4 @@
 import Head from "next/head";
-import LogIn from "../components/forum/Login";
 import Welcome from "../components/Welcome";
 import {Fragment} from "react";
 
