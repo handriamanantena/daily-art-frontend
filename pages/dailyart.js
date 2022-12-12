@@ -3,6 +3,7 @@ import React, {useEffect, useState, useRef} from 'react';
 import dailyArt from '../styles/DailyArt.module.css'
 import { getPicturesByPage } from '../common/GetPictures'
 import { getNextGallery } from "../common/api/pictures";
+import {BasicLayout} from "../components/common/BasicLayout";
 
 function DailyArt({ galleries }) {
    const divRef = useRef()
@@ -38,7 +39,7 @@ function DailyArt({ galleries }) {
          })
       }
    }
-   return (<div>
+   return (<BasicLayout>
             <h1 className={ dailyArt.simpleArtTitle }>Simple Art</h1>
             <div className={ dailyArt.dailyArt} ref={divRef}>
             {
@@ -47,7 +48,7 @@ function DailyArt({ galleries }) {
                }))
             }
             </div>
-         </div>);
+         </BasicLayout>);
 
 }
 
