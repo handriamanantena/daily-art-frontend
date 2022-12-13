@@ -1,12 +1,13 @@
-import React, {Fragment, useEffect} from 'react';
-import Gallery from "../Gallery";
+import React, {Fragment, useContext, useEffect} from 'react';
 import jwt_decode from "jwt-decode";
 import {login} from "../../common/Login"
 import Head from "next/head";
 import { useRouter } from 'next/router'
+import AuthContext from "../../common/context/auth-context";
 
 function GoogleButton (){
     const router = useRouter()
+    const authCtx = useContext(AuthContext);
 
     useEffect(() => {
         /* global google */
@@ -26,11 +27,12 @@ function GoogleButton (){
     });
 
     async function handleCredentialResponse(response) {
-        console.debug("Encoded JWT ID token: " + response.credential);
-        console.debug(jwt_decode(response.credential))
+        console.log("Encoded JWT ID token: " + response.credential);
+        console.log(jwt_decode(response.credential))
         let loginResponse = await login(response.credential)
+        authCtx.login(response.credential);
+        console.log(loginResponse)
         await router.push("/dailyart");
-        console.debug(loginResponse)
     }
 
     return (

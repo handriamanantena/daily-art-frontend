@@ -6,7 +6,7 @@ export function BasicLayout({children}) {
 
     return (<Fragment>
         <NavigationBar/>
-        <main>{children}</main>
+            <main>{children}</main>
         <Footer/>
     </Fragment>)
 
