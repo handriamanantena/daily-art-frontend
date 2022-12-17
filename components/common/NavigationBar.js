@@ -1,14 +1,59 @@
-import React, {Fragment, useContext} from "react";
+import React, {useContext, useEffect} from "react";
 import Image from "next/image";
-import Link from 'next/link'
 import {NavigationImageLink} from "../button/NavigationImageLink";
 import AuthContext from "../../common/context/auth-context";
 import {useRouter} from "next/router";
+import useAxiosPrivate from "../../common/hooks/useAxiosPrivate";
 
 
 export function NavigationBar() {
 
     const router = useRouter();
+    const axiosPrivate = useAxiosPrivate();
+    const ctx = useContext(AuthContext);
+
+    useEffect(async () => {
+        console.log("testing login")
+        // API endpoint where we send form data.
+        let endpoint = process.env.REACT_APP_PICTURES_API_HOST + process.env.REACT_APP_PICTURES_API_PORT + "/refresh";
+        if(ctx.token == undefined) {
+            console.log("refresh");
+            try {
+                const response = await axiosPrivate.post(endpoint,
+                    {},
+                    {
+                        headers: {'Content-Type': 'application/json'},
+                        withCredentials: true
+                    }
+                );
+                console.log(JSON.stringify(response?.data));
+                const accessToken = response?.data?.accessToken;
+                ctx.login(accessToken);
+            } catch (err) {
+              console.log(err);
+            }
+        }
+        else {
+            console.log("login test")
+            endpoint = process.env.REACT_APP_PICTURES_API_HOST + process.env.REACT_APP_PICTURES_API_PORT + "/login"
+
+            try {
+                const response = await axiosPrivate.post(endpoint,
+                    {},
+                    {
+                        headers: {'Content-Type': 'application/json',
+                                    'Authorization': 'Bearer ' + ctx.token},
+                        withCredentials: true
+                    }
+                );
+                console.log(JSON.stringify(response?.data));
+            } catch (err) {
+                console.log(err);
+            }
+        }
+
+
+    }, [ctx.token])
     const logout = () => {
       ctx.logout();
     }
@@ -17,8 +62,6 @@ export function NavigationBar() {
         await router.push("/signin");
     }
 
-    const ctx = useContext(AuthContext);
-    console.log("loggedIn {0}", ctx.isLoggedIn);
     return (<header className="flex pl-5 items-center">
         <button className="flex-none pt-2">
             <Image src="/icons/bars-solid.svg" width={24} height={24}/>

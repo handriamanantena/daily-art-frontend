@@ -31,7 +31,7 @@ function GoogleButton (){
         console.log(jwt_decode(response.credential))
         let loginResponse = await login(response.credential)
         authCtx.login(response.credential);
-        console.log(loginResponse)
+        console.log("jwt from backend {0}", loginResponse)
         await router.push("/dailyart");
     }
 
