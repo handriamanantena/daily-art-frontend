@@ -16,9 +16,15 @@ export const AuthProvider = (props) => {
         setToken(token);
     }
 
-    const logoutHandler = () => {
+    const logoutHandler = async () => {
         setLoggedIn(false);
-        setToken(null);
+        setToken('');
+        console.log("logout");
+        const host = process.env.REACT_APP_PICTURES_API_HOST + process.env.REACT_APP_PICTURES_API_PORT + "/logout";
+        const res = await fetch(host, {
+            method: 'get',
+            credentials: 'include'
+        });
     }
 
     const contextValue = {
