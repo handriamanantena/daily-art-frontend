@@ -12,7 +12,7 @@ function Signin() {
             <link rel="icon" href="/favicon.ico" />
             <script src="https://accounts.google.com/gsi/client" async defer></script>
         </Head>
-        <div class="flex items-center h-screen justify-center align-middle">
+        <div className="flex items-center h-screen justify-center align-middle">
             <Welcome welcomePage="login" welcomeTitle="Log In"></Welcome>
         </div>
     </div>);
