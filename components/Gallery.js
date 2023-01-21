@@ -1,6 +1,7 @@
 import gallery from '../styles/Gallery.module.scss'
-import React, {useEffect, useRef, useState} from 'react';
+import React, {Fragment, useEffect, useRef, useState} from 'react';
 import { ShowPictures } from './ShowPictures'
+import {AddPictureButton} from "./button/addpictureButton";
 
 class Gallery extends React.Component {
     constructor(props) {

@@ -32,7 +32,7 @@ export function BasicLayout({children}) {
         }
         else {
             console.log("login test")
-            endpoint = process.env.REACT_APP_PICTURES_API_HOST + process.env.REACT_APP_PICTURES_API_PORT + "/login"
+            endpoint = process.env.REACT_APP_PICTURES_API_HOST + process.env.REACT_APP_PICTURES_API_PORT + "/jwt"
 
             try {
                 const response = await axiosPrivate.post(endpoint,

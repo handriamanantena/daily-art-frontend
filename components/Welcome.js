@@ -4,9 +4,12 @@ import {useContext, useState} from "react";
 import LogInOptions from "./forum/LoginOptions";
 import AuthContext from "../common/context/auth-context";
 import axios from "axios";
+import {register} from "../common/Login";
+import { useRouter } from 'next/router'
 
 export default function Welcome(props) {
 
+    const router = useRouter()
 
     const ctx = useContext(AuthContext);
     const [errMsg, setErrMsg] = useState('');
@@ -38,9 +41,6 @@ export default function Welcome(props) {
             password: event.target.password.value,
         }
 
-        // Send the data to the server in JSON format.
-        const JSONdata = JSON.stringify(data)
-
         // API endpoint where we send form data.
         const endpoint = process.env.REACT_APP_PICTURES_API_HOST + process.env.REACT_APP_PICTURES_API_PORT + "/artist";
 
@@ -52,9 +52,11 @@ export default function Welcome(props) {
                     withCredentials: true
                 }
             );
-            console.log(JSON.stringify(response?.data));
-            const accessToken = response?.data?.accessToken;
+            //console.log(JSON.stringify(response?.data));
+            console.log("retrieved user", response);
+            const accessToken = response.credential;
             ctx.login(accessToken);
+            await router.push("/dailyart");
         } catch (err) {
             if (!err?.response) {
                 setErrMsg('No Server Response');
@@ -65,18 +67,20 @@ export default function Welcome(props) {
             } else {
                 setErrMsg('Login Failed');
             }
-            errRef.current.focus();
         }
-
-
-        // Get the response data from server as JSON.
-        // If server returns the name submitted, that means the form works.
-        const result = await response.json()
-        alert(`Is this your full name: ${result.data}`)
     }
 
-    const handleJoin = (event) => {
-        alert("worked")
+    const handleJoin = async (event) => {
+        event.preventDefault()
+        let response = await register(event.target.userName.value, event.target.password.value);
+        console.log("success register ", response.ok);
+        if(response.ok) {
+            await router.push("/dailyart");
+        }
+        else if(response.status == 409) {
+            setErrMsg("Email Already in Use");
+        }
+
     }
     let additionalProps = { // login
         artistInfoTitle: "Username",

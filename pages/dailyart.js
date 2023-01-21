@@ -4,6 +4,7 @@ import dailyArt from '../styles/DailyArt.module.css'
 import { getPicturesByPage } from '../common/GetPictures'
 import { getNextGallery } from "../common/api/pictures";
 import {BasicLayout} from "../components/common/BasicLayout";
+import {AddPictureButton} from "../components/button/addpictureButton";
 
 function DailyArt({ galleries }) {
    const divRef = useRef()

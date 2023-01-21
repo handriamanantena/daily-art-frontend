@@ -1,4 +1,3 @@
-import LogIn from "../components/forum/Login";
 import LogInOptions from "../components/forum/LoginOptions";
 import Head from "next/head";
 import GoogleButton from "../components/button/googleButton";

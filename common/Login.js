@@ -1,6 +1,6 @@
 
 
-async function login(token) {
+async function googleLogin(token) {
     const host = process.env.REACT_APP_PICTURES_API_HOST + process.env.REACT_APP_PICTURES_API_PORT
     const response = await fetch(host + '/artist?platform=google', {
         method: 'POST',
@@ -13,4 +13,25 @@ async function login(token) {
     return response.json();
 }
 
-export {login}
+async function registerGoogleAccount(token) {
+
+}
+
+async function register(userName, password) {
+    const host = process.env.REACT_APP_PICTURES_API_HOST + process.env.REACT_APP_PICTURES_API_PORT
+    let body = JSON.stringify({
+        userName,
+        password
+    })
+    const response = await fetch(host + '/register', {
+        method: 'POST',
+        credentials: 'include', // include, *same-origin, omit
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: body
+    });
+    return response;
+}
+
+export {googleLogin, register}
