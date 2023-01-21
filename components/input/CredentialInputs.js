@@ -1,3 +1,4 @@
+import BasicForumInput from "../forum/inputs/input";
 
 export default function CredentialInput({type, id, name, onKeyDown, passwordStrength}) {
 
@@ -14,12 +15,9 @@ export default function CredentialInput({type, id, name, onKeyDown, passwordStre
         dynamicPasswordStrengthStyle = passwordStrengthStyle + "text-green-700";
     }
 
-    return (<div tabIndex="0" className="flex mt-1 px-3 py-2 bg-white border shadow-sm border-slate-300 focus:outline-none
-        focus-within:border-sky-500 focus-within:ring-sky-500 focus-within:ring-1
-        block w-full rounded-md sm:text-sm ">
-        <input type={type} id={id} name={name} required onInput={onKeyDown}
-               className="flex-1 bg-transparent focus:outline-none"/>
-        <span className={dynamicPasswordStrengthStyle}>{passwordStrength}</span>
-    </div>);
+    return (
+        <BasicForumInput type={type} id={id} name={name} onKeyDown={onKeyDown}>
+            <span className={dynamicPasswordStrengthStyle}>{passwordStrength}</span>
+        </BasicForumInput>);
 
 }
