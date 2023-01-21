@@ -6,6 +6,7 @@ import AuthContext from "../common/context/auth-context";
 import axios from "axios";
 import {register} from "../common/Login";
 import { useRouter } from 'next/router'
+import ForumBackground from "./forum/ForumBackground";
 
 export default function Welcome(props) {
 
@@ -106,9 +107,9 @@ export default function Welcome(props) {
         
     }
 
-        return (<div className="bg-white">
-            <p>{errMsg}</p>
-            <ArtistCredentials {...additionalProps}></ArtistCredentials>
-            <LogInOptions></LogInOptions>
-            </div>);
+        return (<ForumBackground>
+                <p>{errMsg}</p>
+                <ArtistCredentials {...additionalProps}/>
+                <LogInOptions/>
+            </ForumBackground>);
 }

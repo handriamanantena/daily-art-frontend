@@ -3,11 +3,15 @@ import BasicForum from "./BasicForum";
 
 export default function ArtistCredentials({welcomeTitle, artistInfoTitle, artistPasswordTitle,
                                               passwordFlavourText, onSubmit, passwordStrength, onKeyDown, artistInfoInputType}) {
+    let artistTypeId = "email";
+    if(artistInfoInputType == "text") {
+        artistTypeId = "userName";
+    }
 
     return (<BasicForum onSubmit={onSubmit}>
                 <h2 className="font-extrabold">{welcomeTitle}</h2>
                 <label htmlFor="userName" className="mt-10 mb-1">{artistInfoTitle}</label>
-                <CredentialInput type={artistInfoInputType} id="userName" name="userName" required/>
+                <CredentialInput type={artistInfoInputType} id={artistTypeId} name="userName" required/>
                 <span className="h-5 flex"/>
                 <label htmlFor="password" className="mb-1">{artistPasswordTitle}</label>
                 <CredentialInput type="password" id="password" name="password" required onKeyDown={onKeyDown} passwordStrength={passwordStrength}/>
