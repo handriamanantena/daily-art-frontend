@@ -1,6 +1,6 @@
 import Image from "next/image";
 import ArtistCredentials from "./forum/ArtistCredentials";
-import {useContext, useState} from "react";
+import {useContext, useState, useEffect } from "react";
 import LogInOptions from "./forum/LoginOptions";
 import AuthContext from "../common/context/auth-context";
 import axios from "axios";
@@ -14,6 +14,11 @@ export default function Welcome(props) {
 
     const ctx = useContext(AuthContext);
     const [errMsg, setErrMsg] = useState('');
+
+    useEffect(async () => {
+        // Prefetch the dashboard page
+        await router.prefetch('/dailyart')
+    }, []);
 
     let [passwordStrength, setPasswordStrength] = useState("");
     let onKeyDown = (event) => {
@@ -57,7 +62,7 @@ export default function Welcome(props) {
             console.log("retrieved user", response);
             const accessToken = response.credential;
             ctx.login(accessToken);
-            await router.push("/dailyart");
+            await router.push("/username");
         } catch (err) {
             if (!err?.response) {
                 setErrMsg('No Server Response');
@@ -73,10 +78,10 @@ export default function Welcome(props) {
 
     const handleJoin = async (event) => {
         event.preventDefault()
-        let response = await register(event.target.userName.value, event.target.password.value);
+        let response = await register(event.target.email.value, event.target.password.value);
         console.log("success register ", response.ok);
         if(response.ok) {
-            await router.push("/dailyart");
+            await router.push("/username");
         }
         else if(response.status == 409) {
             setErrMsg("Email Already in Use");
@@ -104,7 +109,6 @@ export default function Welcome(props) {
             artistInfoInputType: 'email',
             welcomeTitle: props.welcomeTitle
         }
-        
     }
 
         return (<ForumBackground>

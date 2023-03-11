@@ -1,9 +1,9 @@
 import React, {Fragment, useContext, useEffect} from 'react';
 import jwt_decode from "jwt-decode";
-import {googleLogin} from "../../common/Login"
+import {googleLogin} from "../../../common/Login"
 import Head from "next/head";
 import { useRouter } from 'next/router'
-import AuthContext from "../../common/context/auth-context";
+import AuthContext from "../../../common/context/auth-context";
 
 function GoogleButton (){
     const router = useRouter()
@@ -32,7 +32,12 @@ function GoogleButton (){
         let loginResponse = await googleLogin(response.credential)
         authCtx.login(response.credential);
         console.log("jwt from backend {0}", loginResponse)
-        await router.push("/dailyart");
+        if(loginResponse.artist.userName) {
+            await router.push("/dailyart");
+        }
+        else {
+            await router.push("/username");
+        }
     }
 
     return (

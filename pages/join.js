@@ -7,7 +7,6 @@ function Join() {
     return (<Fragment>
         <Head>
             <title>Join</title>
-            <link rel="icon" href="/favicon.ico" />
         </Head>
         <div class="flex items-center h-screen justify-center align-middle bg-gradient-to-r from-cyan-500 to-blue-500">
             <Welcome welcomePage="join" welcomeTitle="Join Daily Art"></Welcome>

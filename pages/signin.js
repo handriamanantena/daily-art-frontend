@@ -1,20 +1,18 @@
-import LogInOptions from "../components/forum/LoginOptions";
 import Head from "next/head";
-import GoogleButton from "../components/button/googleButton";
 import Welcome from "../components/Welcome";
+import {Fragment} from "react";
+import GradiantBackground from "../components/common/GradiantBackground";
 
 function Signin() {
 
-    return (<div class="bg-gradient-to-r from-cyan-500 to-blue-500">
+    return (<Fragment>
         <Head>
             <title>Sign In</title>
-            <link rel="icon" href="/favicon.ico" />
-            <script src="https://accounts.google.com/gsi/client" async defer></script>
         </Head>
-        <div className="flex items-center h-screen justify-center align-middle">
+        <GradiantBackground>
             <Welcome welcomePage="login" welcomeTitle="Log In"></Welcome>
-        </div>
-    </div>);
+        </GradiantBackground>
+    </Fragment>);
 }
 
 export default Signin;

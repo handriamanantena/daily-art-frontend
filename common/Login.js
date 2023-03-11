@@ -17,10 +17,10 @@ async function registerGoogleAccount(token) {
 
 }
 
-async function register(userName, password) {
+async function register(email, password) {
     const host = process.env.REACT_APP_PICTURES_API_HOST + process.env.REACT_APP_PICTURES_API_PORT
     let body = JSON.stringify({
-        userName,
+        email,
         password
     })
     const response = await fetch(host + '/register', {
