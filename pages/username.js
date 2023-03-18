@@ -15,14 +15,14 @@ function Username() {
 
 
     let onSubmit = () => {
-        /*const response = await fetch(host + '/artist?platform=google', {
+        const response = fetch(host + '/artist?platform=google', {
             method: 'POST',
             credentials: 'include', // include, *same-origin, omit
             headers: {
                 'Content-Type': 'application/json',
                 'Authorization': 'Bearer ' + token
             }
-        });*/
+        });
     }
 
     let onClickSkip = async () => {
