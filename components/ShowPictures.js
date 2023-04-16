@@ -10,14 +10,13 @@ function ShowPictures({picture}) {
     return (
            <Link href="/picture/[picture]" as={`/picture/${picture.id}`}>
             <div className={gallery.card}>
-                <a key={picture.id}>
+                <a>
                     <Image className={gallery.imageFrame}
                            width={picture.width}
                            height={picture.height}
                            src={url}
-                           key={picture.id}
                            quality={100}/>
-                    <p className={gallery.pictureName}>{picture.pictureName}</p>
+                    <p className={gallery.pictureName}>{picture._id}</p>
                 </a>
             </div>
            </Link>);

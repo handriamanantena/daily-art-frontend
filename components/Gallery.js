@@ -10,7 +10,7 @@ class Gallery extends React.Component {
 
     render() {
         return this.props.pictures.map((value, index) => {
-                    return <div className="flex flex-col w-1/2 sm:w-3/10 lg:w-1/4" key={value.id} >
+                    return <div className="flex flex-col w-1/2 sm:w-3/10 lg:w-1/4" key={value._id} >
                         <ShowPictures picture={value}> </ShowPictures>
                     </div>
                 })
