@@ -8,7 +8,7 @@ function ShowPictures({picture}) {
     let host = process.env.REACT_APP_PICTURES_API_HOST + process.env.REACT_APP_PICTURES_API_PORT + '/file/'
     let url = encodeURI(host + picture.url)
     return (
-           <Link href="/picture/[picture]" as={`/picture/${picture.id}`}>
+           <Link href="/picture/[picture]" as={`/picture/${picture._id}`}>
             <div className={gallery.card}>
                 <a>
                     <Image className={gallery.imageFrame}

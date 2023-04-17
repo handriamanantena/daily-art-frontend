@@ -4,12 +4,12 @@ import DailyArt from "../dailyart";
 import * as path from "path";
 import Image from "next/image";
 import Gallery from "../../components/Gallery";
-import { getNextGallery } from "../../common/api/pictures";
+import {getNextGallery, getPicturesByPage} from "../../common/api/pictures";
 import id from "../../styles/id.module.css"
 import styles from "../../styles/Home.module.css";
 import {PictureInfo} from "../../components/PictureInfo"
 
-function Id({ picture, previewGallery }) {
+function _Id({ picture, previewGallery }) {
 
     let host = process.env.REACT_APP_PICTURES_API_HOST + process.env.REACT_APP_PICTURES_API_PORT + '/file/'
     let url = encodeURI(host + picture.url)
@@ -21,13 +21,12 @@ function Id({ picture, previewGallery }) {
                             width={picture.width}
                             height={picture.height}
                             src={url}
-                            key={picture.id}
                             quality={100}/>
                     </div>
                     <PictureInfo picture={picture}></PictureInfo>
                 </div>
                 <div>
-                    <Gallery pictures={previewGallery.pictures} key = {0}/>
+                    <Gallery pictures={previewGallery} key = {0}/>
                 </div>
     </div>);
 
@@ -35,10 +34,11 @@ function Id({ picture, previewGallery }) {
 
 export async function setPicturesToParams() {
     let pictures = await getAllPictures()
+    console.log("these are the pics" + pictures)
     return pictures.map(picture => {
         return {
                 params: {
-                    id: picture.id.replace(/\.md$/, '')
+                    _id: picture._id.replace(/\.md$/, '')
                 }
         }
     })
@@ -58,9 +58,9 @@ export async function getStaticPaths() {
 }
 
 export async function getStaticProps( { params }) {
-    const picture = await getPicture(params.id)
-    const previewGallery = await getNextGallery(0)
-    console.log(picture)
+    console.log("the id is: " + params._id);
+    const picture = await getPicture(params._id)
+    const previewGallery = await getPicturesByPage(new Date().toISOString(), 3);
     return {
         props: {
             picture,
@@ -70,4 +70,4 @@ export async function getStaticProps( { params }) {
 }
 
 
-export default Id;
+export default _Id;
