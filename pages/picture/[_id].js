@@ -5,16 +5,17 @@ import * as path from "path";
 import Image from "next/image";
 import Gallery from "../../components/Gallery";
 import {getNextGallery, getPicturesByPage} from "../../common/api/pictures";
-import id from "../../styles/id.module.css"
-import styles from "../../styles/Home.module.css";
 import {PictureInfo} from "../../components/PictureInfo"
+import {BasicLayout} from "../../components/common/BasicLayout";
 
 function _Id({ picture, previewGallery }) {
 
     let host = process.env.REACT_APP_PICTURES_API_HOST + process.env.REACT_APP_PICTURES_API_PORT + '/file/'
     let url = encodeURI(host + picture.url)
 
-    return (<div>
+    return (
+        <BasicLayout>
+            <div>
                 <div>
                     <div className="flex justify-center">
                         <Image
@@ -26,9 +27,11 @@ function _Id({ picture, previewGallery }) {
                     <PictureInfo picture={picture}></PictureInfo>
                 </div>
                 <div>
-                    <Gallery pictures={previewGallery} key = {0}/>
+                    <Gallery pictures={previewGallery} key={0}/>
                 </div>
-    </div>);
+            </div>
+        </BasicLayout>
+      );
 
 }
 

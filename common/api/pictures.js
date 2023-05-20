@@ -32,4 +32,24 @@ async function getPicturesByPage(dateIndex, pageSize) {
     return await res.json()
 }
 
-export {getNextGallery, getPictures, getPictureById, getPicturesByPage}
+async function getPicturesByArtist(artist, pageIndex, pageSize) {
+    const host = process.env.REACT_APP_PICTURES_API_HOST + process.env.REACT_APP_PICTURES_API_PORT
+    const res = await fetch(host + "/pictures?artist=" + artist);
+    return await res.json()
+}
+
+async function getPicturesByArtistUserName(userName, pageSize, pageIndex) {
+    let query = "?";
+    if(pageSize) {
+        query += "pageSize=" + pageSize;
+        if(pageIndex != undefined) {
+            query += "&pageIndex=" + pageIndex;
+        }
+    }
+    query += "&userName=" + userName
+    const host = process.env.REACT_APP_PICTURES_API_HOST + process.env.REACT_APP_PICTURES_API_PORT
+    const res = await fetch(host + "/pictures" + query);
+    return await res.json()
+}
+
+export {getNextGallery, getPictures, getPictureById, getPicturesByPage, getPicturesByArtist, getPicturesByArtistUserName}
