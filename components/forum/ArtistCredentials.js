@@ -1,5 +1,4 @@
 import CredentialInput from "../input/CredentialInputs";
-import BasicForum from "./BasicForum";
 import SubmitButton from "./inputs/SubmitButton";
 
 export default function ArtistCredentials({welcomeTitle, artistInfoTitle, artistPasswordTitle,
@@ -9,7 +8,7 @@ export default function ArtistCredentials({welcomeTitle, artistInfoTitle, artist
         artistTypeId = "userName";
     }
 
-    return (<forum className="grid grid-cols-1 w-96 px-10 pt-10" onSubmit={onSubmit}>
+    return (<form className="grid grid-cols-1 w-96 px-10 pt-10" onSubmit={onSubmit}>
                 <h2 className="font-extrabold">{welcomeTitle}</h2>
                 <label htmlFor={artistTypeId} className="mt-10 mb-1">{artistInfoTitle}</label>
                 <CredentialInput type={artistInfoInputType} id={artistTypeId} name={artistTypeId} required/>
@@ -23,5 +22,5 @@ export default function ArtistCredentials({welcomeTitle, artistInfoTitle, artist
                     <div className="ml-2 mr-2">or</div>
                     <div className="grow border-b border-stone-400"/>
                 </div>
-            </forum>);
+            </form>);
 }

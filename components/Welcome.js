@@ -62,7 +62,7 @@ export default function Welcome(props) {
             console.log("retrieved user", response);
             const accessToken = response.credential;
             ctx.login(accessToken);
-            await router.push("/username");
+            await router.push("/dailyart");
         } catch (err) {
             if (!err?.response) {
                 setErrMsg('No Server Response');
