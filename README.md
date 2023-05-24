@@ -21,3 +21,8 @@ fast reload:  npx next dev
 
 npm view tailwindcss version
 
+## Support for node v18
+need to add 
+export NODE_OPTIONS=--openssl-legacy-provider. In intelij I added it to npx next dev run configuration under enviornment variable. 
+
+
