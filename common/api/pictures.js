@@ -42,7 +42,7 @@ async function getPicturesByArtistUserName(userName, pageSize, pageIndex) {
     let query = "?";
     if(pageSize) {
         query += "pageSize=" + pageSize;
-        if(pageIndex != undefined) {
+        if(pageIndex != 0 && pageIndex != undefined) {
             query += "&pageIndex=" + pageIndex;
         }
     }
