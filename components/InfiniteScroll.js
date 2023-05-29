@@ -1,20 +1,18 @@
 import React, {useRef, useState, useEffect, Fragment} from 'react';
 
-export const InfiniteScroll = ({getObjects, isMaxPage, lastElement, children}) => {
+export const InfiniteScroll = ({getObjects, maxPage, lastElement, children}) => {
     let [pageNum, setPage] = useState(1);
     const observer = useRef();
 
-    useEffect(() => {
-        console.log("page changed")
-        if (pageNum < 2) {
-            getObjects();
+    useEffect(async () => {
+        if (pageNum < maxPage && pageNum != 1) {
+            await getObjects();
         }
     }, [pageNum]);
 
 
     let updatePage = (entries) => {
         let lastCard = entries[0];
-
         if (lastCard.isIntersecting) {
             setPage((value) => value + 1);
         }
