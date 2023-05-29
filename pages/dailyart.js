@@ -1,61 +1,43 @@
 import Gallery from "../components/Gallery";
 import React, {useEffect, useState, useRef} from 'react';
 import dailyArt from '../styles/DailyArt.module.css'
-import { getNextGallery, getPicturesByPage } from "../common/api/pictures";
+import {getNextGallery, getPicturesByArtistUserName, getPicturesByPage} from "../common/api/pictures";
 import {BasicLayout} from "../components/common/BasicLayout";
+import {InfiniteScroll} from "../components/InfiniteScroll";
 
 let pageSize = 10;
 
 
 function DailyArt({ pictures }) {
-   const divRef = useRef()
-   let [newPictures, setPictures] = useState(pictures)
-   let [date, setDate] = useState(pictures[pictures.length-1].date)
-   let [isLoading, setIsLoading] = useState(false)
-   useEffect(() => {
-      window.addEventListener("scroll", handleScroll)
-      return () => {
-         window.removeEventListener("scroll", handleScroll)
-      }
-   })
+    let [newPictures, setPictures] = useState(pictures)
+    let [isLoading, setIsLoading] = useState(false)
+    let [lastElement, setLastElement] = useState(null);
+    let [pageIndex, setPageIndex] = useState(pictures[pictures.length - 1]._id);
 
-   useEffect( async () => {
-      if(divRef.current) {
-         let height = divRef.current.offsetHeight;
-         if(height <= window.innerHeight + window.pageYOffset) {
-            let response = await getPicturesByPage(date, pageSize);
-            console.log(response)
-            if(response.length > 0) {
-               setDate(response[response.length-1].date);
-               pictures.push(...response);
-               setPictures(pictures)
-            }
-         }
-      }
-   }, [newPictures])
-
-   const handleScroll =  async () => {
-      if ((window.innerHeight + window.pageYOffset) >= document.body.offsetHeight && !isLoading) {
-         setIsLoading(true)
-         let response = await getPicturesByPage(date, pageSize);
-         if(response.length > 0) {
-            setDate(response[response.length-1].date);
+    let getPictures = async () => {
+        setIsLoading(true)
+        let response = await getPicturesByPage(null, pageSize, pageIndex);
+        if(response.length > 0) {
+            setPageIndex(response[response.length-1]._id);
             pictures.push(...response);
             setPictures(pictures)
             setIsLoading(false)
-         };
-      }
-   }
-   return (<BasicLayout>
-            <h1 className={ dailyArt.simpleArtTitle }>Simple Art</h1>
-            <Gallery pictures = {pictures}/>
-         </BasicLayout>);
+        }
+    }
+
+   return (
+       <BasicLayout>
+          <h1 className={dailyArt.simpleArtTitle}>Simple Art</h1>
+          <InfiniteScroll getObjects = {getPictures} maxPage = {10} lastElement={lastElement}>
+             <Gallery pictures = {newPictures} setLastElement = {setLastElement}/>
+          </InfiniteScroll>
+       </BasicLayout>);
 
 }
 
 
 export async function getServerSideProps() {
-   const pictures = await getPicturesByPage(new Date().toISOString(), pageSize);
+   const pictures =  await getPicturesByPage(null, pageSize, null);
    return {
       props: {
          pictures : pictures

@@ -18,12 +18,15 @@ async function getPictureById(id) {
     return await res.json()
 }
 
-async function getPicturesByPage(dateIndex, pageSize) {
+async function getPicturesByPage(dateIndex, pageSize, pageIndex) {
     let query = "?";
     if(pageSize) {
         query += "pageSize=" + pageSize;
         if(dateIndex) {
             query += "&date=" + dateIndex;
+        }
+        else if(pageIndex) {
+            query += "&pageIndex=" + pageIndex;
         }
     }
     const host = process.env.REACT_APP_PICTURES_API_HOST + process.env.REACT_APP_PICTURES_API_PORT
