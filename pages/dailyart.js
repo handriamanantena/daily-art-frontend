@@ -48,9 +48,7 @@ function DailyArt({ pictures }) {
    }
    return (<BasicLayout>
             <h1 className={ dailyArt.simpleArtTitle }>Simple Art</h1>
-            <div className={ dailyArt.dailyArt} ref={divRef}>
-               <Gallery pictures = {pictures}/>
-            </div>
+            <Gallery pictures = {pictures}/>
          </BasicLayout>);
 
 }

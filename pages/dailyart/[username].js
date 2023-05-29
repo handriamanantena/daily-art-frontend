@@ -9,7 +9,6 @@ import {InfiniteScroll} from "../../components/InfiniteScroll"
 let pageSize = 2;
 
 function Username({ username, pictures }) {
-    const divRef = useRef()
     let [newPictures, setPictures] = useState(pictures)
     let [isLoading, setIsLoading] = useState(false)
     let [lastElement, setLastElement] = useState(null);
@@ -28,11 +27,9 @@ function Username({ username, pictures }) {
 
    return (<BasicLayout>
             <h1 className={ dailyArt.simpleArtTitle }>Simple Art</h1>
-            <div className={ dailyArt.dailyArt} ref={divRef}>
                 <InfiniteScroll getObjects = {getPictures} maxPage = {10} lastElement = {lastElement}>
                     <Gallery pictures = {newPictures} setLastElement = {setLastElement}/>
                 </InfiniteScroll>
-            </div>
          </BasicLayout>);
 
 }

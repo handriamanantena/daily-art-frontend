@@ -26,9 +26,7 @@ function _Id({ picture, previewGallery }) {
                     </div>
                     <PictureInfo picture={picture}></PictureInfo>
                 </div>
-                <div>
-                    <Gallery pictures={previewGallery} key={0}/>
-                </div>
+                <Gallery pictures={previewGallery} key={0}/>
             </div>
         </BasicLayout>
       );
