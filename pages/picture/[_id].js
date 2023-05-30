@@ -11,7 +11,7 @@ import {InfiniteScroll} from "../../components/InfiniteScroll";
 
 let pageSize = 2;
 
-function _Id({ picture, pictures, _id }) {
+function _Id({ picture, pictures, _id, foundPicture }) {
 
     let host = process.env.REACT_APP_PICTURES_API_HOST + process.env.REACT_APP_PICTURES_API_PORT + '/file/'
     let url = encodeURI(host + picture.url)
@@ -24,9 +24,11 @@ function _Id({ picture, pictures, _id }) {
     let getPictures = async () => {
         setIsLoading(true)
         let response = await getPicturesByPage(null, pageSize, pageIndex);
-        if(response.length > 0) {
-            setPageIndex(response[response.length-1]._id);
-            pictures.push(...response);
+        let filteredResponse = filterPicture(response, _id, foundPicture);
+
+        if(filteredResponse.length > 0) {
+            setPageIndex(filteredResponse[filteredResponse.length-1]._id);
+            pictures.push(...filteredResponse);
             setPictures(pictures)
             setIsLoading(false)
         }
@@ -52,6 +54,23 @@ function _Id({ picture, pictures, _id }) {
         </BasicLayout>
       );
 
+}
+
+let filterPicture = (response, _id, foundPicture) => {
+    let filteredResponse = [];
+    if(!foundPicture.foundPicture) {
+        filteredResponse = response.filter(picture => {
+            if(picture._id == _id) {
+                foundPicture.foundPicture = true;
+                return false;
+            }
+            return true;
+        });
+        return filteredResponse;
+    }
+    else {
+        return response;
+    }
 }
 
 export async function setPicturesToParams() {
@@ -84,11 +103,15 @@ export async function getStaticProps(context) {
     const _id = params._id;
     const picture = await getPicture(params._id)
     const pictures =  await getPicturesByPage(null, pageSize, null);
+    let foundPicture = { foundPicture : false };
+    let filteredPictures = filterPicture(pictures, _id, foundPicture);
+    console.log("_id initial " + JSON.stringify(filteredPictures));
     return {
         props: {
             picture,
-            pictures : pictures,
-            _id : _id
+            pictures : filteredPictures,
+            _id : _id,
+            foundPicture : foundPicture
         }
     }
 }
