@@ -4,14 +4,33 @@ import DailyArt from "../dailyart";
 import * as path from "path";
 import Image from "next/image";
 import Gallery from "../../components/Gallery";
-import {getNextGallery, getPicturesByPage} from "../../common/api/pictures";
+import {getNextGallery, getPicturesByArtistUserName, getPicturesByPage} from "../../common/api/pictures";
 import {PictureInfo} from "../../components/PictureInfo"
 import {BasicLayout} from "../../components/common/BasicLayout";
+import {InfiniteScroll} from "../../components/InfiniteScroll";
 
-function _Id({ picture, previewGallery }) {
+let pageSize = 2;
+
+function _Id({ picture, pictures, _id }) {
 
     let host = process.env.REACT_APP_PICTURES_API_HOST + process.env.REACT_APP_PICTURES_API_PORT + '/file/'
     let url = encodeURI(host + picture.url)
+
+    let [newPictures, setPictures] = useState(pictures)
+    let [isLoading, setIsLoading] = useState(false)
+    let [lastElement, setLastElement] = useState(null);
+    let [pageIndex, setPageIndex] = useState(pictures[pictures.length - 1]._id);
+
+    let getPictures = async () => {
+        setIsLoading(true)
+        let response = await getPicturesByPage(null, pageSize, pageIndex);
+        if(response.length > 0) {
+            setPageIndex(response[response.length-1]._id);
+            pictures.push(...response);
+            setPictures(pictures)
+            setIsLoading(false)
+        }
+    }
 
     return (
         <BasicLayout>
@@ -26,7 +45,9 @@ function _Id({ picture, previewGallery }) {
                     </div>
                     <PictureInfo picture={picture}></PictureInfo>
                 </div>
-                <Gallery pictures={previewGallery} key={0}/>
+                <InfiniteScroll getObjects = {getPictures} maxPage = {10} lastElement={lastElement}>
+                    <Gallery pictures = {newPictures} setLastElement = {setLastElement}/>
+                </InfiniteScroll>
             </div>
         </BasicLayout>
       );
@@ -58,14 +79,16 @@ export async function getStaticPaths() {
     }
 }
 
-export async function getStaticProps( { params }) {
-    console.log("the id is: " + params._id);
+export async function getStaticProps(context) {
+    const { params } = context;
+    const _id = params._id;
     const picture = await getPicture(params._id)
-    const previewGallery = await getPicturesByPage(new Date().toISOString(), 3);
+    const pictures =  await getPicturesByPage(null, pageSize, null);
     return {
         props: {
             picture,
-            previewGallery
+            pictures : pictures,
+            _id : _id
         }
     }
 }
