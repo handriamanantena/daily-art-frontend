@@ -11,7 +11,7 @@ import {InfiniteScroll} from "../../components/InfiniteScroll";
 
 let pageSize = 2;
 
-function _Id({ picture, pictures, _id, foundPicture }) {
+function _Id({ picture, pictures, _id, foundPicture, initialIndex }) {
 
     let host = process.env.REACT_APP_PICTURES_API_HOST + process.env.REACT_APP_PICTURES_API_PORT + '/file/'
     let url = encodeURI(host + picture.url)
@@ -19,15 +19,15 @@ function _Id({ picture, pictures, _id, foundPicture }) {
     let [newPictures, setPictures] = useState(pictures)
     let [isLoading, setIsLoading] = useState(false)
     let [lastElement, setLastElement] = useState(null);
-    let [pageIndex, setPageIndex] = useState(pictures[pictures.length - 1]._id);
+    let [pageIndex, setPageIndex] = useState(initialIndex);
 
     let getPictures = async () => {
         setIsLoading(true)
         let response = await getPicturesByPage(null, pageSize, pageIndex);
-        let filteredResponse = filterPicture(response, _id, foundPicture);
 
-        if(filteredResponse.length > 0) {
-            setPageIndex(filteredResponse[filteredResponse.length-1]._id);
+        if(response.length > 0) {
+            let filteredResponse = filterPicture(response, _id, foundPicture);
+            setPageIndex(response[response.length-1]._id);
             pictures.push(...filteredResponse);
             setPictures(pictures)
             setIsLoading(false)
@@ -103,6 +103,7 @@ export async function getStaticProps(context) {
     const _id = params._id;
     const picture = await getPicture(params._id)
     const pictures =  await getPicturesByPage(null, pageSize, null);
+    const initialIndex = pictures[pictures.length -1]._id
     let foundPicture = { foundPicture : false };
     let filteredPictures = filterPicture(pictures, _id, foundPicture);
     console.log("_id initial " + JSON.stringify(filteredPictures));
@@ -111,7 +112,8 @@ export async function getStaticProps(context) {
             picture,
             pictures : filteredPictures,
             _id : _id,
-            foundPicture : foundPicture
+            foundPicture : foundPicture,
+            initialIndex
         }
     }
 }
