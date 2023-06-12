@@ -5,6 +5,7 @@ import {BasicLayout} from "../../components/common/BasicLayout";
 import {getArtistUserNames} from "../../common/api/artists";
 import {getPicturesByArtistUserName} from "../../common/api/pictures";
 import {InfiniteScroll} from "../../components/InfiniteScroll"
+import {AddPictureButton} from "../../components/button/addpictureButton";
 
 let pageSize = 2;
 
@@ -28,7 +29,9 @@ function Username({ username, pictures }) {
    return (<BasicLayout>
             <h1 className={ dailyArt.simpleArtTitle }>Simple Art</h1>
                 <InfiniteScroll getObjects = {getPictures} maxPage = {10} lastElement = {lastElement}>
-                    <Gallery pictures = {newPictures} setLastElement = {setLastElement}/>
+                    <Gallery pictures = {newPictures} setLastElement = {setLastElement}>
+                        <AddPictureButton/>
+                    </Gallery>
                 </InfiniteScroll>
          </BasicLayout>);
 

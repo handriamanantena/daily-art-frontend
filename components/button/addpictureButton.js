@@ -1,6 +1,7 @@
 import {Fragment, useContext, useRef, useState} from "react";
 import AuthContext from "../../common/context/auth-context";
 import jwt_decode from "jwt-decode";
+import {AddPictureInfo} from "../forum/popup/AddPictureInfo";
 
 
 export const AddPictureButton = ({}) => {
@@ -53,15 +54,8 @@ export const AddPictureButton = ({}) => {
         <Fragment>
         {ctx.isLoggedIn ?
             <Fragment>
-                <form onSubmit={handleSubmit} method="post" encType="multipart/form-data">
-                    <input id="file" type="file" onChange={handleFileChange} hidden={true}/>
-                    <label
-                        className="flex flex-col w-1/2 sm:w-3/10 lg:w-1/4 border-4 border-yellow-500 text-9xl justify-center items-center text-yellow-500 rounded-lg"
-                        htmlFor="file">
-                        +
-                    </label>
-                    <button type="submit">Submit</button>
-                </form>
+                <button className="flex flex-col w-1/2 sm:w-3/10 lg:w-1/4 border-4 border-yellow-500 text-9xl justify-center items-center text-yellow-500 rounded-lg" title="Add Picture">+</button>
+                <AddPictureInfo></AddPictureInfo>
             </Fragment> : <Fragment></Fragment>}
         </Fragment>
     );
