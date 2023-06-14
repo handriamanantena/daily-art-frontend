@@ -4,6 +4,7 @@ import SubmitButton from "../inputs/SubmitButton";
 import style from "../../../styles/AddPictureInfo.module.css";
 import React from "react";
 import Image from "next/dist/client/image";
+import {CancelButton} from "../../button/cancelButton";
 
 const AddPictureInfo = ({onSubmit, method, hidePopUp}) => {
 
@@ -57,7 +58,9 @@ const AddPictureInfo = ({onSubmit, method, hidePopUp}) => {
 
     return (<div className={style.blurryBackground} onClick={onclick} ref={ref}>
         <div className={style.popup}>
-            <Image src="/icons/circle-xmark-regular.svg" width={24} height={24}/>
+            <div className="relative">
+                <CancelButton onclick={hidePopUp}/>
+            </div>
             <form className="flex flex-grow flex-col space-y-1 w-96 px-10 pt-10 pb-10 min-h-[25rem]" onSubmit={onSubmit} method={method} encType="multipart/form-data">
                 <h2 className="font-extrabold">Create DailyArt</h2>
                 <label htmlFor="pictureName">Title</label>
