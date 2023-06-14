@@ -64,7 +64,8 @@ export default function Welcome(props) {
             ctx.login(accessToken);
             await router.push("/dailyart");
         } catch (err) {
-            if (!err?.response) {
+            if (err?.response) {
+                console.log(err);
                 setErrMsg('No Server Response');
             } else if (err.response?.status === 400) {
                 setErrMsg('Missing Username or Password');

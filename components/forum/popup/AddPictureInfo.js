@@ -1,29 +1,32 @@
-import {useEffect, useState, useRef} from "react";
+import {useEffect, useState, useContext} from "react";
 import BasicForumInput from "../inputs/input";
 import SubmitButton from "../inputs/SubmitButton";
 import style from "../../../styles/AddPictureInfo.module.css";
 import React from "react";
 import Image from "next/dist/client/image";
 import {CancelButton} from "../../button/cancelButton";
+import jwt_decode from "jwt-decode";
+import AuthContext from "../../../common/context/auth-context";
 
 const AddPictureInfo = ({onSubmit, method, hidePopUp}) => {
 
+    const ctx = useContext(AuthContext);
+    const host = process.env.REACT_APP_PICTURES_API_HOST + process.env.REACT_APP_PICTURES_API_PORT;
+    const [file, setFile] = useState("");
+    const [fileDataURL, setFileDataURL] = useState("");
 
-    let ref = useRef();
     useEffect(() => {
         document.body.style.overflow = "hidden";
         return () => (document.body.style.overflow = "scroll");
     });
 
-    const [file, setFile] = useState("");
-    const [fileDataURL, setFileDataURL] = useState("");
+
 
     const handleFileChange = (e) => {
         const files = (e.target).files
 
         if (files && files.length > 0) {
-            setFile(files[0])
-            setFileDataURL(files[0].mozFullPath)
+            setFile(files[0]);
         }
     };
 
@@ -50,18 +53,40 @@ const AddPictureInfo = ({onSubmit, method, hidePopUp}) => {
     }, [file]);
 
     let onclick = (e) => {
-        e.preventDefault();
         if(e.target === e.currentTarget) {
             hidePopUp(true)
         }
     };
 
-    return (<div className={style.blurryBackground} onClick={onclick} ref={ref}>
+
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+        try {
+            console.log("submit");
+            let data = new FormData()
+            data.append('file', file, file.name);
+            data.append('pictureName', e.target.pictureName.value);
+            const response = await fetch(host + "/pictures/" + ctx.userName, {
+                method: "POST",
+                credentials: 'include', // include, *same-origin, omit
+                headers: {
+                    'Authorization': 'Bearer ' + ctx.token
+                },
+                body: data,
+            });
+            const result = await response.json();
+            console.log("Success:", result);
+        } catch (error) {
+            console.error("Error:", error);
+        }
+    };
+
+    return (<div className={style.blurryBackground} onClick={onclick}>
         <div className={style.popup}>
             <div className="relative">
                 <CancelButton onclick={hidePopUp}/>
             </div>
-            <form className="flex flex-grow flex-col space-y-1 w-96 px-10 pt-10 pb-10 min-h-[25rem]" onSubmit={onSubmit} method={method} encType="multipart/form-data">
+            <form className="flex flex-grow flex-col space-y-1 w-96 px-10 pt-10 pb-10 min-h-[25rem]" onSubmit={handleSubmit} method={method} encType="multipart/form-data">
                 <h2 className="font-extrabold">Create DailyArt</h2>
                 <label htmlFor="pictureName">Title</label>
                 <BasicForumInput type="text" id="pictureName" name="pictureName"/>
