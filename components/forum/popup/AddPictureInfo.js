@@ -73,11 +73,14 @@ const AddPictureInfo = ({onSubmit, method, hidePopUp}) => {
                     'Authorization': 'Bearer ' + ctx.token
                 },
                 body: data,
+            }).catch(e => {
+                e.preventDefault();
             });
             const result = await response.json();
             console.log("Success:", result);
         } catch (error) {
             console.error("Error:", error);
+
         }
     };
 
@@ -89,12 +92,17 @@ const AddPictureInfo = ({onSubmit, method, hidePopUp}) => {
             <form className="flex flex-grow flex-col space-y-1 w-96 px-10 pt-10 pb-10 min-h-[25rem]" onSubmit={handleSubmit} method={method} encType="multipart/form-data">
                 <h2 className="font-extrabold">Create DailyArt</h2>
                 <label htmlFor="pictureName">Title</label>
-                <BasicForumInput type="text" id="pictureName" name="pictureName"/>
-                <label htmlFor="file">Add Drawing</label>
-                <input id="file" type="file" onChange={handleFileChange} accept="image/*"/>
-                {fileDataURL ? <img src={fileDataURL}/> : <div className="flex flex-grow justify-center bg-slate-100">
-                    <Image src="/icons/palette-solid.svg" width={24} height={24}/>
-                </div>}
+                <BasicForumInput type="text" id="pictureName" name="pictureName" maxlength="15"/>
+                {fileDataURL ? <img src={fileDataURL}/> :
+                    <div className="flex flex-grow bg-slate-100 hover:bg-slate-200">
+                        <label htmlFor="file" className="flex-grow grid grid-cols-1 content-center text-center" name="file">
+                            <Image src="/icons/palette-solid.svg" width={24} height={24}/>
+                            <p>Import File</p>
+                            <div className="content-center text-center h-1">
+                                <input id="file" type="file" onChange={handleFileChange} accept="image/*" hidden={false} name="file" className="opacity-0 h-1 w-1" required={true}/>
+                            </div>
+                        </label>
+                    </div>}
                 <SubmitButton text="Add Picture"/>
             </form>
         </div>
