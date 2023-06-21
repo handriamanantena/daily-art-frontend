@@ -5,7 +5,6 @@ import style from "../../../styles/AddPictureInfo.module.css";
 import React from "react";
 import Image from "next/dist/client/image";
 import {CancelButton} from "../../button/cancelButton";
-import jwt_decode from "jwt-decode";
 import AuthContext from "../../../common/context/auth-context";
 
 const AddPictureInfo = ({onSubmit, method, hidePopUp}) => {
@@ -92,7 +91,7 @@ const AddPictureInfo = ({onSubmit, method, hidePopUp}) => {
             <form className="flex flex-grow flex-col space-y-1 w-96 px-10 pt-10 pb-10 min-h-[25rem]" onSubmit={handleSubmit} method={method} encType="multipart/form-data">
                 <h2 className="font-extrabold">Create DailyArt</h2>
                 <label htmlFor="pictureName">Title</label>
-                <BasicForumInput type="text" id="pictureName" name="pictureName" maxlength="15"/>
+                <BasicForumInput type="text" id="pictureName" name="pictureName" maxLength="15"/>
                 {fileDataURL ? <img src={fileDataURL}/> :
                     <div className="flex flex-grow bg-slate-100 hover:bg-slate-200">
                         <label htmlFor="file" className="flex-grow grid grid-cols-1 content-center text-center" name="file">
@@ -107,6 +106,6 @@ const AddPictureInfo = ({onSubmit, method, hidePopUp}) => {
             </form>
         </div>
         </div>);
-}
+};
 
 export {AddPictureInfo}
