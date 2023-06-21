@@ -13,7 +13,7 @@ function Username({ username, pictures }) {
     let [newPictures, setPictures] = useState(pictures)
     let [isLoading, setIsLoading] = useState(false)
     let [lastElement, setLastElement] = useState(null);
-    let [pageIndex, setPageIndex] = useState(pictures[pictures.length - 1]._id);
+    let [pageIndex, setPageIndex] = useState(pictures[pictures.length - 1]?._id);
 
     let getPictures = async () => {
         setIsLoading(true)

@@ -92,7 +92,7 @@ const AddPictureInfo = ({onSubmit, method, hidePopUp}) => {
                 <h2 className="font-extrabold">Create DailyArt</h2>
                 <label htmlFor="pictureName">Title</label>
                 <BasicForumInput type="text" id="pictureName" name="pictureName" maxLength="15"/>
-                {fileDataURL ? <img src={fileDataURL}/> :
+                {fileDataURL ? <Image src={fileDataURL}/> :
                     <div className="flex flex-grow bg-slate-100 hover:bg-slate-200">
                         <label htmlFor="file" className="flex-grow grid grid-cols-1 content-center text-center" name="file">
                             <Image src="/icons/palette-solid.svg" width={24} height={24}/>

@@ -8,7 +8,7 @@ function Join() {
         <Head>
             <title>Join</title>
         </Head>
-        <div class="flex items-center h-screen justify-center align-middle bg-gradient-to-r from-cyan-500 to-blue-500">
+        <div className="flex items-center h-screen justify-center align-middle bg-gradient-to-r from-cyan-500 to-blue-500">
             <Welcome welcomePage="join" welcomeTitle="Join Daily Art"></Welcome>
         </div>
     </Fragment>);
