@@ -15,7 +15,7 @@ function ShowPictures({picture}) {
                     <Image className={gallery.imageFrame}
                            width={picture.width}
                            height={picture.height}
-                           src={url}
+                           src="https://images.unsplash.com/photo-1681956961352-0cc3c7b3b978?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=774&q=80"
                            quality={100}
                            loader={cloudflareLoader}/>
                     <p className={gallery.pictureName}>{picture._id}</p>
