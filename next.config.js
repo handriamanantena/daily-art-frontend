@@ -9,7 +9,8 @@ module.exports = {
     },
     images: {
         //domains: ['192.168.0.108', 'localhost']
-        domains: ['3.128.34.57', 'localhost']
+        domains: ['3.128.34.57', 'localhost'],
+        unoptimized: true
     },
     async redirects() {
         return [
