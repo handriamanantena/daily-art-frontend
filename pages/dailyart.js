@@ -36,7 +36,7 @@ function DailyArt({ pictures }) {
 }
 
 
-export async function getServerSideProps() {
+export async function getStaticProps() {
    const pictures =  await getPicturesByPage(null, pageSize, null);
    return {
       props: {

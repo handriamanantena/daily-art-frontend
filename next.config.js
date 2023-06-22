@@ -10,7 +10,8 @@ module.exports = {
     images: {
         //domains: ['192.168.0.108', 'localhost']
         domains: ['3.128.34.57', 'localhost'],
-        unoptimized: true
+        loader: 'custom',
+        loaderFile: './common/image/imageLoader.js',
     },
     async redirects() {
         return [

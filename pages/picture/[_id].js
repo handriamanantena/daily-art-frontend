@@ -1,13 +1,12 @@
 import React, {useEffect, useRef, useState} from "react";
 import {getAllPictures, getPicture} from "../../common/GetPictures";
-import DailyArt from "../dailyart";
-import * as path from "path";
 import Image from "next/image";
 import Gallery from "../../components/Gallery";
 import {getNextGallery, getPicturesByArtistUserName, getPicturesByPage} from "../../common/api/pictures";
 import {PictureInfo} from "../../components/PictureInfo"
 import {BasicLayout} from "../../components/common/BasicLayout";
 import {InfiniteScroll} from "../../components/InfiniteScroll";
+import cloudflareLoader from "../../common/image/imageLoader";
 
 let pageSize = 2;
 
@@ -43,7 +42,8 @@ function _Id({ picture, pictures, _id, foundPicture, initialIndex }) {
                             width={picture.width}
                             height={picture.height}
                             src={url}
-                            quality={100}/>
+                            quality={100}
+                            loader={cloudflareLoader}/>
                     </div>
                     <PictureInfo picture={picture}></PictureInfo>
                 </div>
