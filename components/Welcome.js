@@ -115,6 +115,5 @@ export default function Welcome(props) {
         return (<ForumBackground>
                 <p>{errMsg}</p>
                 <ArtistCredentials {...additionalProps}/>
-                <LogInOptions/>
             </ForumBackground>);
 }
