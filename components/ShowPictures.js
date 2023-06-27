@@ -6,7 +6,7 @@ import Link from 'next/link'
 import cloudflareLoader from "../common/image/imageLoader";
 
 function ShowPictures({picture}) {
-    let host = process.env.REACT_APP_PICTURES_API_HOST + process.env.REACT_APP_PICTURES_API_PORT + '/file/'
+    let host = process.env.REACT_APP_CDN_IMAGES;
     let url = encodeURI(host + picture.url)
     return (
            <Link href="/picture/[picture]" as={`/picture/${picture._id}`} loader={cloudflareLoader}>
@@ -15,7 +15,7 @@ function ShowPictures({picture}) {
                     <Image className={gallery.imageFrame}
                            width={picture.width}
                            height={picture.height}
-                           src="https://images.unsplash.com/photo-1681956961352-0cc3c7b3b978?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=774&q=80"
+                           src={url}
                            quality={100}
                            loader={cloudflareLoader}/>
                     <p className={gallery.pictureName}>{picture._id}</p>
