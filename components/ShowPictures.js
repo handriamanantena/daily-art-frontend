@@ -15,7 +15,7 @@ function ShowPictures({picture}) {
                     <Image className={gallery.imageFrame}
                            width={picture.width}
                            height={picture.height}
-                           src={"/" + picture.url}
+                           src={picture.url}
                            quality={100}
                            loader={cloudflareLoader}/>
                     <p className={gallery.pictureName}>{picture._id}</p>

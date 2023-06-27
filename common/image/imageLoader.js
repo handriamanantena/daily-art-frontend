@@ -3,5 +3,5 @@ const normalizeSrc = src => {
 };
 
 export default function cloudflareLoader ({ src, width, quality }) {
-    return '';
+    return `/${normalizeSrc(src)}`;
 };
