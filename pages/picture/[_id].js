@@ -11,7 +11,7 @@ let pageSize = 2;
 
 function _Id({ picture, pictures, _id, foundPicture, initialIndex }) {
 
-    let host = process.env.REACT_APP_PICTURES_API_HOST + process.env.REACT_APP_PICTURES_API_PORT + '/file/'
+    let host = process.env.REACT_APP_CDN_IMAGES;
     let url = encodeURI(host + picture.url)
 
     let [newPictures, setPictures] = useState(pictures)
