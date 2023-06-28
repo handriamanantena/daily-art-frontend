@@ -17,7 +17,7 @@ function ShowPictures({picture}) {
                            src={url}
                            quality={100}
                            unoptimized/>
-                    <p className={gallery.pictureName}>{picture._id}</p>
+                    <p className={gallery.pictureName}>{picture.pictureName}</p>
                 </a>
             </div>
            </Link>);
