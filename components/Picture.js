@@ -2,7 +2,6 @@ import React, {useRef, useState} from "react";
 import {CSSTransition} from "react-transition-group";
 import gallery from "../styles/Gallery.module.scss";
 import Image from "next/image";
-import cloudflareLoader from "../common/image/imageLoader";
 
 
 function ShowPictures({picture}) {
@@ -40,7 +39,7 @@ function ShowPictures({picture}) {
                            src={url}
                            key={picture.id}
                            quality={100}
-                           loader={cloudflareLoader}/>
+                           unoptimized/>
                     <p className={gallery.pictureName}>{picture.pictureName}</p>
                 </a>
             </div>

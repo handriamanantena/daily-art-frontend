@@ -6,7 +6,6 @@ import {getNextGallery, getPicturesByArtistUserName, getPicturesByPage} from "..
 import {PictureInfo} from "../../components/PictureInfo"
 import {BasicLayout} from "../../components/common/BasicLayout";
 import {InfiniteScroll} from "../../components/InfiniteScroll";
-import cloudflareLoader from "../../common/image/imageLoader";
 
 let pageSize = 2;
 
@@ -43,7 +42,7 @@ function _Id({ picture, pictures, _id, foundPicture, initialIndex }) {
                             height={picture.height}
                             src={url}
                             quality={100}
-                            loader={cloudflareLoader}/>
+                            unoptimized/>
                     </div>
                     <PictureInfo picture={picture}></PictureInfo>
                 </div>

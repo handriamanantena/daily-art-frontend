@@ -6,7 +6,6 @@ import React from "react";
 import Image from "next/dist/client/image";
 import {CancelButton} from "../../button/cancelButton";
 import AuthContext from "../../../common/context/auth-context";
-import cloudflareLoader from "../../../common/image/imageLoader";
 
 const AddPictureInfo = ({onSubmit, method, hidePopUp}) => {
 
@@ -93,10 +92,10 @@ const AddPictureInfo = ({onSubmit, method, hidePopUp}) => {
                 <h2 className="font-extrabold">Create DailyArt</h2>
                 <label htmlFor="pictureName">Title</label>
                 <BasicForumInput type="text" id="pictureName" name="pictureName" maxLength="15"/>
-                {fileDataURL ? <Image src={fileDataURL} loader={cloudflareLoader}/> :
+                {fileDataURL ? <Image src={fileDataURL} unoptimized/> :
                     <div className="flex flex-grow bg-slate-100 hover:bg-slate-200">
                         <label htmlFor="file" className="flex-grow grid grid-cols-1 content-center text-center" name="file">
-                            <Image src="/icons/palette-solid.svg" width={24} height={24} loader={cloudflareLoader}/>
+                            <Image src="/icons/palette-solid.svg" width={24} height={24} unoptimized/>
                             <p>Import File</p>
                             <div className="content-center text-center h-1">
                                 <input id="file" type="file" onChange={handleFileChange} accept="image/*" hidden={false} name="file" className="opacity-0 h-1 w-1" required={true}/>

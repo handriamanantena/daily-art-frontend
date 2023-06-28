@@ -3,7 +3,6 @@ import Image from "next/image";
 import {NavigationImageLink} from "../button/NavigationImageLink";
 import AuthContext from "../../common/context/auth-context";
 import {useRouter} from "next/router";
-import cloudflareLoader from "../../common/image/imageLoader";
 
 
 export function NavigationBar() {
@@ -22,7 +21,7 @@ export function NavigationBar() {
 
     return (<header className="flex pl-5 items-center">
         <button className="flex-none pt-2">
-            <Image src="/icons/bars-solid.svg" width={24} height={24} loader={cloudflareLoader}/>
+            <Image src="/icons/bars-solid.svg" width={24} height={24} unoptimized/>
         </button>
         <NavigationImageLink path="/" imagePath="/icons/pen-to-square-regular.svg" text="Daily Art"/>
         <div className="bg-slate-600 w-px h-5"/>
