@@ -6,11 +6,12 @@ import React from "react";
 import Image from "next/dist/client/image";
 import {CancelButton} from "../../button/cancelButton";
 import AuthContext from "../../../common/context/auth-context";
+import {uploadImage} from "../../../common/image/UploadImage";
+import {uploadImageToCloudflare} from "../../../common/api/cloudflare/workers";
 
 const AddPictureInfo = ({onSubmit, method, hidePopUp}) => {
 
     const ctx = useContext(AuthContext);
-    const host = process.env.REACT_APP_PICTURES_API_HOST + process.env.REACT_APP_PICTURES_API_PORT;
     const [file, setFile] = useState("");
     const [fileDataURL, setFileDataURL] = useState("");
 
@@ -62,10 +63,11 @@ const AddPictureInfo = ({onSubmit, method, hidePopUp}) => {
         e.preventDefault();
         try {
             console.log("submit");
-            let data = new FormData()
+            let data = new FormData();
             data.append('file', file, file.name);
             data.append('pictureName', e.target.pictureName.value);
-            const response = await fetch(host + "/pictures/" + ctx.userName, {
+            let response = await uploadImage(ctx.userName, e.target.pictureName.value, ctx.token, file, uploadImageToCloudflare);
+            /*const response = await fetch(host + "/pictures/" + ctx.userName, {
                 method: "POST",
                 credentials: 'include', // include, *same-origin, omit
                 headers: {
@@ -76,7 +78,9 @@ const AddPictureInfo = ({onSubmit, method, hidePopUp}) => {
                 e.preventDefault();
             });
             const result = await response.json();
-            console.log("Success:", result);
+            console.log("Success:", result);*/
+            console.log(response);
+
         } catch (error) {
             console.error("Error:", error);
 
@@ -92,7 +96,7 @@ const AddPictureInfo = ({onSubmit, method, hidePopUp}) => {
                 <h2 className="font-extrabold">Create DailyArt</h2>
                 <label htmlFor="pictureName">Title</label>
                 <BasicForumInput type="text" id="pictureName" name="pictureName" maxLength="15"/>
-                {fileDataURL ? <Image src={fileDataURL} unoptimized/> :
+                {fileDataURL ? <img src={fileDataURL} unoptimized/> :
                     <div className="flex flex-grow bg-slate-100 hover:bg-slate-200">
                         <label htmlFor="file" className="flex-grow grid grid-cols-1 content-center text-center" name="file">
                             <Image src="/icons/palette-solid.svg" width={24} height={24} unoptimized/>
