@@ -38,7 +38,7 @@ const AddPictureInfo = ({onSubmit, method, hidePopUp}) => {
             fileReader.onload = (e) => {
                 const { result } = e.target;
                 if (result && !isCancel) {
-                    setFileDataURL(result.name)
+                    setFileDataURL(result)
                 }
             };
             fileReader.readAsDataURL(file);
@@ -96,7 +96,7 @@ const AddPictureInfo = ({onSubmit, method, hidePopUp}) => {
                 <h2 className="font-extrabold">Create DailyArt</h2>
                 <label htmlFor="pictureName">Title</label>
                 <BasicForumInput type="text" id="pictureName" name="pictureName" maxLength="15"/>
-                {fileDataURL ? <Image src={fileDataURL} unoptimized/> :
+                {fileDataURL ? <Image src={fileDataURL} unoptimized width={1035} height={1228} className="mt-10"/> :
                     <div className="flex flex-grow bg-slate-100 hover:bg-slate-200">
                         <label htmlFor="file" className="flex-grow grid grid-cols-1 content-center text-center" name="file">
                             <Image src="/icons/palette-solid.svg" width={24} height={24} unoptimized/>
