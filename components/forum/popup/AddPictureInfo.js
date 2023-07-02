@@ -63,22 +63,23 @@ const AddPictureInfo = ({onSubmit, method, hidePopUp}) => {
         e.preventDefault();
         try {
             console.log("submit");
-            let data = new FormData();
-            data.append('file', file, file.name);
-            data.append('pictureName', e.target.pictureName.value);
-            let response = await uploadImage(ctx.userName, e.target.pictureName.value, ctx.token, file, uploadImageToCloudflare);
-            /*const response = await fetch(host + "/pictures/" + ctx.userName, {
-                method: "POST",
-                credentials: 'include', // include, *same-origin, omit
-                headers: {
-                    'Authorization': 'Bearer ' + ctx.token
-                },
-                body: data,
-            }).catch(e => {
-                e.preventDefault();
-            });
-            const result = await response.json();
-            console.log("Success:", result);*/
+            let signedUrl = uploadImageToCloudflare(ctx.userName, e.target.pictureName.value, ctx.token);
+            let response = fetch(signedUrl, {
+                    method: "PUT",
+                    body: file,
+                    headers: {
+                        "Content-Type": file.type
+                    }
+                });
+            if(response.status != 200) {
+                // TODO need to delete picture in backend
+                console.error("unable to upload picture");
+                return new Response(response, 500);
+            }
+            else {
+                console.log("added picture");
+                return response;
+            }
             console.log(response);
 
         } catch (error) {

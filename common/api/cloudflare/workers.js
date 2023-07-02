@@ -1,5 +1,5 @@
 
-export const uploadImageToCloudflare = async (userName, pictureName, token, file) => {
+export const uploadImageToCloudflare = async (userName, pictureName, token) => {
     const cloudflareWorkerUrl = process.env.REACT_APP_UPLOAD_PICTURE_API;
     let responseSignedUrl = await fetch(cloudflareWorkerUrl + `picture?userName=${userName}&pictureName=${pictureName}`, {
         method: 'GET',
@@ -12,19 +12,7 @@ export const uploadImageToCloudflare = async (userName, pictureName, token, file
         return null;
     }
     else {
-        let data = new FormData();
-        data.append('file', file, file.name);
-        let response = fetch(responseSignedUrl.text(), {
-            method: "PUT",
-            body: data,
-        });
-        if(response.status != 200) {
-            // TODO need to delete picture in backend
-            return null;
-        }
-        else {
-            return response;
-        }
+        return await responseSignedUrl.text();
     }
 
 };
