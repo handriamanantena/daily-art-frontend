@@ -64,7 +64,7 @@ const AddPictureInfo = ({onSubmit, method, hidePopUp}) => {
         try {
             console.log("submit");
             let signedUrl = await uploadImageToCloudflare(ctx.userName, e.target.pictureName.value, ctx.token);
-            let response = fetch(signedUrl, {
+            let response = await fetch(signedUrl, {
                     method: "PUT",
                     body: file,
                     headers: {
