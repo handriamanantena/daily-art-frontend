@@ -1,10 +1,9 @@
 import React, {useRef, useState} from "react";
-import {CSSTransition} from "react-transition-group";
 import gallery from "../styles/Gallery.module.scss";
 import Image from "next/image";
 import Link from 'next/link'
 
-function ShowPictures({picture}) {
+function LinkedPicture({picture}) {
     let host = process.env.REACT_APP_CDN_IMAGES;
     let url = encodeURI(host + picture.url)
     return (
@@ -23,4 +22,4 @@ function ShowPictures({picture}) {
            </Link>);
 }
 
-export { ShowPictures }
+export { LinkedPicture }
