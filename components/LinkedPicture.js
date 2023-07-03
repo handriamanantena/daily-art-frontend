@@ -2,6 +2,7 @@ import React, {useRef, useState} from "react";
 import gallery from "../styles/Gallery.module.scss";
 import Image from "next/image";
 import Link from 'next/link'
+import {ViewPicture} from "./ViewPicture";
 
 function LinkedPicture({picture}) {
     let host = process.env.REACT_APP_CDN_IMAGES;
@@ -10,13 +11,7 @@ function LinkedPicture({picture}) {
            <Link href="/picture/[picture]" as={`/picture/${picture._id}`}>
             <div className={gallery.card}>
                 <a>
-                    <Image className={gallery.imageFrame}
-                           width={picture.width}
-                           height={picture.height}
-                           src={url}
-                           quality={100}
-                           unoptimized/>
-                    <p className={gallery.pictureName}>{picture.pictureName}</p>
+                    <ViewPicture url = {url}/>
                 </a>
             </div>
            </Link>);
