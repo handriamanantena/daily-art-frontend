@@ -36,14 +36,12 @@ function _Id({ picture, pictures, _id, foundPicture, initialIndex }) {
         <BasicLayout>
             <div>
                 <div>
-                    <div className="flex justify-center">
-                        <Image
-                            width={picture.width}
-                            height={picture.height}
-                            src={url}
-                            quality={100}
-                            unoptimized/>
-                    </div>
+                        <div className="relative h-[1000px]">
+                            <Image className="object-contain rounded-lg h-[1000px]"
+                                   src={url}
+                                   layout="fill"
+                                   unoptimized/>
+                        </div>
                     <PictureInfo picture={picture}></PictureInfo>
                 </div>
                 <InfiniteScroll getObjects = {getPictures} maxPage = {10} lastElement={lastElement}>
