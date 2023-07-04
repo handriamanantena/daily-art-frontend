@@ -12,16 +12,10 @@ $pictureGrowScale: 5;
 
 .card {
     @apply ml-1 mr-1 mt-1 z-50;
-    @extend .hoverBlueRed;
-    color: inherit;
     text-decoration: none;
     /*border: 1px solid #eaeaea;*/
     border-radius: 10px;
     /*transition: color 0.15s ease, border-color 0.15s ease;*/
-}
-
-.hoverBlueRed {
-    @apply transition duration-500 bg-blue-600 hover:bg-red-600 transform hover:-translate-y-1 hover:scale-105;
 }
 
 
