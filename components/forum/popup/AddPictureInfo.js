@@ -81,7 +81,7 @@ const AddPictureInfo = ({hidePopUp}) => {
 
     let onclick = (e) => {
         if(e.target === e.currentTarget) {
-            hidePopUp(true)
+            hidePopUp();
         }
     };
 

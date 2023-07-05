@@ -1,19 +1,13 @@
 import {Fragment, useContext, useRef, useState} from "react";
-import AuthContext from "../../common/context/auth-context";
-import jwt_decode from "jwt-decode";
 import {AddPictureInfo} from "../forum/popup/AddPictureInfo";
 
 
-export const AddPictureButton = ({isPopUpHidden, children, hidePopUp}) => {
-    const ctx = useContext(AuthContext);
+export const AddPictureButton = ({isShowPopup, children, hidePopUp}) => {
 
     return (
         <Fragment>
-        {true ?
-            <Fragment>
-                {children}
-                { isPopUpHidden ? <Fragment></Fragment> : <AddPictureInfo hidePopUp={hidePopUp}/>}
-            </Fragment> : <Fragment></Fragment>}
+            {children}
+            { isShowPopup ? <AddPictureInfo hidePopUp={hidePopUp}/> : <Fragment></Fragment> }
         </Fragment>
     );
 };

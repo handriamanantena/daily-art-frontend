@@ -8,6 +8,7 @@ import {InfiniteScroll} from "../../components/InfiniteScroll"
 import {AddPictureButton} from "../../components/button/addpictureButton";
 import AuthContext from "../../common/context/auth-context";
 import {StyledAddPicture} from "../../components/button/StyledAddPicture";
+import {useShowPopUp} from "../../common/hooks/useShowPopUp";
 
 let pageSize = 2;
 
@@ -18,6 +19,7 @@ function Username({ username, pictures }) {
     let [isLoading, setIsLoading] = useState(false)
     let [lastElement, setLastElement] = useState(null);
     let [pageIndex, setPageIndex] = useState(pictures[pictures.length - 1]?._id);
+    let [isShowPopup, hidePopUp , showPopUp] = useShowPopUp();
 
     let getPictures = async () => {
         setIsLoading(true)
@@ -28,16 +30,14 @@ function Username({ username, pictures }) {
             setPictures(pictures)
             setIsLoading(false)
         }
-    }
+    };
 
-
-    const [isPopUpHidden, hidePopUp] = useState(true);
 
    return (<BasicLayout>
             <h1 className={ dailyArt.simpleArtTitle }>Simple Art</h1>
                 <InfiniteScroll getObjects = {getPictures} maxPage = {10} lastElement = {lastElement}>
                     <Gallery pictures = {newPictures} setLastElement = {setLastElement}>
-                        <AddPictureButton isPopUpHidden={isPopUpHidden} hidePopUp={hidePopUp}><StyledAddPicture hidePopUp={hidePopUp} text="+"/></AddPictureButton>
+                        {ctx.userName == username ? <AddPictureButton isShowPopup={isShowPopup} hidePopUp={hidePopUp}><StyledAddPicture showPopUp={showPopUp} text="+"/></AddPictureButton> : <Fragment></Fragment>}
                     </Gallery>
                 </InfiniteScroll>
          </BasicLayout>);
