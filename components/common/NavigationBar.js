@@ -25,8 +25,12 @@ export function NavigationBar() {
         </button>
         <NavigationImageLink path="/" imagePath="/icons/pen-to-square-regular.svg" text="Daily Art"/>
         <div className="bg-slate-600 w-px h-5"/>
-        {ctx.isLoggedIn && <NavigationImageLink path="/" text="Today's Art"/>}
-        <div className="bg-slate-600 w-px h-5"/>
+        {ctx.isLoggedIn && <NavigationImageLink path="/dailyart" text="Today's Art"/>}
+        {ctx.isLoggedIn && <div className="bg-slate-600 w-px h-5"/>}
+        {ctx.isLoggedIn && <NavigationImageLink path={`/dailyart/${ctx.userName}`} text="My Art"/>}
+        {ctx.isLoggedIn && <div className="bg-slate-600 w-px h-5"/>}
+        {ctx.isLoggedIn && <NavigationImageLink path={`/dailyart/${ctx.userName}`} text="Add a Picture"/>}
+        {ctx.isLoggedIn && <div className="bg-slate-600 w-px h-5"/>}
         {ctx.isLoggedIn && <div className="flex ml-auto">
             <button onClick={logout}>
                 Log out

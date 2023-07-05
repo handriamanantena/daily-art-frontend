@@ -1,15 +1,19 @@
 import Gallery from "../../components/Gallery";
-import React, {useState, useRef} from 'react';
+import React, {useState, useRef, useContext, Fragment} from 'react';
 import dailyArt from '../../styles/DailyArt.module.css';
 import {BasicLayout} from "../../components/common/BasicLayout";
 import {getArtistUserNames} from "../../common/api/artists";
 import {getPicturesByArtistUserName} from "../../common/api/pictures";
 import {InfiniteScroll} from "../../components/InfiniteScroll"
 import {AddPictureButton} from "../../components/button/addpictureButton";
+import AuthContext from "../../common/context/auth-context";
+import {StyledAddPicture} from "../../components/button/StyledAddPicture";
 
 let pageSize = 2;
 
 function Username({ username, pictures }) {
+    const ctx = useContext(AuthContext);
+
     let [newPictures, setPictures] = useState(pictures)
     let [isLoading, setIsLoading] = useState(false)
     let [lastElement, setLastElement] = useState(null);
@@ -26,11 +30,14 @@ function Username({ username, pictures }) {
         }
     }
 
+
+    const [isPopUpHidden, hidePopUp] = useState(true);
+
    return (<BasicLayout>
             <h1 className={ dailyArt.simpleArtTitle }>Simple Art</h1>
                 <InfiniteScroll getObjects = {getPictures} maxPage = {10} lastElement = {lastElement}>
                     <Gallery pictures = {newPictures} setLastElement = {setLastElement}>
-                        <AddPictureButton/>
+                        <AddPictureButton isPopUpHidden={isPopUpHidden} hidePopUp={hidePopUp}><StyledAddPicture hidePopUp={hidePopUp} text="+"/></AddPictureButton>
                     </Gallery>
                 </InfiniteScroll>
          </BasicLayout>);

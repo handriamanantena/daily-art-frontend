@@ -7,16 +7,21 @@ import {default as NextImage} from "next/future/image";
 import {CancelButton} from "../../button/cancelButton";
 import AuthContext from "../../../common/context/auth-context";
 import {uploadImageToCloudflare} from "../../../common/api/cloudflare/workers";
+import {useRouter} from "next/router";
 
-const AddPictureInfo = ({onSubmit, method, hidePopUp}) => {
+const AddPictureInfo = ({hidePopUp}) => {
 
     const ctx = useContext(AuthContext);
     const [file, setFile] = useState("");
     const [fileDataURL, setFileDataURL] = useState("");
     const [imageDimensions, setImageDimensions] = useState({});
+    const router = useRouter();
 
 
     useEffect(() => {
+        if(!ctx.isLoggedIn) {
+            router.push("/join");
+        }
         document.body.style.overflow = "hidden";
         return () => (document.body.style.overflow = "scroll");
     });
@@ -115,7 +120,7 @@ const AddPictureInfo = ({onSubmit, method, hidePopUp}) => {
             <div className="relative">
                 <CancelButton onclick={hidePopUp}/>
             </div>
-            <form className="flex flex-grow flex-col space-y-1 w-96 px-10 pt-10 pb-10 min-h-[25rem]" onSubmit={handleSubmit} method={method} encType="multipart/form-data">
+            <form className="flex flex-grow flex-col space-y-1 w-96 px-10 pt-10 pb-10 min-h-[25rem]" onSubmit={handleSubmit} encType="multipart/form-data">
                 <h2 className="font-extrabold">Create DailyArt</h2>
                 <label htmlFor="pictureName">Title</label>
                 <BasicForumInput type="text" id="pictureName" name="pictureName" maxLength="15"/>
@@ -125,8 +130,10 @@ const AddPictureInfo = ({onSubmit, method, hidePopUp}) => {
                                 <NextImage src={fileDataURL} width={1035} height={1228} className="pt-1"/>
                         ) :
                     <div className="flex flex-grow bg-slate-100 hover:bg-slate-200">
-                        <label htmlFor="file" className="flex-grow grid grid-cols-1 content-center text-center" name="file">
+                        <label htmlFor="file" className="flex-grow grid grid-cols-1 content-center text-center justify-center" name="file">
+                            <div className="pl-[45%]">
                             <NextImage src="/icons/palette-solid.svg" width={24} height={24} unoptimized/>
+                            </div>
                             <p>Import File</p>
                             <div className="content-center text-center h-1">
                                 <input id="file" type="file" onChange={handleFileChange} accept="image/*" hidden={false} name="file" className="opacity-0 h-1 w-1" required={true}/>
