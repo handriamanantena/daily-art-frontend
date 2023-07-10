@@ -1,3 +1,4 @@
+import 'dotenv/config';
 import '../styles/globals.css'
 import {AuthProvider} from "../common/context/auth-context";
 
