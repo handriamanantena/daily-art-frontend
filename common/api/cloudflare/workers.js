@@ -1,6 +1,6 @@
 
 export const uploadImageToCloudflare = async (userName, pictureName, token) => {
-    const cloudflareWorkerUrl = process.env.REACT_APP_UPLOAD_PICTURE_API;
+    const cloudflareWorkerUrl = process.env.NEXT_PUBLIC_UPLOAD_PICTURE_API;
     let responseSignedUrl = await fetch(cloudflareWorkerUrl + `picture?userName=${userName}&pictureName=${pictureName}`, {
         method: 'GET',
         headers: {

@@ -48,7 +48,7 @@ export default function Welcome(props) {
         }
 
         // API endpoint where we send form data.
-        const endpoint = process.env.REACT_APP_PICTURES_API_HOST + process.env.REACT_APP_PICTURES_API_PORT + "/artist";
+        const endpoint = process.env.NEXT_PUBLIC_PICTURES_API_HOST + process.env.NEXT_PUBLIC_PICTURES_API_PORT + "/artist";
 
         try {
             const response = await axios.post(endpoint,

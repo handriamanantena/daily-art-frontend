@@ -1,11 +1,11 @@
 module.exports = {
     reactStrictMode: true,
     env: {
-        REACT_APP_PICTURES_API_HOST:'https://api.dailyirasuto.com',
-        REACT_APP_PICTURES_API_PORT:'',
+        NEXT_PUBLIC_PICTURES_API_HOST:'https://api.dailyirasuto.com',
+        NEXT_PUBLIC_PICTURES_API_PORT:'',
         REACT_API_PICTURES_API_IP: 'https://api.dailyirasuto.com',
-        REACT_APP_CDN_IMAGES: 'https://r2.dailyirasuto.com/',
-        REACT_APP_UPLOAD_PICTURE_API: 'https://upload.dailyirasuto.com/'
+        NEXT_PUBLIC_CDN_IMAGES: 'https://r2.dailyirasuto.com/',
+        NEXT_PUBLIC_UPLOAD_PICTURE_API: 'https://upload.dailyirasuto.com/'
     },
     images: {
         unoptimized: true,

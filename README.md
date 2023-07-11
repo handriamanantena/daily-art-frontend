@@ -19,9 +19,9 @@ You will need to rename ```next.config-template.js``` to ```next.config.js```.
 
 Step 2. 
 
-```REACT_APP_PICTURES_API_HOST```: You will need to set this value to the host of the backend. For example 'http://localhost'
+```NEXT_PUBLIC_PICTURES_API_HOST```: You will need to set this value to the host of the backend. For example 'http://localhost'
 
-```REACT_APP_PICTURES_API_PORT```: You will need to set this value to the port of the backend. For example ':3001'
+```NEXT_PUBLIC_PICTURES_API_PORT```: You will need to set this value to the port of the backend. For example ':3001'
 
 ```GOOGLE_CLIENT_ID```: If you want to enable google login, you will need to set up a google client id on the google cloud platform. It's a lot of over head so leave blank. 
 https://developers.google.com/identity/oauth2/web/guides/get-google-api-clientid
