@@ -1,9 +1,11 @@
 import Gallery from "../components/Gallery";
-import React, {useEffect, useState, useRef} from 'react';
+import React, {useEffect, useState, useRef, Fragment} from 'react';
 import dailyArt from '../styles/DailyArt.module.css'
 import {getNextGallery, getPicturesByArtistUserName, getPicturesByPage} from "../common/api/pictures";
 import {BasicLayout} from "../components/common/BasicLayout";
 import {InfiniteScroll} from "../components/InfiniteScroll";
+import Loading from "../components/loading/loading";
+import {unstable_scheduleCallback as delay} from "scheduler";
 
 let pageSize = 10;
 
@@ -21,8 +23,8 @@ function DailyArt({ pictures }) {
             setPageIndex(response[response.length-1]._id);
             pictures.push(...response);
             setPictures(pictures)
-            setIsLoading(false)
         }
+        setIsLoading(false);
     }
 
    return (
@@ -30,6 +32,7 @@ function DailyArt({ pictures }) {
           <h1 className={dailyArt.simpleArtTitle}>Simple Art</h1>
           <InfiniteScroll getObjects = {getPictures} maxPage = {10} lastElement={lastElement}>
              <Gallery pictures = {newPictures} setLastElement = {setLastElement}/>
+              { isLoading ? <Loading/> : <Fragment></Fragment>}
           </InfiniteScroll>
        </BasicLayout>);
 
