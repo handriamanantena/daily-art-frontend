@@ -4,7 +4,7 @@ import dailyArt from '../styles/DailyArt.module.css'
 import {getPicturesByPage, getPicturesByPageClientSide} from "../common/api/pictures";
 import {BasicLayout} from "../components/common/BasicLayout";
 import {InfiniteScroll} from "../components/InfiniteScroll";
-import Loading from "../components/loading/loading";
+import Loading from "../components/loading/Loading";
 
 let pageSize = 2;
 
