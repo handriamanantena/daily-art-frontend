@@ -35,6 +35,15 @@ async function getPicturesByPage(dateIndex, pageSize, pageIndex) {
     return await res.json()
 }
 
+/*function getPicturesByPageClientSide() {
+    console.log("getPicturesByPageClientSide");
+
+    const fetcher = url => fetch(url).then(res => res.json())
+
+
+    return fetcher;
+}
+*/
 async function getPicturesByArtist(artist, pageIndex, pageSize) {
     const host = process.env.NEXT_PUBLIC_PICTURES_API_HOST + process.env.NEXT_PUBLIC_PICTURES_API_PORT
     const res = await fetch(host + "/pictures?artist=" + artist);
@@ -56,4 +65,4 @@ async function getPicturesByArtistUserName(userName, pageSize, pageIndex) {
     return await res.json()
 }
 
-export {getNextGallery, getPictures, getPictureById, getPicturesByPage, getPicturesByArtist, getPicturesByArtistUserName}
+export {getNextGallery, getPictures, getPictureById, getPicturesByPage, getPicturesByArtistUserName}
