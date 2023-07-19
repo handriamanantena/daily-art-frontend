@@ -12,7 +12,7 @@ function GoogleButton (){
     useEffect(() => {
         /* global google */
         google.accounts.id.initialize({
-            client_id: process.env.GOOGLE_CLIENT_ID,
+            client_id: process.env.NEXT_PUBLIC_GOOGLE_CLIENT_ID,
             callback: handleCredentialResponse
         });
         google.accounts.id.renderButton(
@@ -30,8 +30,8 @@ function GoogleButton (){
         console.log("Encoded JWT ID token: " + response.credential);
         console.log(jwt_decode(response.credential))
         let loginResponse = await googleLogin(response.credential)
-        authCtx.login(response.credential);
-        console.log("jwt from backend {0}", loginResponse)
+        authCtx.login(loginResponse.accessToken);
+        console.log("jwt from backend " + JSON.stringify(loginResponse));
         if(loginResponse.artist.userName) {
             await router.push("/dailyart");
         }

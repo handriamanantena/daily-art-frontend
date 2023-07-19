@@ -33,7 +33,7 @@ export const AuthProvider = (props) => {
         setUserName('');
         setEmail('');
         console.log("logout");
-        const host = process.env.REACT_APP_PICTURES_API_HOST + process.env.REACT_APP_PICTURES_API_PORT + "/logout";
+        const host = process.env.NEXT_PUBLIC_PICTURES_API_HOST + process.env.NEXT_PUBLIC_PICTURES_API_PORT + "/logout";
         const res = await fetch(host, {
             method: 'get',
             credentials: 'include'

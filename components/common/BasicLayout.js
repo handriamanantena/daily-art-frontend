@@ -12,7 +12,7 @@ export function BasicLayout({children}) {
     useEffect(async () => {
         console.log("testing login")
         // API endpoint where we send form data.
-        let endpoint = process.env.REACT_APP_PICTURES_API_HOST + process.env.REACT_APP_PICTURES_API_PORT + "/refresh";
+        let endpoint = process.env.NEXT_PUBLIC_PICTURES_API_HOST + process.env.NEXT_PUBLIC_PICTURES_API_PORT + "/refresh";
         if(ctx.token == undefined) { // get access token when browser is closed (no log out)
             console.log("refresh");
             try {
@@ -32,7 +32,7 @@ export function BasicLayout({children}) {
         }
         /*else { //TODO to delete not sure what this does. might be related to browser closing
             console.log("login test")
-            endpoint = process.env.REACT_APP_PICTURES_API_HOST + process.env.REACT_APP_PICTURES_API_PORT + "/jwt"
+            endpoint = process.env.NEXT_PUBLIC_PICTURES_API_HOST + process.env.NEXT_PUBLIC_PICTURES_API_PORT + "/jwt"
 
             try {
                 const response = await axiosPrivate.post(endpoint,

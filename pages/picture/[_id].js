@@ -6,13 +6,14 @@ import {getNextGallery, getPicturesByArtistUserName, getPicturesByPage} from "..
 import {PictureInfo} from "../../components/PictureInfo"
 import {BasicLayout} from "../../components/common/BasicLayout";
 import {InfiniteScroll} from "../../components/InfiniteScroll";
+import { useRouter } from 'next/router'
 
 let pageSize = 2;
 
 function _Id({ picture, pictures, _id, foundPicture, initialIndex }) {
 
-    let host = process.env.REACT_APP_CDN_IMAGES;
-    let url = encodeURI(host + picture.url)
+    let host = process.env.NEXT_PUBLIC_CDN_IMAGES;
+    let url = encodeURI(host + picture?.url)
 
     let [newPictures, setPictures] = useState(pictures)
     let [isLoading, setIsLoading] = useState(false)
@@ -30,6 +31,14 @@ function _Id({ picture, pictures, _id, foundPicture, initialIndex }) {
             setPictures(pictures)
             setIsLoading(false)
         }
+    }
+
+    const router = useRouter()
+
+    // If the page is not yet generated, this will be displayed
+    // initially until getStaticProps() finishes running
+    if (router.isFallback) {
+        return <div>Loading...</div>
     }
 
     return (
@@ -91,7 +100,7 @@ export async function getStaticPaths() {
     const paths = await setPicturesToParams()
     return {
         paths,
-        fallback: false
+        fallback: true
     }
 }
 

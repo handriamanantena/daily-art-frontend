@@ -3,19 +3,25 @@ import BasicForumInput from "../inputs/input";
 import SubmitButton from "../inputs/SubmitButton";
 import style from "../../../styles/AddPictureInfo.module.css";
 import React from "react";
-import Image from "next/dist/client/image";
+import {default as NextImage} from "next/future/image";
 import {CancelButton} from "../../button/cancelButton";
 import AuthContext from "../../../common/context/auth-context";
-import {uploadImage} from "../../../common/image/UploadImage";
 import {uploadImageToCloudflare} from "../../../common/api/cloudflare/workers";
+import {useRouter} from "next/router";
 
-const AddPictureInfo = ({onSubmit, method, hidePopUp}) => {
+const AddPictureInfo = ({hidePopUp}) => {
 
     const ctx = useContext(AuthContext);
     const [file, setFile] = useState("");
     const [fileDataURL, setFileDataURL] = useState("");
+    const [imageDimensions, setImageDimensions] = useState({});
+    const router = useRouter();
+
 
     useEffect(() => {
+        if(!ctx.isLoggedIn) {
+            router.push("/join");
+        }
         document.body.style.overflow = "hidden";
         return () => (document.body.style.overflow = "scroll");
     });
@@ -31,25 +37,18 @@ const AddPictureInfo = ({onSubmit, method, hidePopUp}) => {
     };
 
 
-    useEffect(() => {
+    useEffect(async () => {
         let fileReader, isCancel = false;
         if (file) {
             fileReader = new FileReader();
             fileReader.onload = (e) => {
                 const { result } = e.target;
                 if (result && !isCancel) {
-                    setFileDataURL(result)
+                    setFileDataURL(result);
+                    console.log(imageDimensions);
                 }
             };
             fileReader.readAsDataURL(file);
-            const image = new Image();
-            image.src = e.target.result;
-            image.onload = () => {
-                const {
-                    height,
-                    width
-                } = image;
-            }
         }
         return () => {
             isCancel = true;
@@ -60,9 +59,29 @@ const AddPictureInfo = ({onSubmit, method, hidePopUp}) => {
 
     }, [file]);
 
+    useEffect(() => {
+        const img = new Image(fileDataURL);
+        img.onload = () => {
+            let proportion = img.height;
+            console.log(img.height);
+            console.log(img.width);
+
+            setImageDimensions({
+                height: img.height,
+                width: img.width
+            });
+            console.log(img.height);
+        };
+        img.src = fileDataURL;
+        img.onerror = (err) => {
+            console.log("img error");
+            console.error(err);
+        };
+    }, [fileDataURL]);
+
     let onclick = (e) => {
         if(e.target === e.currentTarget) {
-            hidePopUp(true)
+            hidePopUp();
         }
     };
 
@@ -101,14 +120,20 @@ const AddPictureInfo = ({onSubmit, method, hidePopUp}) => {
             <div className="relative">
                 <CancelButton onclick={hidePopUp}/>
             </div>
-            <form className="flex flex-grow flex-col space-y-1 w-96 px-10 pt-10 pb-10 min-h-[25rem]" onSubmit={handleSubmit} method={method} encType="multipart/form-data">
+            <form className="flex flex-grow flex-col space-y-1 w-96 px-10 pt-10 pb-10 min-h-[25rem]" onSubmit={handleSubmit} encType="multipart/form-data">
                 <h2 className="font-extrabold">Create DailyArt</h2>
                 <label htmlFor="pictureName">Title</label>
                 <BasicForumInput type="text" id="pictureName" name="pictureName" maxLength="15"/>
-                {fileDataURL ? <Image src={fileDataURL} unoptimized fill={true} className="mt-10"/> :
+                {fileDataURL ?
+                    Object.keys(imageDimensions).length === 0 ? (<b>Processing Image...</b>) :
+                        (
+                                <NextImage src={fileDataURL} width={1035} height={1228} className="pt-1"/>
+                        ) :
                     <div className="flex flex-grow bg-slate-100 hover:bg-slate-200">
-                        <label htmlFor="file" className="flex-grow grid grid-cols-1 content-center text-center" name="file">
-                            <Image src="/icons/palette-solid.svg" width={24} height={24} unoptimized/>
+                        <label htmlFor="file" className="flex-grow grid grid-cols-1 content-center text-center justify-center" name="file">
+                            <div className="pl-[45%]">
+                            <NextImage src="/icons/palette-solid.svg" width={24} height={24} unoptimized/>
+                            </div>
                             <p>Import File</p>
                             <div className="content-center text-center h-1">
                                 <input id="file" type="file" onChange={handleFileChange} accept="image/*" hidden={false} name="file" className="opacity-0 h-1 w-1" required={true}/>
