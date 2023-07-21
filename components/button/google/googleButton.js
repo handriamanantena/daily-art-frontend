@@ -1,4 +1,4 @@
-import React, {Fragment, useContext, useEffect} from 'react';
+import React, {Fragment, useContext, useEffect, useRef, useState} from 'react';
 import jwt_decode from "jwt-decode";
 import {googleLogin} from "../../../common/Login"
 import Head from "next/head";
@@ -10,20 +10,21 @@ function GoogleButton (){
     const authCtx = useContext(AuthContext);
 
     useEffect(() => {
-        /* global google */
-        google.accounts.id.initialize({
-            client_id: process.env.NEXT_PUBLIC_GOOGLE_CLIENT_ID,
-            callback: handleCredentialResponse
-        });
-        google.accounts.id.renderButton(
-            document.getElementById("googleButton"),
-            {
-                theme: "filled_blue",
-                size: "large",
-                width: "304",
-                shape: "pill"
-            }  // customization attributes
-        );
+        window.onGoogleLibraryLoad = () => {
+            google.accounts.id.initialize({
+                client_id: process.env.NEXT_PUBLIC_GOOGLE_CLIENT_ID,
+                callback: handleCredentialResponse
+            });
+            google.accounts.id.renderButton(
+                document.getElementById("googleButton"),
+                {
+                    theme: "filled_blue",
+                    size: "large",
+                    width: "304",
+                    shape: "pill"
+                }  // customization attributes
+            );
+        }
     });
 
     async function handleCredentialResponse(response) {
