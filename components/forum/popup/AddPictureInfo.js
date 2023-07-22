@@ -105,6 +105,7 @@ const AddPictureInfo = ({hidePopUp}) => {
             }
             else {
                 console.log("added picture");
+                router.push("/dailyart");
                 return response;
             }
             console.log(response);
