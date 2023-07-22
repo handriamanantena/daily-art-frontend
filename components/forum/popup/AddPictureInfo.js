@@ -98,22 +98,18 @@ const AddPictureInfo = ({hidePopUp}) => {
                         "Content-Type": file.type
                     }
                 });
-            if(response.status != 200) {
-                // TODO need to delete picture in backend
+            if(response.status != 200 && response.status != 201) {
+                // TODO need to delete picture in backend and send error message to front end
                 console.error("unable to upload picture");
-                return new Response(response, 500);
             }
             else {
                 console.log("added picture");
                 hidePopUp();
                 router.reload();
-                return response;
             }
             console.log(response);
-
         } catch (error) {
             console.error("Error:", error);
-
         }
     };
 
