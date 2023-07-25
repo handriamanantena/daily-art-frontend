@@ -6,6 +6,8 @@ export const ViewPicture = ({picture}) => {
 
     let [hideInfo, setHidePictureInfo] = useState(true);
 
+    let profilePic = picture.profile[0]?.profilePicture ? picture.profile[0]?.profilePicture : "/placeholder/user-solid.svg"
+
     let hidePicInfo = (e) => {
         e.preventDefault();
         setHidePictureInfo(true);
@@ -35,7 +37,7 @@ export const ViewPicture = ({picture}) => {
                         <Image className="object-cover h-full rounded-full"
                                width={30}
                                height={30}
-                               src={picture.url}
+                               src={profilePic}
                                unoptimized/>
                         <h3 className="text-white ml-3">{picture.userName}</h3>
                     </a>
