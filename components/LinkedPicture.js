@@ -6,11 +6,15 @@ import {ViewPicture} from "./ViewPicture";
 function LinkedPicture({picture}) {
     let host = process.env.NEXT_PUBLIC_CDN_IMAGES;
     let url = encodeURI(host + picture.url)
+
+    useEffect(() => {
+        picture.url = url;
+    }, []);
     return (
            <Link href="/picture/[picture]" as={`/picture/${picture._id}`}>
             <div className={gallery.card}>
                 <a>
-                    <ViewPicture url = {url}/>
+                    <ViewPicture picture = {picture}/>
                 </a>
             </div>
            </Link>);
