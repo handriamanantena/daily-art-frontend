@@ -8,7 +8,8 @@ function LinkedPicture({picture}) {
     let url = encodeURI(host + picture.url)
 
     useEffect(() => {
-        picture.url = url;
+        if(!picture.url.startsWith("http"))
+            picture.url = url;
     }, []);
     return (
            <Link href="/picture/[picture]" as={`/picture/${picture._id}`}>
