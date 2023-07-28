@@ -14,16 +14,13 @@ function GoogleButton (){
             google.accounts.id.initialize({
                 client_id: process.env.NEXT_PUBLIC_GOOGLE_CLIENT_ID,
                 callback: handleCredentialResponse
+            })
+            const parent = document.getElementById('google_btn');
+            google.accounts.id.renderButton(parent,  {
+                theme: "filled_blue",
+                size: "large",
+                width: 304
             });
-            google.accounts.id.renderButton(
-                document.getElementById("googleButton"),
-                {
-                    theme: "filled_blue",
-                    size: "large",
-                    width: "304",
-                    shape: "pill"
-                }  // customization attributes
-            );
         }
     });
 
@@ -46,7 +43,7 @@ function GoogleButton (){
             <Head>
                 <script src="https://accounts.google.com/gsi/client" async defer/>
             </Head>
-            <div id="googleButton"/>
+            <div id="google_btn"/>
         </Fragment>
         );
 
