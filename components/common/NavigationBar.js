@@ -33,12 +33,12 @@ export function NavigationBar() {
         {ctx.isLoggedIn && <div className="bg-slate-600 w-px h-5"/>}
         <AddPictureButton isShowPopup={isShowPopup} hidePopUp={hidePopUp}><button className="px-5 flex" onClick={showPopUp}><h3 className="font-bold">Add Picture</h3></button></AddPictureButton>
         {ctx.isLoggedIn && <div className="bg-slate-600 w-px h-5"/>}
-        {ctx.isLoggedIn && <div className="flex ml-auto">
+        {ctx.isLoggedIn && <div className="flex ml-auto mr-2">
             <button onClick={logout}>
                 Log out
             </button>
         </div>}
-        {!ctx.isLoggedIn && <div className="flex ml-auto">
+        {!ctx.isLoggedIn && <div className="flex ml-auto mr-2">
             <button onClick={login}>
                 Log In
             </button>
