@@ -29,7 +29,7 @@ export function NavigationBar() {
         </button>
         <NavigationImageLink path="/" imagePath="/icons/pen-to-square-regular.svg" text="図面"/>
         <div className="bg-slate-600 w-px h-5"/>
-        <NavigationImageLink path={`/dailyart/${ctx.userName}`} text="My Art" imagePath="/placeholder/user-solid.svg"/>
+        {ctx.isLoggedIn && <NavigationImageLink path={`/dailyart/${ctx.userName}`} text="My Art" imagePath="/placeholder/user-solid.svg"/>}
         <AddPictureButton isShowPopup={isShowPopup} hidePopUp={hidePopUp}>
             <button className="pl-1 pr-2 flex" onClick={showPopUp} title="Add Picture">
                 <div className="md:hidden flex items-center justify-center">
@@ -42,7 +42,7 @@ export function NavigationBar() {
                 <NavigationH3 text="Add Picture"></NavigationH3>
             </button>
         </AddPictureButton>
-        <div className="bg-slate-600 w-px h-5"/>
+        {ctx.isLoggedIn && <div className="bg-slate-600 w-px h-5"/>}
         {ctx.isLoggedIn && <div className="flex ml-auto mr-2">
             <button onClick={logout}>
                 <h3 className="font-bold hover:text-cyan-600">Log out</h3>
