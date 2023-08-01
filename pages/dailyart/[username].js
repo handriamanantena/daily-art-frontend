@@ -34,7 +34,6 @@ function Username({ username, pictures }) {
 
 
    return (<BasicLayout>
-            <h1 className={ dailyArt.simpleArtTitle }>Simple Art</h1>
                 <InfiniteScroll getObjects = {getPictures} maxPage = {10} lastElement = {lastElement}>
                     <Gallery pictures = {newPictures} setLastElement = {setLastElement}>
                         {ctx.userName == username ? <AddPictureButton isShowPopup={isShowPopup} hidePopUp={hidePopUp}><StyledAddPicture showPopUp={showPopUp} text="+"/></AddPictureButton> : <Fragment></Fragment>}

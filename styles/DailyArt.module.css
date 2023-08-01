@@ -1,7 +1,6 @@
 
 .dailyArt {
     @apply flex flex-row flex-wrap justify-center space-y-0;
-    margin: 30px;
 }
 
 @screen sm {

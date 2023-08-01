@@ -1,5 +1,5 @@
 import Image from "next/dist/client/image";
-import React, {useState} from "react";
+import React, {Fragment, useState} from "react";
 import Link from 'next/link'
 
 export const ViewPicture = ({picture}) => {
@@ -18,10 +18,10 @@ export const ViewPicture = ({picture}) => {
         setHidePictureInfo(false);
     }
     return (<div className="relative grow h-96">
-        <div className="flex items-center justify-center h-96 bg-gray-300 rounded-lg dark:bg-gray-700"
+        <div className="flex items-center justify-center h-96 bg-gray-300 md:rounded-lg dark:bg-gray-700"
              onMouseEnter={showPicInfo}
               onMouseLeave={hidePicInfo}>
-            <Image className="object-cover h-full rounded-lg grow hover:brightness-50"
+            <Image className="object-cover h-full md:rounded-lg grow hover:brightness-50"
                    layout="fill"
                    src={picture.url}
                    objectPosition = "center"

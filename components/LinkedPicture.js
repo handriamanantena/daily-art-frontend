@@ -17,7 +17,7 @@ function LinkedPicture({picture}) {
     }, []);
     return (
            <Link href="/picture/[picture]" as={`/picture/${picture._id}`}>
-            <div className={gallery.card}>
+            <div className="md:ml-1 md:mr-1 mt-1 mb-1 z-49">
                 <a>
                     <ViewPicture picture = {picture}/>
                 </a>

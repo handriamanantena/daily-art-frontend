@@ -28,7 +28,6 @@ function DailyArt({ pictures }) {
 
    return (
        <BasicLayout>
-          <h1 className={dailyArt.simpleArtTitle}>Simple Art</h1>
           <InfiniteScroll getObjects = {getPictures} maxPage = {10} lastElement={lastElement}>
              <Gallery pictures = {newPictures} setLastElement = {setLastElement}/>
               { isLoading ? <Loading/> : <Fragment></Fragment>}
