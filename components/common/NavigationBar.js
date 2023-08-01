@@ -45,12 +45,12 @@ export function NavigationBar() {
         <div className="bg-slate-600 w-px h-5"/>
         {ctx.isLoggedIn && <div className="flex ml-auto mr-2">
             <button onClick={logout}>
-                <NavigationH3 text="Log out"/>
+                <h3 className="font-bold hover:text-cyan-600">Log out</h3>
             </button>
         </div>}
         {!ctx.isLoggedIn && <div className="flex ml-auto mr-2">
             <button onClick={login}>
-                <NavigationH3 text="Log In"/>
+                <h3 className="font-bold hover:text-cyan-600">Log In</h3>
             </button>
         </div>}
         </div>
