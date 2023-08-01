@@ -4,11 +4,11 @@ import Link from "next/link";
 import Image from "next/dist/client/image";
 
 export const BasicPictureInfo = ({picture}) => {
-    let date = Moment(picture.date).format('d MMM');
+    let date = Moment(picture.date).format('YYYY年 MMM月 D日');
 
     let profilePic = picture.profile[0]?.profilePicture;
     //src={picture.profile[0]?.profilePicture}
-    return <div className="md:hidden flex flex-row w-15 h-10 relative grow">
+    return <div className="md:hidden flex flex-row w-15 h-10 relative grow mt-5 mb-5">
         <Link href="/dailyart/[userName]" as={`/dailyart/${picture.userName}`}>
             <a className="relative flex flex-row justify-center pt-1 ml-1 w-15 h-15">
                 { profilePic ?
@@ -35,7 +35,7 @@ export const BasicPictureInfo = ({picture}) => {
             </div>
             <Link href="/dailyart/[userName]" as={`/dailyart/${picture.userName}`}>
                 <a className="flex flex-row">
-                    <p>{picture.userName}</p>
+                    <p>By {picture.userName}</p>
                 </a>
             </Link>
         </div>
