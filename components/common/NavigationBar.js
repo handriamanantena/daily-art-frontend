@@ -54,7 +54,7 @@ export function NavigationBar() {
             </button>
         </div>}
         </div>
-        <div className="bg-white bg-opacity-95 md:h-24">
+        <div className="bg-white bg-opacity-95 md:h-24 border-t">
             <h1 className="text-center md:text-7xl">Daily イラスト</h1>
         </div>
     </header>)
