@@ -44,15 +44,13 @@ function _Id({ picture, pictures, _id, foundPicture, initialIndex }) {
     return (
         <BasicLayout>
             <div>
-                <div>
-                        <div className="relative h-[1000px]">
-                            <Image className="object-contain rounded-lg h-[1000px]"
+                        <div className="relative h-[600px] lg:h-[1000px]">
+                            <Image className="object-contain"
                                    src={url}
                                    layout="fill"
                                    unoptimized/>
                         </div>
                     <PictureInfo picture={picture}></PictureInfo>
-                </div>
                 <InfiniteScroll getObjects = {getPictures} maxPage = {10} lastElement={lastElement}>
                     <Gallery pictures = {newPictures} setLastElement = {setLastElement}/>
                 </InfiniteScroll>
