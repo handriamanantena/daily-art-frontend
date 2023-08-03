@@ -15,6 +15,7 @@ const AddPictureInfo = ({hidePopUp}) => {
     const [file, setFile] = useState("");
     const [fileDataURL, setFileDataURL] = useState("");
     const [imageDimensions, setImageDimensions] = useState({});
+    const [isFileLarge, setIsFileLarge] = useState(false);
     const router = useRouter();
 
 
@@ -33,9 +34,13 @@ const AddPictureInfo = ({hidePopUp}) => {
         const files = (e.target).files
 
         if (files && files.length > 0) {
-            //if(files[0].size <= process.env.NEXT_PUBLIC_MAX_FILE_UPLOAD_SIZE) {
+            if(files[0].size <= process.env.NEXT_PUBLIC_MAX_FILE_UPLOAD_SIZE) {
+                setIsFileLarge(false);
                 setFile(files[0]);
-           // }
+            }
+            else {
+                setIsFileLarge(true);
+            }
             console.log("file size: " +  files[0].size);
         }
     };
@@ -144,6 +149,7 @@ const AddPictureInfo = ({hidePopUp}) => {
                                 <input data-testid="file-input" id="file" type="file" onChange={handleFileChange} accept="image/*" hidden={false} name="file" className="opacity-0 h-1 w-1" required={true}/>
                             </div>
                         </label>
+                        {isFileLarge ? <p data-testid="file-message">Files too large</p> : <></>}
                     </div>}
                 <SubmitButton text="Add Picture"/>
             </form>

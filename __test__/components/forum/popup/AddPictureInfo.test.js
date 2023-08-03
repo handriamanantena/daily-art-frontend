@@ -46,4 +46,42 @@ describe('AddPictureInfo', () => {
 
     })
 
+    it('upload large image', async () => {
+        let onclick = jest.fn();
+
+        const setStateMock = jest.fn();
+
+        const useStateMock = (useState) => [useState, setStateMock];
+        jest.spyOn(React, "useState").mockImplementation(useStateMock);
+
+
+        render(<AddPictureInfo hidePopUp={onclick}/>)
+        const fileInput = screen.getByTestId('file-input');
+
+        const data = await fs.readFile("__test__/files/largeImage.jpg", "utf-8");
+
+        const file = new File([data], 'test.jpg', {
+            type: 'image/jpg',
+        });
+        global.Image = class {
+            constructor() {
+                setTimeout(() => {
+                    this.onload(); // simulate success
+                }, 100);
+            }
+        }
+
+        const event = createEvent.input(fileInput, {target: {files: [file]}});
+        fireEvent.change(fileInput, event);
+
+
+
+        await waitFor(() => {
+            const fileTooLargeWarning = screen.getByTestId('file-message');
+            expect(fileTooLargeWarning).toBeInTheDocument();
+        });
+
+
+    })
+
 })
