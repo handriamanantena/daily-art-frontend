@@ -34,7 +34,7 @@ const AddPictureInfo = ({hidePopUp}) => {
         const files = (e.target).files
 
         if (files && files.length > 0) {
-            if(files[0].size <= process.env.NEXT_PUBLIC_MAX_FILE_UPLOAD_SIZE) {
+            if(files[0].size <= process.env.NEXT_PUBLIC_MAX_FILE_UPLOAD_BYTE_SIZE) {
                 setIsFileLarge(false);
                 setFile(files[0]);
             }
@@ -145,11 +145,11 @@ const AddPictureInfo = ({hidePopUp}) => {
                             <NextImage src="/icons/palette-solid.svg" width={24} height={24} unoptimized alt="Image"/>
                             </div>
                             <p>Import File</p>
+                            {isFileLarge ? <p data-testid="file-message" className="text-red-500">File too large</p> : <></>}
                             <div className="content-center text-center h-1">
                                 <input data-testid="file-input" id="file" type="file" onChange={handleFileChange} accept="image/*" hidden={false} name="file" className="opacity-0 h-1 w-1" required={true}/>
                             </div>
                         </label>
-                        {isFileLarge ? <p data-testid="file-message">Files too large</p> : <></>}
                     </div>}
                 <SubmitButton text="Add Picture"/>
             </form>
