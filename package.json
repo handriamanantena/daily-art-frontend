@@ -6,7 +6,9 @@
     "dev": "npx next dev",
     "build": "next build && next export",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "test": "jest",
+    "coverage": "jest --coverage"
   },
   "dependencies": {
     "axios": "^1.2.1",
@@ -24,11 +26,15 @@
     "@tailwindcss/forms": "^0.5.2",
     "@tailwindcss/line-clamp": "^0.4.0",
     "@tailwindcss/typography": "^0.5.4",
+    "@testing-library/jest-dom": "^5.17.0",
+    "@testing-library/react": "^12.1.4",
     "@types/node": "20.3.3",
     "@types/react": "17.0.15",
     "autoprefixer": "^10.4.7",
     "eslint": "7.32.0",
     "eslint-config-next": "11.0.1",
+    "jest": "^29.6.2",
+    "jest-environment-jsdom": "^29.6.2",
     "postcss": "^8.4.14",
     "tailwindcss": "^3.1.6"
   }

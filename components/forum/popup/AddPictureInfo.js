@@ -15,6 +15,7 @@ const AddPictureInfo = ({hidePopUp}) => {
     const [file, setFile] = useState("");
     const [fileDataURL, setFileDataURL] = useState("");
     const [imageDimensions, setImageDimensions] = useState({});
+    const [isFileLarge, setIsFileLarge] = useState(false);
     const router = useRouter();
 
 
@@ -29,10 +30,18 @@ const AddPictureInfo = ({hidePopUp}) => {
 
 
     const handleFileChange = (e) => {
+        console.log(e);
         const files = (e.target).files
 
         if (files && files.length > 0) {
-            setFile(files[0]);
+            if(files[0].size <= process.env.NEXT_PUBLIC_MAX_FILE_UPLOAD_BYTE_SIZE) {
+                setIsFileLarge(false);
+                setFile(files[0]);
+            }
+            else {
+                setIsFileLarge(true);
+            }
+            console.log("file size: " +  files[0].size);
         }
     };
 
@@ -44,8 +53,8 @@ const AddPictureInfo = ({hidePopUp}) => {
             fileReader.onload = (e) => {
                 const { result } = e.target;
                 if (result && !isCancel) {
+                    console.log("inside");
                     setFileDataURL(result);
-                    console.log(imageDimensions);
                 }
             };
             fileReader.readAsDataURL(file);
@@ -60,6 +69,9 @@ const AddPictureInfo = ({hidePopUp}) => {
     }, [file]);
 
     useEffect(() => {
+        console.log("dimensions");
+
+
         const img = new Image(fileDataURL);
         img.onload = () => {
             let proportion = img.height;
@@ -125,16 +137,17 @@ const AddPictureInfo = ({hidePopUp}) => {
                 {fileDataURL ?
                     Object.keys(imageDimensions).length === 0 ? (<b>Processing Image...</b>) :
                         (
-                                <NextImage src={fileDataURL} width={1035} height={1228} className="pt-1"/>
+                                <NextImage data-testid="preview-picture" src={fileDataURL} width={1035} height={1228} className="pt-1" alt="Image"/>
                         ) :
                     <div className="flex flex-grow bg-slate-100 hover:bg-slate-200">
                         <label htmlFor="file" className="flex-grow grid grid-cols-1 content-center text-center justify-center" name="file">
                             <div className="pl-[45%]">
-                            <NextImage src="/icons/palette-solid.svg" width={24} height={24} unoptimized/>
+                            <NextImage src="/icons/palette-solid.svg" width={24} height={24} unoptimized alt="Image"/>
                             </div>
                             <p>Import File</p>
+                            {isFileLarge ? <p data-testid="file-message" className="text-red-500">File too large</p> : <></>}
                             <div className="content-center text-center h-1">
-                                <input id="file" type="file" onChange={handleFileChange} accept="image/*" hidden={false} name="file" className="opacity-0 h-1 w-1" required={true}/>
+                                <input data-testid="file-input" id="file" type="file" onChange={handleFileChange} accept="image/*" hidden={false} name="file" className="opacity-0 h-1 w-1" required={true}/>
                             </div>
                         </label>
                     </div>}
