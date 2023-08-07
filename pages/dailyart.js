@@ -30,7 +30,7 @@ function DailyArt({ pictures }) {
        <BasicLayout>
           <InfiniteScroll getObjects = {getPictures} maxPage = {10} lastElement={lastElement}>
              <Gallery pictures = {newPictures} setLastElement = {setLastElement}/>
-              { isLoading ? <Loading/> : <Fragment></Fragment>}
+              { isLoading ? <Loading><p>Loading...</p></Loading> : <Fragment></Fragment>}
           </InfiniteScroll>
        </BasicLayout>);
 
