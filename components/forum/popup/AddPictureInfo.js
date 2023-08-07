@@ -140,17 +140,17 @@ const AddPictureInfo = ({hidePopUp}) => {
 
     return (<div className={style.blurryBackground} onClick={onclick}>
         <div className={style.popup}>
-            <div className="relative">
+            <div className="md:relative">
                 <CancelButton onclick={hidePopUp}/>
             </div>
-            <form className="flex flex-grow flex-col space-y-1 w-96 px-10 pt-10 pb-10 min-h-[25rem]" onSubmit={handleSubmit} encType="multipart/form-data">
+            <form className="flex flex-grow flex-col space-y-1 md:w-96 px-10 pt-10 pb-10 min-h-[25rem] max-h-screen max-w-fit md:max-w-none" onSubmit={handleSubmit} encType="multipart/form-data">
                 <h2 className="font-extrabold">Create DailyArt</h2>
                 <label htmlFor="pictureName">Title</label>
                 <BasicForumInput type="text" id="pictureName" name="pictureName" maxLength="15"/>
                 {fileDataURL && errorText == undefined ?
                     Object.keys(imageDimensions).length === 0 ? (<b>Processing Image...</b>) :
                         (
-                            <div className="content-center text-center justify-center min-h-[250px]">
+                            <div className="content-center text-center justify-center md:min-h-[250px]">
                                 <div className={isLoading ? "brightness-50" : ""}>
                                     <NextImage data-testid="preview-picture" src={fileDataURL} width={1035}
                                                height={1228} className="pt-1" alt="Image"/>
