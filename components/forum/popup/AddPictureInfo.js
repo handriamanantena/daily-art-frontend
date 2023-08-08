@@ -23,9 +23,9 @@ const AddPictureInfo = ({hidePopUp}) => {
 
 
     useEffect(() => {
-        if(!ctx.isLoggedIn) {
+        /*if(!ctx.isLoggedIn) {
             router.push("/join");
-        }
+        }*/
         document.body.style.overflow = "hidden";
         return () => (document.body.style.overflow = "scroll");
     });
@@ -77,9 +77,6 @@ const AddPictureInfo = ({hidePopUp}) => {
 
         const img = new Image(fileDataURL);
         img.onload = () => {
-            let proportion = img.height;
-            console.log(img.height);
-            console.log(img.width);
 
             setImageDimensions({
                 height: img.height,
@@ -140,10 +137,10 @@ const AddPictureInfo = ({hidePopUp}) => {
 
     return (<div className={style.blurryBackground} onClick={onclick}>
         <div className={style.popup}>
-            <div className="md:relative">
+            <div className="relative m-1">
                 <CancelButton onclick={hidePopUp}/>
             </div>
-            <form className="flex flex-grow flex-col space-y-1 md:w-96 px-10 pt-10 pb-10 min-h-[25rem] max-h-screen max-w-fit md:max-w-none" onSubmit={handleSubmit} encType="multipart/form-data">
+            <form className="flex flex-grow flex-col space-y-1 md:min-w-[24rem] px-10 pt-10 pb-10 min-h-[25rem] max-h-screen max-w-fit md:max-w-none" onSubmit={handleSubmit} encType="multipart/form-data">
                 <h2 className="font-extrabold">Create DailyArt</h2>
                 <label htmlFor="pictureName">Title</label>
                 <BasicForumInput type="text" id="pictureName" name="pictureName" maxLength="15"/>
@@ -151,9 +148,9 @@ const AddPictureInfo = ({hidePopUp}) => {
                     Object.keys(imageDimensions).length === 0 ? (<b>Processing Image...</b>) :
                         (
                             <div className="content-center text-center justify-center md:min-h-[250px]">
-                                <div className={isLoading ? "brightness-50" : ""}>
+                                <div className={isLoading ? "brightness-50 bg-slate-100 md:bg-inherit" : "bg-slate-100 md:bg-inherit"}>
                                     <NextImage data-testid="preview-picture" src={fileDataURL} width={1035}
-                                               height={1228} className="pt-1" alt="Image"/>
+                                               height={1228} className="pt-1 max-h-[250px] md:max-h-[500px] max-w-max inline" alt="Image"/>
                                 </div>
                                 <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2" hidden={!isLoading}>
                                     <Loading>
