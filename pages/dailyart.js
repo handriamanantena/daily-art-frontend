@@ -30,7 +30,7 @@ function DailyArt({ pictures }) {
        <BasicLayout>
           <InfiniteScroll getObjects = {getPictures} maxPage = {10} lastElement={lastElement}>
              <Gallery pictures = {newPictures} setLastElement = {setLastElement}/>
-              { isLoading ? <Loading/> : <Fragment></Fragment>}
+              { isLoading ? <Loading><p>Loading...</p></Loading> : <Fragment></Fragment>}
           </InfiniteScroll>
        </BasicLayout>);
 
@@ -42,8 +42,8 @@ export async function getStaticProps() {
    return {
       props: {
          pictures : pictures,
-         revalidate: 10
-      }
+      },
+       revalidate: +(process.env.NEXT_PUBLIC_REVALIDATE_SEC)
    }
 }
 
