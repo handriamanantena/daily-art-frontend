@@ -37,7 +37,7 @@ function DailyArt({ pictures }) {
 }
 
 
-export async function getStaticProps() {
+/*export async function getStaticProps() {
    const pictures =  await getPicturesByPage(null, pageSize, null);
    return {
       props: {
@@ -45,7 +45,7 @@ export async function getStaticProps() {
          revalidate: 10
       }
    }
-}
+}*/
 
 
 export default DailyArt;
