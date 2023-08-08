@@ -23,9 +23,9 @@ const AddPictureInfo = ({hidePopUp}) => {
 
 
     useEffect(() => {
-        /*if(!ctx.isLoggedIn) {
+        if(!ctx.isLoggedIn) {
             router.push("/join");
-        }*/
+        }
         document.body.style.overflow = "hidden";
         return () => (document.body.style.overflow = "scroll");
     });
@@ -115,17 +115,20 @@ const AddPictureInfo = ({hidePopUp}) => {
                     }
                 });
             console.log("second call")
-            setIsLoading(false);
             if(response.status != 200 && response.status != 201) {
+                setIsLoading(false);
                 // TODO need to delete picture in backend and send error message to front end
                 setErrorText("Unable to upload");
                 console.error("unable to upload picture");
             }
             else {
                 console.log("added picture");
-                hidePopUp();
-                setLoadingMessage("Success");
-                router.reload();
+                setTimeout(() => {
+                    hidePopUp();
+                    setLoadingMessage("Success");
+                    setIsLoading(false);
+                    window.location.reload();
+                }, +(process.env.NEXT_PUBLIC_REVALIDATE_SEC) * 1000);
             }
             console.log(response);
         } catch (error) {

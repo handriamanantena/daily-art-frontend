@@ -37,15 +37,15 @@ function DailyArt({ pictures }) {
 }
 
 
-/*export async function getStaticProps() {
+export async function getStaticProps() {
    const pictures =  await getPicturesByPage(null, pageSize, null);
    return {
       props: {
          pictures : pictures,
-         revalidate: 10
-      }
+      },
+       revalidate: +(process.env.NEXT_PUBLIC_REVALIDATE_SEC)
    }
-}*/
+}
 
 
 export default DailyArt;
