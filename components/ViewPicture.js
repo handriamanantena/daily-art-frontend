@@ -33,7 +33,7 @@ export const ViewPicture = ({picture}) => {
                     <h2 className="absolute top-0 right-0 p-3 text-white">{picture.pictureName}</h2>
                 </a>
             </Link>
-            <div className="absolute bottom-0 left-0 h-30 p-3" hidden={hideInfo}>
+            <div className="absolute bottom-0 left-0 m-3 h-[30px] w-[30px]" hidden={hideInfo}>
                 <ProfilePicture userInfo={userInfo}/>
             </div>
             <svg className="w-10 h-10 text-gray-200 dark:text-gray-600" aria-hidden="true"

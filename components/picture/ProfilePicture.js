@@ -8,12 +8,11 @@ export const ProfilePicture = ({userInfo}) => {
 
     return <Link href="/dailyart/[userName]" as={`/dailyart/${userInfo.userName}`}>
             <a className="flex flex-row">
-                <Image className="object-cover h-full rounded-full"
-                       width={30}
-                       height={30}
+                <Image className="rounded-full"
                        src={profilePic}
+                       fill={true}
                        unoptimized/>
-                <h3 className="text-white ml-3">{userInfo.userName}</h3>
+                <h3 className="text-white ml-9">{userInfo.userName}</h3>
             </a>
         </Link>
 }

@@ -36,9 +36,15 @@ function Username({ username, pictures, profilePicture }) {
         }
     };
 
+    /*
+
+
+                <div className=" m-3 h-[30px] w-[30px]">
+                    <ProfilePicture userInfo={userInfo}/>
+                </div>
+     */
 
    return (<BasicLayout>
-                <ProfilePicture userInfo={userInfo}/>
                 <InfiniteScroll getObjects = {getPictures} maxPage = {10} lastElement = {lastElement}>
                     <Gallery pictures = {newPictures} setLastElement = {setLastElement}>
                         {ctx.userName == username ? <AddPictureButton isShowPopup={isShowPopup} hidePopUp={hidePopUp}><StyledAddPicture showPopUp={showPopUp} text="+"/></AddPictureButton> : <Fragment></Fragment>}
