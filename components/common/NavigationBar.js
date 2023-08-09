@@ -1,4 +1,4 @@
-import React, {useContext} from "react";
+import React, {Fragment, useContext} from "react";
 import Image from "next/image";
 import {NavigationImageLink} from "../button/NavigationImageLink";
 import AuthContext from "../../common/context/auth-context";
@@ -22,12 +22,14 @@ export function NavigationBar() {
         await router.push("/signin");
     }
 
-    return (<nav className="sticky top-0 z-50">
+    return (
+        <Fragment>
+        <nav className="sticky top-0 z-50 border-b">
         <div className="flex pl-5 items-center bg-white">
         <button className="flex-none pt-2">
             <Image src="/icons/bars-solid.svg" width={24} height={24} unoptimized/>
         </button>
-        <NavigationImageLink path="/" imagePath="/icons/pen-to-square-regular.svg" text="図面"/>
+        <NavigationImageLink path="/" imagePath="/icons/pen-to-square-regular.svg" text="Daily イラスト"/>
         <div className="bg-slate-600 w-px h-5"/>
         {ctx.isLoggedIn && <NavigationImageLink path={`/dailyart/${ctx.userName}`} text="My Art" imagePath="/placeholder/user-solid.svg"/>}
         <AddPictureButton isShowPopup={isShowPopup} hidePopUp={hidePopUp}>
@@ -54,8 +56,9 @@ export function NavigationBar() {
             </button>
         </div>}
         </div>
-        <div className="bg-white bg-opacity-95 md:h-24 border-t">
-            <h1 className="text-center md:text-7xl">Daily イラスト</h1>
-        </div>
-    </nav>)
+    </nav>
+            <div className="bg-white md:h-24">
+                <h1 className="text-center md:text-7xl">Daily イラスト</h1>
+            </div>
+        </Fragment>)
 }

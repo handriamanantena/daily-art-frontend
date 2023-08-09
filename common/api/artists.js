@@ -13,7 +13,7 @@ async function getArtists(pageIndex, fields, username) {
         query += "&userName=" + username;
     }
     const host = process.env.NEXT_PUBLIC_PICTURES_API_HOST + process.env.NEXT_PUBLIC_PICTURES_API_PORT
-    const res = await fetch(host + "/artist?fields=userName" + query);
+    const res = await fetch(host + "/artist" + query);
     return await res.json()
 }
 

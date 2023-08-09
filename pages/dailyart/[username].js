@@ -13,7 +13,7 @@ import {ProfilePicture} from "../../components/picture/ProfilePicture";
 
 let pageSize = 2;
 
-function Username({ username, pictures, profilePicture }) {
+function Username({ pictures, userInfo }) {
     const ctx = useContext(AuthContext);
 
     let [newPictures, setPictures] = useState(pictures)
@@ -21,13 +21,10 @@ function Username({ username, pictures, profilePicture }) {
     let [lastElement, setLastElement] = useState(null);
     let [pageIndex, setPageIndex] = useState(pictures[pictures.length - 1]?._id);
     let [isShowPopup, hidePopUp , showPopUp] = useShowPopUp();
-    let userInfo = {
-        username,
-        profilePicture
-    }
     let getPictures = async () => {
+        console.log(JSON.stringify(userInfo))
         setIsLoading(true)
-        let response = await getPicturesByArtistUserName(username, pageSize, pageIndex);
+        let response = await getPicturesByArtistUserName(userInfo.userName, pageSize, pageIndex);
         if(response.length > 0) {
             setPageIndex(response[response.length-1]._id);
             pictures.push(...response);
@@ -36,21 +33,32 @@ function Username({ username, pictures, profilePicture }) {
         }
     };
 
-    /*
-
-
-                <div className=" m-3 h-[30px] w-[30px]">
-                    <ProfilePicture userInfo={userInfo}/>
-                </div>
-     */
-
-   return (<BasicLayout>
-                <InfiniteScroll getObjects = {getPictures} maxPage = {10} lastElement = {lastElement}>
-                    <Gallery pictures = {newPictures} setLastElement = {setLastElement}>
-                        {ctx.userName == username ? <AddPictureButton isShowPopup={isShowPopup} hidePopUp={hidePopUp}><StyledAddPicture showPopUp={showPopUp} text="+"/></AddPictureButton> : <Fragment></Fragment>}
-                    </Gallery>
-                </InfiniteScroll>
-         </BasicLayout>);
+   return (
+       <BasicLayout>
+           <div className="flex flex-col-reverse bg-black h-[300px] mb-3 p-10">
+               <h3 className="text-white whitespace-nowrap mt-5">{userInfo.about}</h3>
+               <p className="text-gray-400 whitespace-nowrap mt-5">My Bio</p>
+               <div className="relative h-[100px] w-[100px]">
+                   <ProfilePicture userInfo={userInfo}>
+                       <div className="ml-[110px] mt-5 grow">
+                           <h1 className="text-white">{userInfo.userName}</h1>
+                           <div className="flex flex-row grow">
+                               <h3 className="text-white whitespace-nowrap">{userInfo.streak} 記録破り Record Daily Streak</h3>
+                               <div className="border-l-2 border-white h-5 mx-4"/>
+                               <h3 className="text-white whitespace-nowrap">{userInfo.streak} 規律 Current Daily Streak</h3>
+                           </div>
+                       </div>
+                   </ProfilePicture>
+               </div>
+           </div>
+           <InfiniteScroll getObjects={getPictures} maxPage={10} lastElement={lastElement}>
+               <Gallery pictures={newPictures} setLastElement={setLastElement}>
+                   {ctx.userName == userInfo.userName ?
+                       <AddPictureButton isShowPopup={isShowPopup} hidePopUp={hidePopUp}><StyledAddPicture
+                           showPopUp={showPopUp} text="+"/></AddPictureButton> : <Fragment></Fragment>}
+               </Gallery>
+           </InfiniteScroll>
+       </BasicLayout>);
 
 }
 
@@ -87,7 +95,7 @@ export async function getStaticPaths() {
     console.log(paths);
     return {
         paths: paths,
-        fallback: false, // can also be true or 'blocking'
+        fallback: true
     }
 }
 
@@ -95,14 +103,15 @@ export async function getStaticPaths() {
 export async function getStaticProps(context) {
     const { params } = context;
     const username = params.username;
-    let response = await getArtists(null, "profilePicture", username); //TODO we already get the information in getStaticPaths, but we can't pass it to getStaticProps. need to upgrade to next 13 to avoid 2 api calls
-    console.log(JSON.stringify(response));
+    let response = await getArtists(null, null, username); //TODO we already get the information in getStaticPaths, but we can't pass it to getStaticProps. need to upgrade to next 13 to avoid 2 api calls
+    console.log("last get artist" +JSON.stringify(response));
     const pictures = await getPicturesByArtistUserName(username, pageSize, 0);
+    let userInfo = response[0];
+    userInfo.userName = username;
     return {
         props: {
             pictures : pictures,
-            username: username,
-            profilePicture: response[0].profilePicture
+            userInfo
         }
     }
 }
