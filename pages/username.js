@@ -15,7 +15,7 @@ function Username() {
 
 
     let onSubmit = () => {
-        const response = fetch(host + '/artist?platform=google', {
+        const response = fetch(host + '/artist/login?platform=google', {
             method: 'POST',
             credentials: 'include', // include, *same-origin, omit
             headers: {

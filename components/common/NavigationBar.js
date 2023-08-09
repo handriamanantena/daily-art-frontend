@@ -22,7 +22,7 @@ export function NavigationBar() {
         await router.push("/signin");
     }
 
-    return (<header className="sticky top-0 z-50">
+    return (<nav className="sticky top-0 z-50">
         <div className="flex pl-5 items-center bg-white">
         <button className="flex-none pt-2">
             <Image src="/icons/bars-solid.svg" width={24} height={24} unoptimized/>
@@ -57,5 +57,5 @@ export function NavigationBar() {
         <div className="bg-white bg-opacity-95 md:h-24 border-t">
             <h1 className="text-center md:text-7xl">Daily イラスト</h1>
         </div>
-    </header>)
+    </nav>)
 }
