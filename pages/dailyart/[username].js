@@ -10,6 +10,7 @@ import AuthContext from "../../common/context/auth-context";
 import {StyledAddPicture} from "../../components/button/StyledAddPicture";
 import {useShowPopUp} from "../../common/hooks/useShowPopUp";
 import {ProfilePicture} from "../../components/picture/ProfilePicture";
+import Image from "next/future/image";
 
 let pageSize = 2;
 
@@ -39,16 +40,15 @@ function Username({ pictures, userInfo }) {
                <h3 className="text-white whitespace-nowrap mt-5">{userInfo.about}</h3>
                <p className="text-gray-400 whitespace-nowrap mt-5">My Bio</p>
                <div className="relative h-[100px] w-[100px]">
-                   <ProfilePicture userInfo={userInfo}>
-                       <div className="ml-[110px] mt-5 grow">
-                           <h1 className="text-white">{userInfo.userName}</h1>
-                           <div className="flex flex-row grow">
-                               <h3 className="text-white whitespace-nowrap">{userInfo.streak} 記録破り Record Daily Streak</h3>
-                               <div className="border-l-2 border-white h-5 mx-4"/>
-                               <h3 className="text-white whitespace-nowrap">{userInfo.streak} 規律 Current Daily Streak</h3>
-                           </div>
-                       </div>
-                   </ProfilePicture>
+                   <div className="ml-[110px] mt-5 grow">
+                       <ProfilePicture userInfo={userInfo}/>
+                       <h1 className="text-white">{userInfo.userName}</h1>
+                   </div>
+                   <div className="ml-[110px] flex flex-row grow">
+                       <h3 className="text-white whitespace-nowrap">{userInfo.streak} 記録破り Record Daily Streak</h3>
+                       <div className="border-l-2 border-white h-5 mx-4"/>
+                       <h3 className="text-white whitespace-nowrap">{userInfo.streak} 規律 Current Daily Streak</h3>
+                   </div>
                </div>
            </div>
            <InfiniteScroll getObjects={getPictures} maxPage={10} lastElement={lastElement}>
