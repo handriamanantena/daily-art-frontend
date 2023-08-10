@@ -10,9 +10,9 @@ import AuthContext from "../../common/context/auth-context";
 import {StyledAddPicture} from "../../components/button/StyledAddPicture";
 import {useShowPopUp} from "../../common/hooks/useShowPopUp";
 import {ProfilePicture} from "../../components/picture/ProfilePicture";
-import Image from "next/future/image";
+import {useRouter} from "next/router";
 
-let pageSize = 2;
+let pageSize = +(process.env.NEXT_PUBLIC_PAGE_SIZE);
 
 function Username({ pictures, userInfo }) {
     const ctx = useContext(AuthContext);
@@ -20,7 +20,8 @@ function Username({ pictures, userInfo }) {
     let [newPictures, setPictures] = useState(pictures)
     let [isLoading, setIsLoading] = useState(false)
     let [lastElement, setLastElement] = useState(null);
-    let [pageIndex, setPageIndex] = useState(pictures[pictures.length - 1]?._id);
+    let initalIndex = pictures?.length > 0 ? pictures[pictures.length - 1]?._id : null;
+    let [pageIndex, setPageIndex] = useState(initalIndex);
     let [isShowPopup, hidePopUp , showPopUp] = useShowPopUp();
     let getPictures = async () => {
         console.log(JSON.stringify(userInfo))
@@ -33,6 +34,11 @@ function Username({ pictures, userInfo }) {
             setIsLoading(false)
         }
     };
+    const router = useRouter()
+
+    if (router.isFallback) {
+        return <div>Loading...</div>
+    }
 
    return (
        <BasicLayout>
@@ -51,7 +57,7 @@ function Username({ pictures, userInfo }) {
                    </div>
                </div>
            </div>
-           <InfiniteScroll getObjects={getPictures} maxPage={10} lastElement={lastElement}>
+           <InfiniteScroll getObjects={getPictures} maxPage={100} lastElement={lastElement}>
                <Gallery pictures={newPictures} setLastElement={setLastElement}>
                    {ctx.userName == userInfo.userName ?
                        <AddPictureButton isShowPopup={isShowPopup} hidePopUp={hidePopUp}><StyledAddPicture
@@ -66,7 +72,7 @@ export async function setUserNamesToParams() {
     let usernames = [];
     let response = await getArtists(null, "userName,profilePicture");
     console.log(JSON.stringify(response));
-    let isLastPage = false;
+    /*let isLastPage = false;
     while(!isLastPage) {
         usernames.push(...response);
         response = await getArtists(usernames[0]._id, "userName,profilePicture");
@@ -74,7 +80,7 @@ export async function setUserNamesToParams() {
         if(response.length == 0) {
             isLastPage = true;
         }
-    }
+    }*/
     if(usernames) {
         return usernames.map(user => {
             return {
@@ -112,7 +118,8 @@ export async function getStaticProps(context) {
         props: {
             pictures : pictures,
             userInfo
-        }
+        },
+        revalidate: +(process.env.NEXT_PUBLIC_REVALIDATE_SEC)
     }
 }
 
