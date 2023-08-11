@@ -18,6 +18,19 @@ function GoogleButton (){
 
         document.body.appendChild(script);
 
+        window.onGoogleLibraryLoad = () => {
+            google.accounts.id.initialize({
+                client_id: process.env.NEXT_PUBLIC_GOOGLE_CLIENT_ID,
+                callback: handleCredentialResponse
+            })
+            const parent = document.getElementById('google_btn');
+            google.accounts.id.renderButton(parent,  {
+                theme: "filled_blue",
+                size: "large",
+                width: 304
+            });
+        }
+
         return () => {
             document.body.removeChild(script);
         };
@@ -39,18 +52,7 @@ function GoogleButton (){
 
     return (
         <Fragment>
-            <div
-                id='g_id_onload'
-                data-client_id={process.env.NEXT_PUBLIC_GOOGLE_CLIENT_ID}
-                data-native_callback="handleCredentialResponse"
-            />
-            <div
-                className='g_id_signin'
-                data-size='large'
-                data-theme='filled_blue'
-                data-shape='rectangular'
-                data-width='304'
-            />
+            <div id='google_btn'/>
         </Fragment>
         );
 
