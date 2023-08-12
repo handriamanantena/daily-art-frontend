@@ -20,8 +20,8 @@ function Username({ pictures, userInfo }) {
     let [newPictures, setPictures] = useState(pictures)
     let [isLoading, setIsLoading] = useState(false)
     let [lastElement, setLastElement] = useState(null);
-    let initalIndex = pictures?.length > 0 ? pictures[pictures.length - 1]?._id : null;
-    let [pageIndex, setPageIndex] = useState(initalIndex);
+    let initialIndex = pictures?.length > 0 ? pictures[pictures.length - 1]?._id : null;
+    let [pageIndex, setPageIndex] = useState(initialIndex);
     let [isShowPopup, hidePopUp , showPopUp] = useShowPopUp();
     let getPictures = async () => {
         console.log(JSON.stringify(userInfo))
@@ -40,11 +40,23 @@ function Username({ pictures, userInfo }) {
         return <div>Loading...</div>
     }
 
-   return (
+    let renderPage = (query) => {
+        switch(query) {
+            case 'about': return (<h3 className="whitespace-nowrap mt-5">{userInfo.about}</h3>);
+            default:
+            return (<InfiniteScroll getObjects={getPictures} maxPage={100} lastElement={lastElement}>
+                <Gallery pictures={newPictures} setLastElement={setLastElement}>
+                    {ctx.userName == userInfo.userName ?
+                        <AddPictureButton isShowPopup={isShowPopup} hidePopUp={hidePopUp}><StyledAddPicture
+                            showPopUp={showPopUp} text="+"/></AddPictureButton> : <Fragment></Fragment>}
+                </Gallery>
+            </InfiniteScroll>);
+        }
+    }
+
+    return (
        <BasicLayout>
            <div className="flex flex-col-reverse bg-black h-[300px] mb-3 p-10">
-               <h3 className="text-white whitespace-nowrap mt-5">{userInfo.about}</h3>
-               <p className="text-gray-400 whitespace-nowrap mt-5">My Bio</p>
                <div className="relative h-[100px] w-[100px]">
                    <div className="ml-[110px] mt-5 grow">
                        <ProfilePicture userInfo={userInfo}/>
@@ -57,13 +69,7 @@ function Username({ pictures, userInfo }) {
                    </div>
                </div>
            </div>
-           <InfiniteScroll getObjects={getPictures} maxPage={100} lastElement={lastElement}>
-               <Gallery pictures={newPictures} setLastElement={setLastElement}>
-                   {ctx.userName == userInfo.userName ?
-                       <AddPictureButton isShowPopup={isShowPopup} hidePopUp={hidePopUp}><StyledAddPicture
-                           showPopUp={showPopUp} text="+"/></AddPictureButton> : <Fragment></Fragment>}
-               </Gallery>
-           </InfiniteScroll>
+           {renderPage(router.query.username[1])}
        </BasicLayout>);
 
 }
@@ -71,24 +77,30 @@ function Username({ pictures, userInfo }) {
 export async function setUserNamesToParams() {
     let usernames = [];
     let response = await getArtists(null, "userName,profilePicture");
-    console.log(JSON.stringify(response));
-    /*let isLastPage = false;
+    console.log("setUserNamesToParams" + JSON.stringify(response));
+    let isLastPage = false;
     while(!isLastPage) {
         usernames.push(...response);
-        response = await getArtists(usernames[0]._id, "userName,profilePicture");
+        let initialIndex = response?.length > 0 ? response[response.length - 1]?._id : null;
+        response = await getArtists(initialIndex, "userName,profilePicture");
         console.log(JSON.stringify(response));
         if(response.length == 0) {
             isLastPage = true;
         }
-    }*/
+    }
     if(usernames) {
-        return usernames.map(user => {
-            return {
+        return usernames.flatMap(user =>
+            [{
                 params: { // TODO backend should wrap response with params
-                    username: user.userName
+                    username: [user.userName, "about"]
                 },
-            }
-        })
+            },
+                {
+                    params: { // TODO backend should wrap response with params
+                        username: [user.userName, "gallery"]
+                    },
+                }]
+        )
     }
     else return {
         params: {}
@@ -98,7 +110,6 @@ export async function setUserNamesToParams() {
 
 export async function getStaticPaths() {
     let paths = await setUserNamesToParams();
-    console.log(paths);
     return {
         paths: paths,
         fallback: true
@@ -108,12 +119,12 @@ export async function getStaticPaths() {
 
 export async function getStaticProps(context) {
     const { params } = context;
-    const username = params.username;
-    let response = await getArtists(null, null, username); //TODO we already get the information in getStaticPaths, but we can't pass it to getStaticProps. need to upgrade to next 13 to avoid 2 api calls
+    const user = params.username;
+    let response = await getArtists(null, null, user[0]); //TODO we already get the information in getStaticPaths, but we can't pass it to getStaticProps. need to upgrade to next 13 to avoid 2 api calls
     console.log("last get artist" +JSON.stringify(response));
-    const pictures = await getPicturesByArtistUserName(username, pageSize, 0);
+    const pictures = await getPicturesByArtistUserName(user[0], pageSize, 0);
     let userInfo = response[0];
-    userInfo.userName = username;
+    userInfo.userName = user[0];
     return {
         props: {
             pictures : pictures,

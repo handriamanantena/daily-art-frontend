@@ -8,7 +8,7 @@ import useShowPopUp from "../../common/hooks/useShowPopUp";
 import {NavigationH3} from "./NavigationH3";
 
 
-export function NavigationBar() {
+export function HeaderBar() {
 
     const router = useRouter();
     const ctx = useContext(AuthContext);
@@ -24,7 +24,7 @@ export function NavigationBar() {
 
     return (
         <Fragment>
-        <nav className="sticky top-0 z-50 border-b">
+        <header className="sticky top-0 z-50 border-b">
         <div className="flex pl-5 items-center bg-white">
         <button className="flex-none pt-2">
             <Image src="/icons/bars-solid.svg" width={24} height={24} unoptimized/>
@@ -56,7 +56,7 @@ export function NavigationBar() {
             </button>
         </div>}
         </div>
-    </nav>
+    </header>
             <div className="bg-white md:h-24">
                 <h1 className="text-center md:text-7xl">Daily イラスト</h1>
             </div>

@@ -1,5 +1,5 @@
 import {Fragment, useContext, useEffect} from "react";
-import {NavigationBar} from "./NavigationBar"
+import {HeaderBar} from "./HeaderBar"
 import {Footer} from "./Footer"
 import AuthContext from "../../common/context/auth-context";
 import useAxiosPrivate from "../../common/hooks/useAxiosPrivate";
@@ -53,7 +53,7 @@ export function BasicLayout({children}) {
     }, [ctx.token])
 
     return (<Fragment>
-        <NavigationBar/>
+        <HeaderBar/>
             <main>{children}</main>
         <Footer/>
     </Fragment>)

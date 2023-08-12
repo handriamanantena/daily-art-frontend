@@ -1,4 +1,4 @@
-import GoogleButton, {handleCredentialResponseLogin} from "../button/google/googleButton";
+import GoogleButton from "../button/google/googleButton";
 
 
 export default function LogInOptions() {
