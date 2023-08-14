@@ -6,7 +6,7 @@ import {useRouter} from "next/router";
 import {AddPictureButton} from "../button/addpictureButton";
 import useShowPopUp from "../../common/hooks/useShowPopUp";
 import {NavigationH3} from "./NavigationH3";
-import Link from "next/link";
+import {NavigationBar} from "./NavigationBar";
 
 
 export function HeaderBar() {
@@ -25,8 +25,7 @@ export function HeaderBar() {
 
     return (
         <Fragment>
-        <header className="sticky top-0 z-50 border-b">
-        <div className="flex pl-5 items-center bg-white">
+    <NavigationBar>
         <button className="flex-none pt-2">
             <Image src="/icons/bars-solid.svg" width={24} height={24} unoptimized/>
         </button>
@@ -56,8 +55,7 @@ export function HeaderBar() {
                 <h3 className="font-bold hover:text-cyan-600">Log In</h3>
             </button>
         </div>}
-        </div>
-    </header>
+    </NavigationBar>
             <div className="bg-white md:h-24">
                 <h1 className="text-center md:text-7xl">Daily イラスト</h1>
             </div>

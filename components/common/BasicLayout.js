@@ -3,6 +3,7 @@ import {HeaderBar} from "./HeaderBar"
 import {Footer} from "./Footer"
 import AuthContext from "../../common/context/auth-context";
 import useAxiosPrivate from "../../common/hooks/useAxiosPrivate";
+import React from "react";
 
 export function BasicLayout({children}) {
 

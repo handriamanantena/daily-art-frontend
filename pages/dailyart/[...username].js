@@ -56,9 +56,8 @@ function Username({ pictures, userInfo }) {
 
     return (
        <BasicLayout>
-           <div className="flex flex-col-reverse bg-black h-[300px] mb-3 p-10">
-               <ArtistNavBar userName={userInfo.userName}/>
-               <div className="relative h-[100px] w-[100px]">
+           <div className="flex flex-col-reverse bg-black h-[300px]">
+               <div className="relative h-[100px] w-[100px] m-10">
                    <div className="ml-[110px] mt-5 grow">
                        <ProfilePicture userInfo={userInfo}/>
                        <h1 className="text-white">{userInfo.userName}</h1>
@@ -70,6 +69,7 @@ function Username({ pictures, userInfo }) {
                    </div>
                </div>
            </div>
+           <ArtistNavBar userName={userInfo.userName}/>
            {renderPage(router.query.username[1])}
        </BasicLayout>);
 
