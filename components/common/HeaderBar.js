@@ -25,6 +25,7 @@ export function HeaderBar() {
 
     return (
         <Fragment>
+            <div className="sticky grid top-0 z-50 border-b h-16 bg-white content-center flex pl-5 items-center">
     <NavigationBar>
         <button className="flex-none pt-2">
             <Image src="/icons/bars-solid.svg" width={24} height={24} unoptimized/>
@@ -56,6 +57,7 @@ export function HeaderBar() {
             </button>
         </div>}
     </NavigationBar>
+            </div>
             <div className="bg-white md:h-24">
                 <h1 className="text-center md:text-7xl">Daily イラスト</h1>
             </div>

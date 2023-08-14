@@ -69,7 +69,9 @@ function Username({ pictures, userInfo }) {
                    </div>
                </div>
            </div>
-           <ArtistNavBar userName={userInfo.userName}/>
+           <div className="grid top-0 z-50 border-b h-16 bg-white content-center flex pl-5 items-center mb-10">
+                <ArtistNavBar userName={userInfo.userName}/>
+           </div>
            {renderPage(router.query.username[1])}
        </BasicLayout>);
 
