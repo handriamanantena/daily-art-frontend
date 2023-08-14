@@ -14,9 +14,9 @@ function LinkedPicture({picture}) {
         else {
             picture.url = url;
         }
-    }, []);
+    }, [picture]);
     return (
-           <Link href="/picture/[picture]" as={`/picture/${picture._id}`}>
+           <Link href={`/picture/${picture._id}`}>
             <div className="md:ml-1 md:mr-1 mt-1 mb-1 z-49">
                 <a>
                     <ViewPicture picture = {picture}/>
