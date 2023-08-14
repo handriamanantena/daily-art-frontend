@@ -1,6 +1,5 @@
 import Gallery from "../../components/Gallery";
 import React, {useState, useRef, useContext, Fragment} from 'react';
-import dailyArt from '../../styles/DailyArt.module.css';
 import {BasicLayout} from "../../components/common/BasicLayout";
 import {getArtists} from "../../common/api/artists";
 import {getPicturesByArtistUserName} from "../../common/api/pictures";
@@ -11,6 +10,7 @@ import {StyledAddPicture} from "../../components/button/StyledAddPicture";
 import {useShowPopUp} from "../../common/hooks/useShowPopUp";
 import {ProfilePicture} from "../../components/picture/ProfilePicture";
 import {useRouter} from "next/router";
+import {ArtistNavBar} from "../../components/common/ArtistNavBar";
 
 let pageSize = +(process.env.NEXT_PUBLIC_PAGE_SIZE);
 
@@ -34,7 +34,7 @@ function Username({ pictures, userInfo }) {
             setIsLoading(false)
         }
     };
-    const router = useRouter()
+    const router = useRouter();
 
     if (router.isFallback) {
         return <div>Loading...</div>
@@ -57,6 +57,7 @@ function Username({ pictures, userInfo }) {
     return (
        <BasicLayout>
            <div className="flex flex-col-reverse bg-black h-[300px] mb-3 p-10">
+               <ArtistNavBar userName={userInfo.userName}/>
                <div className="relative h-[100px] w-[100px]">
                    <div className="ml-[110px] mt-5 grow">
                        <ProfilePicture userInfo={userInfo}/>
@@ -99,6 +100,11 @@ export async function setUserNamesToParams() {
                     params: { // TODO backend should wrap response with params
                         username: [user.userName, "gallery"]
                     },
+                },
+                {
+                    params: { // TODO backend should wrap response with params
+                        username: [user.userName]
+                    },
                 }]
         )
     }
@@ -121,10 +127,10 @@ export async function getStaticProps(context) {
     const { params } = context;
     const user = params.username;
     let response = await getArtists(null, null, user[0]); //TODO we already get the information in getStaticPaths, but we can't pass it to getStaticProps. need to upgrade to next 13 to avoid 2 api calls
-    console.log("last get artist" +JSON.stringify(response));
-    const pictures = await getPicturesByArtistUserName(user[0], pageSize, 0);
+    const pictures = await getPicturesByArtistUserName(user[0], pageSize, 0); // TODO maybe use caching to avoid getting info multiple times for each sub path
     let userInfo = response[0];
-    userInfo.userName = user[0];
+    console.log("artist by username" +JSON.stringify(response));
+    //userInfo.userName = user[0];
     return {
         props: {
             pictures : pictures,
