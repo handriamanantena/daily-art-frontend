@@ -8,7 +8,7 @@ import {BasicLayout} from "../../components/common/BasicLayout";
 import {InfiniteScroll} from "../../components/InfiniteScroll";
 import { useRouter } from 'next/router'
 
-let pageSize = 2;
+let pageSize = process.env.NEXT_PUBLIC_PAGE_SIZE;
 
 function _Id({ picture, pictures, _id, foundPicture, initialIndex }) {
 
@@ -51,7 +51,7 @@ function _Id({ picture, pictures, _id, foundPicture, initialIndex }) {
                                    unoptimized/>
                         </div>
                     <PictureInfo picture={picture}></PictureInfo>
-                <InfiniteScroll getObjects = {getPictures} maxPage = {10} lastElement={lastElement}>
+                <InfiniteScroll getObjects = {getPictures} maxPage = {100} lastElement={lastElement}>
                     <Gallery pictures = {newPictures} setLastElement = {setLastElement}/>
                 </InfiniteScroll>
             </div>

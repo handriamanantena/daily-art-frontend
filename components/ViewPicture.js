@@ -1,12 +1,14 @@
 import Image from "next/dist/client/image";
 import React, {Fragment, useState} from "react";
 import Link from 'next/link'
+import {ProfilePicture} from "./picture/ProfilePicture";
 
 export const ViewPicture = ({picture}) => {
 
     let [hideInfo, setHidePictureInfo] = useState(true);
 
-    let profilePic = picture.profile[0]?.profilePicture ? picture.profile[0]?.profilePicture : "/placeholder/user-solid.svg"
+    let profilePic = picture.profile[0]?.profilePicture ? picture.profile[0]?.profilePicture : "/placeholder/user-solid.svg";
+    let userInfo = { userName: picture.userName, profilePicture: profilePic};
 
     let hidePicInfo = (e) => {
         e.preventDefault();
@@ -31,17 +33,13 @@ export const ViewPicture = ({picture}) => {
                     <h2 className="absolute top-0 right-0 p-3 text-white">{picture.pictureName}</h2>
                 </a>
             </Link>
-            <div className="absolute bottom-0 left-0 h-30 p-3" hidden={hideInfo}>
-                <Link href="/dailyart/[userName]" as={`/dailyart/${picture.userName}`}>
+            <div className="absolute bottom-0 left-0 m-3 h-[30px] w-[30px]" hidden={hideInfo}>
+                <Link href={`/dailyart/${encodeURIComponent(userInfo.userName)}`}>
                     <a className="flex flex-row">
-                        <Image className="object-cover h-full rounded-full"
-                               width={30}
-                               height={30}
-                               src={profilePic}
-                               unoptimized/>
-                        <h3 className="text-white ml-3">{picture.userName}</h3>
+                        <ProfilePicture userInfo={userInfo}/>
+                        <h3 className="text-white ml-9">{userInfo.userName}</h3>
                     </a>
-                </Link>
+                </Link>L
             </div>
             <svg className="w-10 h-10 text-gray-200 dark:text-gray-600" aria-hidden="true"
                  xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 18">
