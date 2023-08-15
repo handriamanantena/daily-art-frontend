@@ -56,16 +56,16 @@ function Username({ pictures, userInfo }) {
 
     return (
        <BasicLayout>
-           <div className="flex flex-col-reverse bg-black h-[300px]">
+           <div className="flex flex-col-reverse bg-black md:h-[300px]">
                <div className="relative h-[100px] w-[100px] m-10">
                    <div className="ml-[110px] mt-5 grow">
                        <ProfilePicture userInfo={userInfo}/>
-                       <h1 className="text-white">{userInfo.userName}</h1>
+                       <h1 className="text-white hidden md:block">{userInfo.userName}</h1>
                    </div>
                    <div className="ml-[110px] flex flex-row grow">
-                       <h3 className="text-white whitespace-nowrap">{userInfo.streak} 記録破り Record Daily Streak</h3>
-                       <div className="border-l-2 border-white h-5 mx-4"/>
-                       <h3 className="text-white whitespace-nowrap">{userInfo.streak} 規律 Current Daily Streak</h3>
+                       <h3 className="text-white whitespace-nowrap hidden md:block">{userInfo.streak} 記録破り Record Daily Streak</h3>
+                       <div className="border-l-2 border-white h-5 mx-4 hidden md:block"/>
+                       <h3 className="text-white whitespace-nowrap hidden md:block">{userInfo.streak} 規律 Current Daily Streak</h3>
                    </div>
                </div>
            </div>
