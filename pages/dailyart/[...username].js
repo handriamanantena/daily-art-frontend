@@ -11,6 +11,7 @@ import {useShowPopUp} from "../../common/hooks/useShowPopUp";
 import {ProfilePicture} from "../../components/picture/ProfilePicture";
 import {useRouter} from "next/router";
 import {ArtistNavBar} from "../../components/common/ArtistNavBar";
+import {About} from "../../components/page/About";
 
 let pageSize = +(process.env.NEXT_PUBLIC_PAGE_SIZE);
 
@@ -42,7 +43,7 @@ function Username({ pictures, userInfo }) {
 
     let renderPage = (query) => {
         switch(query) {
-            case 'about': return (<h3 className="whitespace-nowrap mt-5">{userInfo.about}</h3>);
+            case 'about': return <About userInfo={userInfo}/>;
             default:
             return (<InfiniteScroll getObjects={getPictures} maxPage={100} lastElement={lastElement}>
                 <Gallery pictures={newPictures} setLastElement={setLastElement}>
