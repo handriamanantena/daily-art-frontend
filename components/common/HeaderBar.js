@@ -5,7 +5,7 @@ import AuthContext from "../../common/context/auth-context";
 import {useRouter} from "next/router";
 import {AddPictureButton} from "../button/addpictureButton";
 import useShowPopUp from "../../common/hooks/useShowPopUp";
-import {NavigationH3} from "./NavigationH3";
+import {H3NavHideOnMobile} from "./H3NavHideOnMobile";
 import {NavigationBar} from "./NavigationBar";
 
 
@@ -25,7 +25,7 @@ export function HeaderBar() {
 
     return (
         <Fragment>
-            <div className="sticky grid top-0 z-50 border-b h-16 bg-white content-center flex pl-5 items-center">
+            <div className="sticky grid top-0 z-50 border-b h-16 bg-white content-center flex items-center">
     <NavigationBar>
         <button className="flex-none pt-2">
             <Image src="/icons/bars-solid.svg" width={24} height={24} unoptimized/>
@@ -42,7 +42,7 @@ export function HeaderBar() {
                            src="/placeholder/picture.svg"
                            unoptimized/>
                 </div>
-                <NavigationH3 text="Add Picture"></NavigationH3>
+                <H3NavHideOnMobile text="Add Picture"/>
             </button>
         </AddPictureButton>
         {ctx.isLoggedIn && <div className="bg-slate-600 w-px h-5"/>}

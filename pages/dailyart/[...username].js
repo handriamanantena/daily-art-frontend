@@ -57,10 +57,10 @@ function Username({ pictures, userInfo }) {
     return (
        <BasicLayout>
            <div className="flex flex-col-reverse bg-black md:h-[300px]">
-               <div className="relative h-[100px] w-[100px] m-10">
+               <div className="relative h-[100px] w-[100px] m-5 md:m-10">
                    <div className="ml-[110px] mt-5 grow">
                        <ProfilePicture userInfo={userInfo}/>
-                       <h1 className="text-white hidden md:block">{userInfo.userName}</h1>
+                       <h1 className="text-white">{userInfo.userName}</h1>
                    </div>
                    <div className="ml-[110px] flex flex-row grow">
                        <h3 className="text-white whitespace-nowrap hidden md:block">{userInfo.streak} 記録破り Record Daily Streak</h3>
@@ -69,7 +69,7 @@ function Username({ pictures, userInfo }) {
                    </div>
                </div>
            </div>
-           <div className="grid top-0 z-50 border-b h-16 bg-white content-center flex pl-5 items-center mb-10">
+           <div className="grid top-0 z-50 border-b h-16 bg-white content-center flex items-center mb-10">
                 <ArtistNavBar userName={userInfo.userName}/>
            </div>
            {renderPage(router.query.username[1])}
