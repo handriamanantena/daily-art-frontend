@@ -3,14 +3,16 @@ import React from "react";
 import Moment from 'moment';
 import Link from "next/link";
 import {ProfilePicture} from "./picture/ProfilePicture";
+import {CommentSection} from "./input/CommentSection";
 
 
 function PictureInfo({userInfo, picture}) {
     console.log(picture.author)
-    let date = Moment(picture.date).format('d MMM')
+    let date = Moment(picture.date).format('YYYY年 MMM月 D日');
+
     return (
         <div className="grid place-content-center mb-5">
-            <div className="mt-3">
+            <div className="mt-3 grow md:max-w-screen-md md:min-w-[768px]">
                 <div className="flex flex-row">
                     <Link href={`/dailyart/${encodeURIComponent(picture.userName)}`}>
                         <a className="flex flex-row">
@@ -20,7 +22,9 @@ function PictureInfo({userInfo, picture}) {
                         </a>
                     </Link>
                     <div className="flex flex-col ml-3">
-                        <h1 className="">{picture.pictureName}</h1>
+                        <div className="flex flex-row">
+                            <h1 className="">{picture.pictureName}</h1>
+                        </div>
                         <div className="flex flex-row">
                             <p className="text-slate-500 mr-1 text-lg">Posted by:</p>
                             <Link href={`/dailyart/${encodeURIComponent(picture.userName)}`}>
@@ -30,33 +34,11 @@ function PictureInfo({userInfo, picture}) {
                             </Link>
                         </div>
                     </div>
+                    <div className="grow">
+                        <p className="float-right">{date}</p>
+                    </div>
                 </div>
             </div>
-            <div className="ml-[10px] md:max-w-screen-md md:min-w-[768px]">
-            <div className="flex flex-row">
-                <button className="flex flex-row pt-[10px]">
-                    <p className="mr-[5px]">6</p>
-                    <Image src="/icons/chat.svg" alt="Comment" width={24} height={24} unoptimized/>
-                    <p className="text-[0px] md:text-[16px] md:visible ml-[5px]">Comment</p>
-                </button>
-                <div className="flex flex-row-reverse grow">
-                    <button disabled={true} className="flex flex-row pt-[10px]">
-                        <p className="text-[0px] md:text-[16px] mr-[5px]">Views</p>
-                        <Image src="/icons/eye-fill.svg" width={24} height={24} unoptimized/>
-                    </button>
-                    <button className="pr-[5px] pt-[10px]">
-                        <Image src="/icons/trophy-fill.svg" alt="Award" width={24} height={24} unoptimized/>
-                    </button>
-                </div>
-            </div>
-            <div>
-                <p className="text-sm">{date}</p>
-            </div>
-            <form className="flex flex-col">
-                <label>Comments</label>
-                <textarea className="ml-10 h-[80px] bg-slate-200 mw-80"/>
-            </form>
-        </div>
         </div>);
 
 }
