@@ -54,23 +54,7 @@ function _Id({ picture, pictures, _id, foundPicture, initialIndex }) {
                            layout="fill"
                            unoptimized/>
                 </div>
-                <div className="grid content-center justify-items-center">
-                    <h1 className="">{picture.pictureName}</h1>
-                    <Link href={`/dailyart/${encodeURIComponent(picture.userName)}`}>
-                        <a className="flex flex-row">
-                            <div className="relative h-20 w-20">
-                                <ProfilePicture userInfo={userInfo}/>
-                            </div>
-                        </a>
-                    </Link>
-                    <p>Posted by: </p>
-                    <Link href={`/dailyart/${encodeURIComponent(picture.userName)}`}>
-                        <a className="flex flex-row">
-                            <h2 className="hover:text-cyan-600">{userInfo.userName}</h2>
-                        </a>
-                    </Link>
-                </div>
-                <PictureInfo picture={picture}></PictureInfo>
+                <PictureInfo picture={picture} userInfo={userInfo}></PictureInfo>
                 <InfiniteScroll getObjects = {getPictures} maxPage = {100} lastElement={lastElement}>
                     <Gallery pictures = {newPictures} setLastElement = {setLastElement}/>
                 </InfiniteScroll>
