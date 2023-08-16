@@ -14,7 +14,13 @@ async function getPictures() {
 
 async function getPictureById(id) {
     const host = process.env.NEXT_PUBLIC_PICTURES_API_HOST + process.env.NEXT_PUBLIC_PICTURES_API_PORT
-    const res = await fetch(host + "/pictures/" + id);
+    const res = await fetch(host + "/pictures/artists/" + id);
+    return await res.json()
+}
+
+async function getPictureWithProfilePicture(id) {
+    const host = process.env.NEXT_PUBLIC_PICTURES_API_HOST + process.env.NEXT_PUBLIC_PICTURES_API_PORT
+    const res = await fetch(host + "/pictures/artists/" + id + "?artistProjection=userName,profilePicture");
     return await res.json()
 }
 
@@ -65,4 +71,4 @@ async function getPicturesByArtistUserName(userName, pageSize, pageIndex) {
     return await res.json()
 }
 
-export {getNextGallery, getPictures, getPictureById, getPicturesByPage, getPicturesByArtistUserName}
+export {getNextGallery, getPictures, getPictureById, getPicturesByPage, getPicturesByArtistUserName, getPictureWithProfilePicture}

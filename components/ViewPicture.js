@@ -39,7 +39,7 @@ export const ViewPicture = ({picture}) => {
                         <ProfilePicture userInfo={userInfo}/>
                         <h3 className="text-white ml-9">{userInfo.userName}</h3>
                     </a>
-                </Link>L
+                </Link>
             </div>
             <svg className="w-10 h-10 text-gray-200 dark:text-gray-600" aria-hidden="true"
                  xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 18">

@@ -1,12 +1,14 @@
 import React, {useEffect, useRef, useState} from "react";
-import {getAllPictures, getPicture} from "../../common/GetPictures";
+import {getAllPictures} from "../../common/GetPictures";
 import Image from "next/image";
 import Gallery from "../../components/Gallery";
-import {getNextGallery, getPicturesByArtistUserName, getPicturesByPage} from "../../common/api/pictures";
+import {getPicturesByPage, getPictureWithProfilePicture} from "../../common/api/pictures";
 import {PictureInfo} from "../../components/PictureInfo"
 import {BasicLayout} from "../../components/common/BasicLayout";
 import {InfiniteScroll} from "../../components/InfiniteScroll";
 import { useRouter } from 'next/router'
+import Link from "next/link";
+import {ProfilePicture} from "../../components/picture/ProfilePicture";
 
 let pageSize = process.env.NEXT_PUBLIC_PAGE_SIZE;
 
@@ -14,6 +16,8 @@ function _Id({ picture, pictures, _id, foundPicture, initialIndex }) {
 
     let host = process.env.NEXT_PUBLIC_CDN_IMAGES;
     let url = encodeURI(host + picture?.url)
+    let profilePic = picture.profile[0]?.profilePicture ? picture.profile[0]?.profilePicture : "/placeholder/user-solid.svg";
+    let userInfo = { userName: picture.userName, profilePicture: profilePic};
 
     let [newPictures, setPictures] = useState(pictures)
     let [isLoading, setIsLoading] = useState(false)
@@ -43,14 +47,30 @@ function _Id({ picture, pictures, _id, foundPicture, initialIndex }) {
 
     return (
         <BasicLayout>
-            <div>
-                        <div className="relative h-[600px] lg:h-[1000px]">
-                            <Image className="object-contain"
-                                   src={url}
-                                   layout="fill"
-                                   unoptimized/>
-                        </div>
-                    <PictureInfo picture={picture}></PictureInfo>
+            <div className="mt-5">
+                <div className="relative h-[300px] md:h-[1000px] bg-gradient-to-r from-yellow-50">
+                    <Image className="object-contain"
+                           src={url}
+                           layout="fill"
+                           unoptimized/>
+                </div>
+                <div className="grid content-center justify-items-center">
+                    <h1 className="">{picture.pictureName}</h1>
+                    <Link href={`/dailyart/${encodeURIComponent(picture.userName)}`}>
+                        <a className="flex flex-row">
+                            <div className="relative h-20 w-20">
+                                <ProfilePicture userInfo={userInfo}/>
+                            </div>
+                        </a>
+                    </Link>
+                    <p>Posted by: </p>
+                    <Link href={`/dailyart/${encodeURIComponent(picture.userName)}`}>
+                        <a className="flex flex-row">
+                            <h2 className="hover:text-cyan-600">{userInfo.userName}</h2>
+                        </a>
+                    </Link>
+                </div>
+                <PictureInfo picture={picture}></PictureInfo>
                 <InfiniteScroll getObjects = {getPictures} maxPage = {100} lastElement={lastElement}>
                     <Gallery pictures = {newPictures} setLastElement = {setLastElement}/>
                 </InfiniteScroll>
@@ -105,7 +125,7 @@ export async function getStaticPaths() {
 export async function getStaticProps(context) {
     const { params } = context;
     const _id = params._id;
-    const picture = await getPicture(params._id)
+    const picture = await getPictureWithProfilePicture(params._id) // TODO need to add a filter on id. right now it returns all ids less than id
     const pictures =  await getPicturesByPage(null, pageSize, null);
     const initialIndex = pictures[pictures.length -1]._id
     let foundPicture = { foundPicture : false };
