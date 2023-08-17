@@ -7,8 +7,6 @@ import {PictureInfo} from "../../components/PictureInfo"
 import {BasicLayout} from "../../components/common/BasicLayout";
 import {InfiniteScroll} from "../../components/InfiniteScroll";
 import { useRouter } from 'next/router'
-import Link from "next/link";
-import {ProfilePicture} from "../../components/picture/ProfilePicture";
 
 let pageSize = process.env.NEXT_PUBLIC_PAGE_SIZE;
 
@@ -16,8 +14,8 @@ function _Id({ picture, pictures, _id, foundPicture, initialIndex }) {
 
     let host = process.env.NEXT_PUBLIC_CDN_IMAGES;
     let url = encodeURI(host + picture?.url)
-    let profilePic = picture.profile[0]?.profilePicture ? picture.profile[0]?.profilePicture : "/placeholder/user-solid.svg";
-    let userInfo = { userName: picture.userName, profilePicture: profilePic};
+    let profilePic = picture?.profile[0]?.profilePicture ? picture.profile[0]?.profilePicture : "/placeholder/user-solid.svg";
+    let userInfo = { userName: picture?.userName, profilePicture: profilePic};
 
     let [newPictures, setPictures] = useState(pictures)
     let [isLoading, setIsLoading] = useState(false)
@@ -83,7 +81,6 @@ let filterPicture = (response, _id, foundPicture) => {
 
 export async function setPicturesToParams() {
     let pictures = await getAllPictures()
-    console.log("these are the pics" + pictures)
     return pictures.map(picture => {
         return {
                 params: {
@@ -106,15 +103,14 @@ export async function getStaticPaths() {
     }
 }
 
-export async function getStaticProps(context) {
-    const { params } = context;
+export async function getStaticProps({params}) {
     const _id = params._id;
+    console.log("this is the path id: " + _id);
     const picture = await getPictureWithProfilePicture(params._id) // TODO need to add a filter on id. right now it returns all ids less than id
     const pictures =  await getPicturesByPage(null, pageSize, null);
     const initialIndex = pictures[pictures.length -1]._id
     let foundPicture = { foundPicture : false };
     let filteredPictures = filterPicture(pictures, _id, foundPicture);
-    console.log("_id initial " + JSON.stringify(filteredPictures));
     return {
         props: {
             picture,
