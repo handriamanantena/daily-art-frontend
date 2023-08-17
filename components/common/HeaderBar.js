@@ -58,7 +58,7 @@ export function HeaderBar() {
         </div>}
     </NavigationBar>
             </div>
-            <div className="bg-white md:h-24">
+            <div className="grid content-center bg-white md:h-24 border-b md:pb-3">
                 <h1 className="text-center md:text-7xl">Daily イラスト</h1>
             </div>
         </Fragment>)

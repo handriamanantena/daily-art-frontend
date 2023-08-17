@@ -1,4 +1,4 @@
-import { getNextGallery, getPictures, getPictureById } from "./api/pictures";
+import { getNextGallery, getPictures, getPictureById, getPictureWithProfilePicture } from "./api/pictures";
 
 
 async function getPicturesByPage(page, setPage, galleries, setGalleryList) {
@@ -19,8 +19,4 @@ async function getAllPictures() {
     return pictures
 }
 
-async function getPicture(id) {
-    return await getPictureById(id)
-}
-
-export {getPicturesByPage, getAllPictures, getPicture}
+export {getPicturesByPage, getAllPictures}
