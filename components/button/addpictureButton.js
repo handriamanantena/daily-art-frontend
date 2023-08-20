@@ -1,5 +1,5 @@
 import {Fragment, useContext, useRef, useState} from "react";
-import {AddPictureInfo} from "../forum/popup/AddPictureInfo";
+import {AddPictureInfo} from "../popup/AddPictureInfo";
 import React from "react";
 
 

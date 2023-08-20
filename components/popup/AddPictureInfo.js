@@ -1,14 +1,14 @@
 import {useEffect, useState, useContext} from "react";
-import BasicForumInput from "../inputs/input";
-import SubmitButton from "../inputs/SubmitButton";
-import style from "../../../styles/AddPictureInfo.module.css";
+import BasicForumInput from "../forum/inputs/input";
+import SubmitButton from "../forum/inputs/SubmitButton";
+import style from "../../styles/AddPictureInfo.module.css";
 import React from "react";
 import {default as NextImage} from "next/future/image";
-import {CancelButton} from "../../button/cancelButton";
-import AuthContext from "../../../common/context/auth-context";
-import {uploadImageToCloudflare} from "../../../common/api/cloudflare/workers";
+import {CancelButton} from "../button/cancelButton";
+import AuthContext from "../../common/context/auth-context";
+import {uploadImageToCloudflare} from "../../common/api/cloudflare/workers";
 import {useRouter} from "next/router";
-import Loading from "../../loading/Loading";
+import Loading from "../loading/Loading";
 
 const AddPictureInfo = ({hidePopUp}) => {
 
