@@ -18,7 +18,8 @@ export const DrawingOftheDay = () => {
     }, []);
 
 
-    return <div>
-        <p>{JSON.stringify(word)}</p>
+    return <div className="grid md:min-w-[24rem] px-10 pt-10 pb-10 min-h-[25rem] max-h-screen max-w-fit md:max-w-none">
+        <h1 className="justify-self-center">Today we are drawing</h1>
+        <h1 className="justify-self-center">{word.japanese}/{word.english}</h1>
     </div>
 }
