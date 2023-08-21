@@ -49,7 +49,7 @@ function Username({ pictures, userInfo }) {
             return (<InfiniteScroll getObjects={getPictures} maxPage={100} lastElement={lastElement}>
                 <Gallery pictures={newPictures} setLastElement={setLastElement}>
                     {ctx.userName == userInfo.userName ?
-                        <PopUp button={<StyledAddPicture showPopUp={showPopUp} text="+"/>} popup={<AddPictureInfo hidePopUp={hidePopUp}/>} isShowPopup={isShowPopup}/> : <Fragment/>}
+                        <PopUp button={<StyledAddPicture showPopUp={showPopUp} text="+"/>} popup={<AddPictureInfo/>} isShowPopup={isShowPopup} hidePopUp={hidePopUp}/> : <Fragment/>}
                 </Gallery>
             </InfiniteScroll>);
         }

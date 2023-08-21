@@ -5,6 +5,9 @@ import {getPicturesByPage} from "../common/api/pictures";
 import {BasicLayout} from "../components/common/BasicLayout";
 import {InfiniteScroll} from "../components/InfiniteScroll";
 import Loading from "../components/loading/Loading";
+import {DrawingOftheDay} from "../components/popup/DrawingOfTheDay";
+import {PopUp} from "../components/popup/Popup";
+import useShowPopUp from "../common/hooks/useShowPopUp";
 
 let pageSize = 14;
 
@@ -14,6 +17,7 @@ function DailyArt({ pictures }) {
     let [isLoading, setIsLoading] = useState(false)
     let [lastElement, setLastElement] = useState(null);
     let [pageIndex, setPageIndex] = useState(pictures[pictures?.length - 1]._id);
+    const [isShowPopup, hidePopUp, showPopUp] = useShowPopUp(true);
 
     let getPictures = async () => {
         setIsLoading(true)
@@ -28,6 +32,7 @@ function DailyArt({ pictures }) {
 
    return (
        <BasicLayout>
+           <PopUp popup={<DrawingOftheDay/>} isShowPopup={isShowPopup} hidePopUp={hidePopUp}/>
           <InfiniteScroll getObjects = {getPictures} maxPage = {10} lastElement={lastElement}>
              <Gallery pictures = {newPictures} setLastElement = {setLastElement}/>
               { isLoading ? <Loading><p>Loading...</p></Loading> : <Fragment></Fragment>}
