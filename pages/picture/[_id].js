@@ -2,7 +2,7 @@ import React, {useEffect, useRef, useState} from "react";
 import {getAllPictures} from "../../common/GetPictures";
 import Image from "next/image";
 import Gallery from "../../components/Gallery";
-import {getPicturesByPage, getPictureWithProfilePicture} from "../../common/api/pictures";
+import {getPicturesByArtistUserName, getPicturesByPage, getPictureWithProfilePicture} from "../../common/api/pictures";
 import {PictureInfo} from "../../components/PictureInfo"
 import {BasicLayout} from "../../components/common/BasicLayout";
 import {InfiniteScroll} from "../../components/InfiniteScroll";
@@ -24,7 +24,7 @@ function _Id({ picture, pictures, _id, foundPicture, initialIndex }) {
 
     let getPictures = async () => {
         setIsLoading(true)
-        let response = await getPicturesByPage(null, pageSize, pageIndex);
+        let response = await getPicturesByArtistUserName(picture.userName, pageSize, pageIndex);
 
         if(response.length > 0) {
             let filteredResponse = filterPicture(response, _id, foundPicture);
@@ -107,8 +107,8 @@ export async function getStaticProps({params}) {
     const _id = params._id;
     console.log("this is the path id: " + _id);
     const picture = await getPictureWithProfilePicture(params._id) // TODO need to add a filter on id. right now it returns all ids less than id
-    const pictures =  await getPicturesByPage(null, pageSize, null);
-    const initialIndex = pictures[pictures.length -1]._id
+    const pictures = await getPicturesByArtistUserName(picture.userName, pageSize, 0);
+    const initialIndex = pictures ? pictures[pictures.length -1]._id : undefined
     let foundPicture = { foundPicture : false };
     let filteredPictures = filterPicture(pictures, _id, foundPicture);
     return {
