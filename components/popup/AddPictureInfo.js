@@ -9,6 +9,7 @@ import AuthContext from "../../common/context/auth-context";
 import {uploadImageToCloudflare} from "../../common/api/cloudflare/workers";
 import {useRouter} from "next/router";
 import Loading from "../loading/Loading";
+import Label from "../forum/inputs/label";
 
 const AddPictureInfo = () => {
 
@@ -132,7 +133,9 @@ const AddPictureInfo = () => {
 
     return (
             <form className="flex flex-grow flex-col space-y-1 md:min-w-[24rem] px-10 pt-10 pb-10 min-h-[25rem] max-h-screen max-w-fit md:max-w-none" onSubmit={handleSubmit} encType="multipart/form-data">
-                <h2 className="font-extrabold">Create DailyArt</h2>
+                <h2 className="font-extrabold">Upload Drawing</h2>
+                <input type="radio" id="dailyChallenge" name="dailyChallenge" value="Test"/>
+                <label htmlFor="dailyChallenge">Yes</label>
                 <label htmlFor="pictureName">Title</label>
                 <BasicForumInput type="text" id="pictureName" name="pictureName" maxLength="15"/>
                 {fileDataURL && errorText == undefined ?
@@ -162,7 +165,7 @@ const AddPictureInfo = () => {
                             </div>
                         </label>
                     </div>}
-                <SubmitButton text="Add Picture"/>
+                <SubmitButton text="Submit"/>
             </form>);
 };
 
