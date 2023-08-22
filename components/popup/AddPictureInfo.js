@@ -1,16 +1,16 @@
 import {useEffect, useState, useContext} from "react";
-import BasicForumInput from "../inputs/input";
-import SubmitButton from "../inputs/SubmitButton";
-import style from "../../../styles/AddPictureInfo.module.css";
+import BasicForumInput from "../forum/inputs/input";
+import SubmitButton from "../forum/inputs/SubmitButton";
+import style from "../../styles/AddPictureInfo.module.css";
 import React from "react";
 import {default as NextImage} from "next/future/image";
-import {CancelButton} from "../../button/cancelButton";
-import AuthContext from "../../../common/context/auth-context";
-import {uploadImageToCloudflare} from "../../../common/api/cloudflare/workers";
+import {CancelButton} from "../button/cancelButton";
+import AuthContext from "../../common/context/auth-context";
+import {uploadImageToCloudflare} from "../../common/api/cloudflare/workers";
 import {useRouter} from "next/router";
-import Loading from "../../loading/Loading";
+import Loading from "../loading/Loading";
 
-const AddPictureInfo = ({hidePopUp}) => {
+const AddPictureInfo = () => {
 
     const ctx = useContext(AuthContext);
     const [file, setFile] = useState("");
@@ -91,13 +91,6 @@ const AddPictureInfo = ({hidePopUp}) => {
         };
     }, [fileDataURL]);
 
-    let onclick = (e) => {
-        if(e.target === e.currentTarget) {
-            hidePopUp();
-        }
-    };
-
-
     const handleSubmit = async (e) => {
         console.log("submit");
         e.preventDefault();
@@ -124,7 +117,6 @@ const AddPictureInfo = ({hidePopUp}) => {
             else {
                 console.log("added picture");
                 setTimeout(() => {
-                    hidePopUp();
                     setLoadingMessage("Success");
                     setIsLoading(false);
                     window.location.reload();
@@ -138,11 +130,7 @@ const AddPictureInfo = ({hidePopUp}) => {
         }
     };
 
-    return (<div className={style.blurryBackground} onClick={onclick}>
-        <div className={style.popup}>
-            <div className="relative m-1">
-                <CancelButton onclick={hidePopUp}/>
-            </div>
+    return (
             <form className="flex flex-grow flex-col space-y-1 md:min-w-[24rem] px-10 pt-10 pb-10 min-h-[25rem] max-h-screen max-w-fit md:max-w-none" onSubmit={handleSubmit} encType="multipart/form-data">
                 <h2 className="font-extrabold">Create DailyArt</h2>
                 <label htmlFor="pictureName">Title</label>
@@ -175,9 +163,7 @@ const AddPictureInfo = ({hidePopUp}) => {
                         </label>
                     </div>}
                 <SubmitButton text="Add Picture"/>
-            </form>
-        </div>
-        </div>);
+            </form>);
 };
 
 export {AddPictureInfo}
