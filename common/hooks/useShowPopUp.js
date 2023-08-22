@@ -1,7 +1,7 @@
 import {useState} from "react";
 
-export const useShowPopUp = () => {
-    const [isShowPopup, setIsShowPopup] = useState(false);
+export const useShowPopUp = (initial) => {
+    const [isShowPopup, setIsShowPopup] = useState(!!initial);
 
     const hidePopUp = () => {
         setIsShowPopup(false);

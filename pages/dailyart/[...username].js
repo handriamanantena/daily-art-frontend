@@ -4,7 +4,6 @@ import {BasicLayout} from "../../components/common/BasicLayout";
 import {getArtists} from "../../common/api/artists";
 import {getPicturesByArtistUserName} from "../../common/api/pictures";
 import {InfiniteScroll} from "../../components/InfiniteScroll"
-import {AddPictureButton} from "../../components/button/addpictureButton";
 import AuthContext from "../../common/context/auth-context";
 import {StyledAddPicture} from "../../components/button/StyledAddPicture";
 import {useShowPopUp} from "../../common/hooks/useShowPopUp";
@@ -12,6 +11,8 @@ import {ProfilePicture} from "../../components/picture/ProfilePicture";
 import {useRouter} from "next/router";
 import {ArtistNavBar} from "../../components/common/ArtistNavBar";
 import {About} from "../../components/page/About";
+import {PopUp} from "../../components/popup/Popup";
+import {AddPictureInfo} from "../../components/popup/AddPictureInfo";
 
 let pageSize = +(process.env.NEXT_PUBLIC_PAGE_SIZE);
 
@@ -48,8 +49,7 @@ function Username({ pictures, userInfo }) {
             return (<InfiniteScroll getObjects={getPictures} maxPage={100} lastElement={lastElement}>
                 <Gallery pictures={newPictures} setLastElement={setLastElement}>
                     {ctx.userName == userInfo.userName ?
-                        <AddPictureButton isShowPopup={isShowPopup} hidePopUp={hidePopUp}><StyledAddPicture
-                            showPopUp={showPopUp} text="+"/></AddPictureButton> : <Fragment></Fragment>}
+                        <PopUp button={<StyledAddPicture showPopUp={showPopUp} text="+"/>} popup={<AddPictureInfo/>} isShowPopup={isShowPopup} hidePopUp={hidePopUp}/> : <Fragment/>}
                 </Gallery>
             </InfiniteScroll>);
         }
