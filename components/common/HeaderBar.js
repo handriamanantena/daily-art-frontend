@@ -11,6 +11,7 @@ import {AddPictureInfo} from "../popup/AddPictureInfo";
 import {NavigationButton} from "../button/NavigationButton";
 import {NavigationImage} from "../image/NavigationImage";
 import {DropDown} from "../button/DropDown";
+import {DropDownLink} from "../Link/DropDownLink";
 
 
 export function HeaderBar() {
@@ -37,15 +38,23 @@ export function HeaderBar() {
         <NavigationImageLink path="/" imagePath="/icons/pen-to-square-regular.svg" text="Daily イラスト"/>
         <div className="bg-slate-600 w-px h-5"/>
             {ctx.isLoggedIn && <NavigationImageLink path={`/dailyart/[username]`} as={`/dailyart/${ctx.userName}`} text="My Art" imagePath="/placeholder/user-solid.svg"/>}
-        <PopUp button={
-            <NavigationButton className="pl-1 pr-2 flex" onClick={showPopUp} title="Add Drawing">
-                <NavigationImage image="/placeholder/picture.svg"/>
-                <H3NavHideOnMobile text="Add Drawing"/>
-            </NavigationButton>}
-               popup={<AddPictureInfo/>}
-               isShowPopup={isShowPopup}
-               hidePopUp={hidePopUp}/>
-        <DropDown/>
+        <DropDown>
+            <div className="bg-black ">
+                <div className="hover:bg-cyan-600 p-3">
+                    <PopUp button={
+                        <NavigationButton onClick={showPopUp} title="Add Drawing">
+                            <NavigationImage image="/placeholder/picture.svg"/>
+                            <h3 className="font-bold text-white">Add Drawing</h3>
+                        </NavigationButton>}
+                           popup={<AddPictureInfo/>}
+                           isShowPopup={isShowPopup}
+                           hidePopUp={hidePopUp}/>
+                </div>
+                <div className="hover:bg-cyan-600 p-3">
+                    <DropDownLink path={`/dailyart`} text="Daily Challenge"/>
+                </div>
+            </div>
+        </DropDown>
         {ctx.isLoggedIn && <div className="bg-slate-600 w-px h-5"/>}
         {ctx.isLoggedIn && <div className="flex ml-auto mr-2">
             <button onClick={logout}>

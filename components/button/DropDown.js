@@ -3,6 +3,7 @@ import {NavigationBar} from "../common/NavigationBar";
 import React, {useState} from "react";
 import {H3NavHideOnMobile} from "../common/H3NavHideOnMobile";
 import {NavigationButton} from "./NavigationButton";
+import {DropDownLink} from "../Link/DropDownLink";
 
 export const DropDown = ({children}) => {
 
@@ -12,17 +13,12 @@ export const DropDown = ({children}) => {
         setShow(!show);
     }
 
-    return <div className="flex static">
-        <button onMouseOver={dropDown} className="">
-            <H3NavHideOnMobile text="Add Drawing"/>
+    return <div className="group flex static">
+        <button className="">
+            <h3 className="font-bold hover:text-cyan-600">Add Picture</h3>
         </button>
-        <div hidden={show} className="grow absolute top-14 bg-white w-40">
-            <div className="hover:bg-slate-300">
-                <NavigationLink path={`/dailyart`} text="Link 1"/>
-            </div>
-            <div className="hover:bg-slate-300">
-                <NavigationLink path={`/dailyart`} text="Link 2"/>
-            </div>
+        <div className="flex-col-reverse grow absolute w-40 h-36 top-4 hidden group-hover:flex hover:flex">
+            {children}
         </div>
     </div>
 }
