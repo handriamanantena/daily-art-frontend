@@ -11,14 +11,15 @@ import {AddPictureInfo} from "../popup/AddPictureInfo";
 import {NavigationButton} from "../button/NavigationButton";
 import {NavigationImage} from "../image/NavigationImage";
 import {DropDown} from "../button/DropDown";
-import {DropDownLink} from "../Link/DropDownLink";
+import {DrawingOftheDay} from "../popup/DrawingOfTheDay";
 
 
 export function HeaderBar() {
 
     const router = useRouter();
     const ctx = useContext(AuthContext);
-    const [isShowPopup, hidePopUp, showPopUp] = useShowPopUp();
+    const [isShowAddPicture, hideAddPicture, showAddPicture] = useShowPopUp();
+    const [isShowDailyChallenge, hideDailyChallenge, showDailyChallenge] = useShowPopUp();
 
     const logout = () => {
       ctx.logout();
@@ -46,15 +47,21 @@ export function HeaderBar() {
             <div className="bg-black">
                 <div className="hover:bg-cyan-600 p-3 slate-400 border-b border-x">
                     <PopUp button={
-                        <NavigationButton onClick={showPopUp} title="Add Drawing">
+                        <NavigationButton onClick={showAddPicture} title="Add Drawing">
                             <h3 className="font-bold text-white">Add Drawing</h3>
                         </NavigationButton>}
                            popup={<AddPictureInfo/>}
-                           isShowPopup={isShowPopup}
-                           hidePopUp={hidePopUp}/>
+                           isShowPopup={isShowAddPicture}
+                           hidePopUp={hideAddPicture}/>
                 </div>
                 <div className="hover:bg-cyan-600 p-3 slate-400 border-b border-x">
-                    <DropDownLink path={`/dailyart`} text="Daily Challenge"/>
+                    <PopUp button={
+                        <NavigationButton onClick={showDailyChallenge} title="Daily Challenge">
+                            <h3 className="font-bold text-white">Daily Challenge</h3>
+                        </NavigationButton>}
+                           popup={<DrawingOftheDay/>}
+                           isShowPopup={isShowDailyChallenge}
+                           hidePopUp={hideDailyChallenge}/>
                 </div>
             </div>
         </DropDown>

@@ -2,7 +2,7 @@ import React, {useState} from "react";
 
 export const DropDown = ({children, menuOption}) => {
 
-    let [hidden, setHidden] = useState(false);
+    let [hidden, setHidden] = useState(true);
 
     let dropDown = () => {
         console.log("clicked")
