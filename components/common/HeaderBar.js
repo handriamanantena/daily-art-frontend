@@ -38,7 +38,11 @@ export function HeaderBar() {
         <NavigationImageLink path="/" imagePath="/icons/pen-to-square-regular.svg" text="Daily イラスト"/>
         <div className="bg-slate-600 w-px h-5"/>
             {ctx.isLoggedIn && <NavigationImageLink path={`/dailyart/[username]`} as={`/dailyart/${ctx.userName}`} text="My Art" imagePath="/placeholder/user-solid.svg"/>}
-        <DropDown>
+        <DropDown menuOption={
+            <button className="z-40 hover:text-cyan-600">
+                <NavigationImage image="/placeholder/picture.svg"/>
+                <H3NavHideOnMobile text="Add Drawing"/>
+            </button>}>
             <div className="bg-black">
                 <div className="hover:bg-cyan-600 p-3 slate-400 border-b border-x">
                     <PopUp button={
