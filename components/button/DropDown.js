@@ -8,17 +8,12 @@ import {NavigationImage} from "../image/NavigationImage";
 
 export const DropDown = ({children}) => {
 
-    let [show, setShow] = useState(false);
-
-    let dropDown = () => {
-        setShow(!show);
-    }
-
     return <div className="group flex static">
         <button className="z-10 hover:text-cyan-600">
-            <h3 className="font-bold hover:text-cyan-600">Add Picture</h3>
+            <NavigationImage image="/placeholder/picture.svg"/>
+            <H3NavHideOnMobile text="Add Drawing"/>
         </button>
-        <div className="flex-col-reverse grow absolute w-40 h-36 top-4 hidden group-hover:flex hover:flex">
+        <div className="flex-col-reverse grow absolute w-40 h-36 top-[17px] hidden group-hover:flex hover:flex">
             {children}
         </div>
     </div>
