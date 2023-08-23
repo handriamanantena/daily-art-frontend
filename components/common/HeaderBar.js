@@ -39,18 +39,17 @@ export function HeaderBar() {
         <div className="bg-slate-600 w-px h-5"/>
             {ctx.isLoggedIn && <NavigationImageLink path={`/dailyart/[username]`} as={`/dailyart/${ctx.userName}`} text="My Art" imagePath="/placeholder/user-solid.svg"/>}
         <DropDown>
-            <div className="bg-black ">
-                <div className="hover:bg-cyan-600 p-3">
+            <div className="bg-black">
+                <div className="hover:bg-cyan-600 p-3 slate-400 border-b border-x">
                     <PopUp button={
                         <NavigationButton onClick={showPopUp} title="Add Drawing">
-                            <NavigationImage image="/placeholder/picture.svg"/>
                             <h3 className="font-bold text-white">Add Drawing</h3>
                         </NavigationButton>}
                            popup={<AddPictureInfo/>}
                            isShowPopup={isShowPopup}
                            hidePopUp={hidePopUp}/>
                 </div>
-                <div className="hover:bg-cyan-600 p-3">
+                <div className="hover:bg-cyan-600 p-3 slate-400 border-b border-x">
                     <DropDownLink path={`/dailyart`} text="Daily Challenge"/>
                 </div>
             </div>
