@@ -3,6 +3,9 @@ import {getWordOfTheDay} from "../../common/api/words";
 import SubmitButton from "../forum/inputs/SubmitButton";
 import Label from "../forum/inputs/label";
 import React from "react";
+import BasicForumInput from "../forum/inputs/input";
+import {default as NextImage} from "next/future/image";
+import Loading from "../loading/Loading";
 
 export const DrawingOftheDay = () => {
 
@@ -25,8 +28,5 @@ export const DrawingOftheDay = () => {
         <h1 className="justify-self-center">Today's daily drawing challenge...</h1>
         <h1 className="justify-self-center text-6xl py-5">🎨</h1>
         <h1 className="justify-self-center text-slate-400">{word.japanese}/{word.english}</h1>
-        <form className="flex flex-col pt-5">
-            <SubmitButton text="Enter Daily Challenge"/>
-        </form>
     </div>
 }
