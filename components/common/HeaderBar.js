@@ -32,6 +32,12 @@ export function HeaderBar() {
     return (
         <Fragment>
             <div className="sticky grid top-0 z-50 border-b h-16 bg-white content-center flex items-center">
+                <PopUp popup={<AddPictureInfo/>}
+                       isShowPopup={isShowAddPicture}
+                       hidePopUp={hideAddPicture}/>
+                <PopUp popup={<DrawingOftheDay/>}
+                       isShowPopup={isShowDailyChallenge}
+                       hidePopUp={hideDailyChallenge}/>
     <NavigationBar>
         <button className="flex-none pt-2">
             <Image src="/icons/bars-solid.svg" width={24} height={24} unoptimized/>
@@ -48,22 +54,14 @@ export function HeaderBar() {
             </button>}>
             <div className="bg-black">
                 <div className="hover:bg-cyan-600 p-3 slate-400 border-b border-x">
-                    <PopUp button={
-                        <NavigationButton onClick={showAddPicture} title="Add Drawing">
-                            <h3 className="font-bold text-white">Add Drawing</h3>
-                        </NavigationButton>}
-                           popup={<AddPictureInfo/>}
-                           isShowPopup={isShowAddPicture}
-                           hidePopUp={hideAddPicture}/>
+                    <NavigationButton onClick={showAddPicture} title="Add Drawing">
+                        <h3 className="font-bold text-white">Add Drawing</h3>
+                    </NavigationButton>
                 </div>
                 <div className="hover:bg-cyan-600 p-3 slate-400 border-b border-x">
-                    <PopUp button={
-                        <NavigationButton onClick={showDailyChallenge} title="Daily Challenge">
-                            <h3 className="font-bold text-white">Daily Challenge</h3>
-                        </NavigationButton>}
-                           popup={<DrawingOftheDay/>}
-                           isShowPopup={isShowDailyChallenge}
-                           hidePopUp={hideDailyChallenge}/>
+                    <NavigationButton onClick={showDailyChallenge} title="Daily Challenge">
+                        <h3 className="font-bold text-white">Daily Challenge</h3>
+                    </NavigationButton>
                 </div>
             </div>
         </DropDown>
