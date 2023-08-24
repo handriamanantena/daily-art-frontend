@@ -8,13 +8,18 @@ import {H3NavHideOnMobile} from "./H3NavHideOnMobile";
 import {NavigationBar} from "./NavigationBar";
 import {PopUp} from "../popup/Popup";
 import {AddPictureInfo} from "../popup/AddPictureInfo";
+import {NavigationButton} from "../button/NavigationButton";
+import {NavigationImage} from "../image/NavigationImage";
+import {DropDown} from "../button/DropDown";
+import {DrawingOftheDay} from "../popup/DrawingOfTheDay";
 
 
 export function HeaderBar() {
 
     const router = useRouter();
     const ctx = useContext(AuthContext);
-    const [isShowPopup, hidePopUp, showPopUp] = useShowPopUp();
+    const [isShowAddPicture, hideAddPicture, showAddPicture] = useShowPopUp();
+    const [isShowDailyChallenge, hideDailyChallenge, showDailyChallenge] = useShowPopUp();
 
     const logout = () => {
       ctx.logout();
@@ -27,28 +32,40 @@ export function HeaderBar() {
     return (
         <Fragment>
             <div className="sticky grid top-0 z-50 border-b h-16 bg-white content-center flex items-center">
+                <PopUp popup={<AddPictureInfo/>}
+                       isShowPopup={isShowAddPicture}
+                       hidePopUp={hideAddPicture}/>
+                <PopUp popup={<DrawingOftheDay/>}
+                       isShowPopup={isShowDailyChallenge}
+                       hidePopUp={hideDailyChallenge}/>
     <NavigationBar>
         <button className="flex-none pt-2">
             <Image src="/icons/bars-solid.svg" width={24} height={24} unoptimized/>
         </button>
         <NavigationImageLink path="/" imagePath="/icons/pen-to-square-regular.svg" text="Daily イラスト"/>
-        <div className="bg-slate-600 w-px h-5"/>
+        <div className="bg-slate-600 w-px h-5 mx-2"/>
             {ctx.isLoggedIn && <NavigationImageLink path={`/dailyart/[username]`} as={`/dailyart/${ctx.userName}`} text="My Art" imagePath="/placeholder/user-solid.svg"/>}
-        <PopUp button={
-            <button className="pl-1 pr-2 flex" onClick={showPopUp} title="Add Picture">
-                <div className="md:hidden flex items-center justify-center">
-                    <Image className="object-cover h-full rounded-md"
-                           width={20}
-                           height={20}
-                           src="/placeholder/picture.svg"
-                           unoptimized/>
+        <DropDown menuOption={
+            <button className="z-40 hover:text-cyan-600">
+                <div className="flex flex-row group">
+                    <NavigationImage image="/placeholder/picture.svg"/>
+                    <H3NavHideOnMobile text="Submit"/>
                 </div>
-                <H3NavHideOnMobile text="Add Picture"/>
-            </button>}
-               popup={<AddPictureInfo/>}
-               isShowPopup={isShowPopup}
-               hidePopUp={hidePopUp}/>
-        {ctx.isLoggedIn && <div className="bg-slate-600 w-px h-5"/>}
+            </button>}>
+            <div className="bg-black">
+                <div className="hover:bg-cyan-600 p-3 slate-400 border-b border-x">
+                    <NavigationButton onClick={showAddPicture} title="Add Drawing">
+                        <h3 className="font-bold text-white">Add Drawing</h3>
+                    </NavigationButton>
+                </div>
+                <div className="hover:bg-cyan-600 p-3 slate-400 border-b border-x">
+                    <NavigationButton onClick={showDailyChallenge} title="Daily Challenge">
+                        <h3 className="font-bold text-white">Daily Challenge</h3>
+                    </NavigationButton>
+                </div>
+            </div>
+        </DropDown>
+        {ctx.isLoggedIn && <div className="bg-slate-600 w-px h-5 ml-5 mx-2"/>}
         {ctx.isLoggedIn && <div className="flex ml-auto mr-2">
             <button onClick={logout}>
                 <h3 className="font-bold hover:text-cyan-600">Log out</h3>

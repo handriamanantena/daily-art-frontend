@@ -8,7 +8,7 @@ body {
   margin: 0;
   font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen,
     Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
-  background-color: #fffbee;
+  /*background-color: #fffbee;*/
   /*background: linear-gradient(90deg, rgba(233,200,171,1) 0%, rgba(255,230,208,1) 53%, rgba(255,255,255,1) 100%);*/
 
 }
@@ -30,4 +30,8 @@ a {
     @apply text-xl font-bold;
   }
   /* ... */
+}
+
+[hidden] {
+  display: none !important;
 }

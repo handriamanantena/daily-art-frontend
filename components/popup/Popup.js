@@ -3,7 +3,7 @@ import React from "react";
 import style from "../../styles/AddPictureInfo.module.css";
 import {CancelButton} from "../button/cancelButton";
 
-export const PopUp = ({button, popup, isShowPopup, hidePopUp}) => {
+export const PopUp = ({popup, isShowPopup, hidePopUp}) => {
 
     let onclick = (e) => {
         if(e.target === e.currentTarget) {
@@ -14,7 +14,6 @@ export const PopUp = ({button, popup, isShowPopup, hidePopUp}) => {
 
     return (
         <Fragment>
-            {button}
             { isShowPopup ?
                 <div className={style.blurryBackground} onClick={onclick}>
                     <div className={style.popup}>
