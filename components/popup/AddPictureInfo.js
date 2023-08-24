@@ -31,7 +31,7 @@ const AddPictureInfo = () => {
 
     return (
             <form className="flex flex-grow flex-col space-y-1 md:min-w-[24rem] px-10 pt-10 pb-10 min-h-[25rem] max-h-screen max-w-fit md:max-w-none" onSubmit={handleSubmit} encType="multipart/form-data">
-                <h2 className="font-extrabold">Create DailyArt</h2>
+                <h2 className="font-extrabold">Create Daily イラスト</h2>
                 <label htmlFor="pictureName">Title</label>
                 <BasicForumInput type="text" id="pictureName" name="pictureName" maxLength="15"/>
                 <ImageInput file={file} setFile={setFile} loadingMessage={loadingMessage} setLoadingMessage={setLoadingMessage}

@@ -85,7 +85,7 @@ export const ImageInput = ({file, setFile, loadingMessage, setLoadingMessage, is
                 <div className="pl-[45%]">
                     <NextImage src="/icons/palette-solid.svg" width={24} height={24} unoptimized alt="Image"/>
                 </div>
-                <p>Import File</p>
+                <p>Import Drawing</p>
                 {errorText ? <p data-testid="file-message" className="text-red-500">{errorText}</p> : <></>}
                 <div className="content-center text-center h-1">
                     <input data-testid="file-input" id="file" type="file" onChange={handleFileChange} accept="image/*" hidden={false} name="file" className="opacity-0 h-1 w-1" required={true}/>
