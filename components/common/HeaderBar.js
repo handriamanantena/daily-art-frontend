@@ -37,12 +37,14 @@ export function HeaderBar() {
             <Image src="/icons/bars-solid.svg" width={24} height={24} unoptimized/>
         </button>
         <NavigationImageLink path="/" imagePath="/icons/pen-to-square-regular.svg" text="Daily イラスト"/>
-        <div className="bg-slate-600 w-px h-5"/>
+        <div className="bg-slate-600 w-px h-5 mx-2"/>
             {ctx.isLoggedIn && <NavigationImageLink path={`/dailyart/[username]`} as={`/dailyart/${ctx.userName}`} text="My Art" imagePath="/placeholder/user-solid.svg"/>}
         <DropDown menuOption={
             <button className="z-40 hover:text-cyan-600">
-                <NavigationImage image="/placeholder/picture.svg"/>
-                <H3NavHideOnMobile text="Add Drawing"/>
+                <div className="flex flex-row group">
+                    <NavigationImage image="/placeholder/picture.svg"/>
+                    <H3NavHideOnMobile text="Submit"/>
+                </div>
             </button>}>
             <div className="bg-black">
                 <div className="hover:bg-cyan-600 p-3 slate-400 border-b border-x">
@@ -65,7 +67,7 @@ export function HeaderBar() {
                 </div>
             </div>
         </DropDown>
-        {ctx.isLoggedIn && <div className="bg-slate-600 w-px h-5"/>}
+        {ctx.isLoggedIn && <div className="bg-slate-600 w-px h-5 ml-5 mx-2"/>}
         {ctx.isLoggedIn && <div className="flex ml-auto mr-2">
             <button onClick={logout}>
                 <h3 className="font-bold hover:text-cyan-600">Log out</h3>
