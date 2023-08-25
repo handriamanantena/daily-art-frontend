@@ -36,24 +36,29 @@ export const DrawingOftheDay = () => {
         router.push("/join");
     }
 
+    let uploadPicture = (e) => {
+        e.preventDefault();
+        handleSubmit(undefined, word.japanese);
+    }
+
     return <div className="flex flex-grow flex-col space-y-1 md:min-w-[24rem] px-10 pt-10 pb-10 max-w-fit md:max-w-none">
         <h2 className="font-extrabold mb-5">Daily Challenge 🚀</h2>
         <p>Today&apos;s Drawing Challenge:</p>
         <div className="grid">
-            {isLoadingWord || word.english == undefined || word.japanese == undefined ? <Loading></Loading> : <h1 className="justify-self-center">{word.english}/{word.japanese}</h1>}
-        </div>
-        {ctx.isLoggedIn ?
-            <Fragment>
-                <div className="flex min-h-[174px]">
-                    <ImageInput file={file} setFile={setFile} loadingMessage={loadingMessage}
-                                setLoadingMessage={setLoadingMessage}
-                                isLoading={isLoading} setIsLoading={setIsLoading} errorText={errorText}
-                                setErrorText={setErrorText}/>
-                </div>
+            {isLoadingWord || word.english == undefined || word.japanese == undefined ? <Loading></Loading> : ctx.isLoggedIn ?
+                <Fragment>
+                    <h1 className="justify-self-center">{word.english}/{word.japanese}</h1>
+                    <div className="flex min-h-[174px]">
+                        <ImageInput file={file} setFile={setFile} loadingMessage={loadingMessage}
+                                    setLoadingMessage={setLoadingMessage}
+                                    isLoading={isLoading} setIsLoading={setIsLoading} errorText={errorText}
+                                    setErrorText={setErrorText}/>
+                    </div>
 
-                <form className="flex flex-col" onSubmit={handleSubmit} encType="multipart/form-data">
-                    <SubmitButton text="Submit"/>
-                </form>
-            </Fragment> : <Button onclick={joinUs} text="Join Us"/>}
+                    <form className="flex flex-col" onSubmit={uploadPicture} encType="multipart/form-data">
+                        <SubmitButton text="Submit"/>
+                    </form>
+                </Fragment> : <Button onclick={joinUs} text="Join Us"/>}
+        </div>
     </div>
 }

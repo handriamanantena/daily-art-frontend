@@ -12,14 +12,13 @@ export const useUploadPicture = () => {
     const [isLoading, setIsLoading] = useState(false);
     const [errorText, setErrorText] = useState(undefined);
 
-    const handleSubmit = async (e) => {
+    const handleSubmit = async (pictureName, dailyChallenge) => {
         console.log("submit");
-        e.preventDefault();
         try {
             console.log("submit");
             setIsLoading(true);
             setLoadingMessage("Uploading...");
-            let signedUrl = await uploadImageToCloudflare(ctx.userName, e.target.pictureName?.value, ctx.token);
+            let signedUrl = await uploadImageToCloudflare(ctx.userName, pictureName, dailyChallenge, ctx.token);
             console.log(signedUrl);
             let response = await fetch(signedUrl, {
                 method: "PUT",
