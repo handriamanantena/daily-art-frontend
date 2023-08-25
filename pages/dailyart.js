@@ -1,5 +1,5 @@
 import Gallery from "../components/Gallery";
-import React, {useState, Fragment} from 'react';
+import React, {useState, Fragment, useContext} from 'react';
 import dailyArt from '../styles/DailyArt.module.css'
 import {getPicturesByPage} from "../common/api/pictures";
 import {BasicLayout} from "../components/common/BasicLayout";
@@ -8,6 +8,7 @@ import Loading from "../components/loading/Loading";
 import {DrawingOftheDay} from "../components/popup/DrawingOfTheDay";
 import {PopUp} from "../components/popup/Popup";
 import useShowPopUp from "../common/hooks/useShowPopUp";
+import AuthContext from "../common/context/auth-context";
 
 let pageSize = 14;
 
@@ -17,7 +18,8 @@ function DailyArt({ pictures }) {
     let [isLoading, setIsLoading] = useState(false)
     let [lastElement, setLastElement] = useState(null);
     let [pageIndex, setPageIndex] = useState(pictures[pictures?.length - 1]._id);
-    const [isShowPopup, hidePopUp, showPopUp] = useShowPopUp(true);
+    let ctx = useContext(AuthContext);
+    const [isShowPopup, hidePopUp, showPopUp] = useShowPopUp(!ctx.isLoggedIn);
 
     let getPictures = async () => {
         setIsLoading(true)
