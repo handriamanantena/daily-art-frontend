@@ -38,7 +38,7 @@ export const DrawingOftheDay = () => {
 
     let uploadPicture = (e) => {
         e.preventDefault();
-        handleSubmit(undefined, word.japanese);
+        handleSubmit(undefined, word.english);
     }
 
     return <div className="flex flex-grow flex-col space-y-1 md:min-w-[24rem] px-10 pt-10 pb-10 max-w-fit md:max-w-none">
