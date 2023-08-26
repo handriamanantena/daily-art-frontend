@@ -8,6 +8,7 @@ import useUploadPicture from "../../common/hooks/useUploadPicture";
 import AuthContext from "../../common/context/auth-context";
 import {Button} from "../button/Button";
 import { useRouter } from 'next/router'
+import BasicForumInput from "../forum/inputs/input";
 
 export const DrawingOftheDay = () => {
 
@@ -38,7 +39,7 @@ export const DrawingOftheDay = () => {
 
     let uploadPicture = (e) => {
         e.preventDefault();
-        handleSubmit(undefined, word.english);
+        handleSubmit(e.target.pictureName?.value, word.english);
     }
 
     return <div className="flex flex-grow flex-col space-y-1 md:min-w-[24rem] px-10 pt-10 pb-10 max-w-fit md:max-w-none">
@@ -48,14 +49,15 @@ export const DrawingOftheDay = () => {
             {isLoadingWord || word.english == undefined || word.japanese == undefined ? <Loading></Loading> : ctx.isLoggedIn ?
                 <Fragment>
                     <h1 className="justify-self-center">{word.english}/{word.japanese}</h1>
-                    <div className="flex min-h-[174px]">
-                        <ImageInput file={file} setFile={setFile} loadingMessage={loadingMessage}
-                                    setLoadingMessage={setLoadingMessage}
-                                    isLoading={isLoading} setIsLoading={setIsLoading} errorText={errorText}
-                                    setErrorText={setErrorText}/>
-                    </div>
-
-                    <form className="flex flex-col" onSubmit={uploadPicture} encType="multipart/form-data">
+                    <form className="flex flex-col space-y-1" onSubmit={uploadPicture} encType="multipart/form-data">
+                        <label htmlFor="pictureName">Title</label>
+                        <BasicForumInput type="text" id="pictureName" name="pictureName" maxLength="15"/>
+                        <div className="flex min-h-[174px]">
+                            <ImageInput file={file} setFile={setFile} loadingMessage={loadingMessage}
+                                        setLoadingMessage={setLoadingMessage}
+                                        isLoading={isLoading} setIsLoading={setIsLoading} errorText={errorText}
+                                        setErrorText={setErrorText}/>
+                        </div>
                         <SubmitButton text="Submit"/>
                     </form>
                 </Fragment> : <Button onclick={joinUs} text="Join Us"/>}

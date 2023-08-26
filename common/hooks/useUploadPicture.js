@@ -19,6 +19,7 @@ export const useUploadPicture = () => {
             setIsLoading(true);
             setLoadingMessage("Uploading...");
             let signedUrl = await uploadImageToCloudflare(ctx.userName, pictureName, dailyChallenge, ctx.token);
+            setLoadingMessage("Saving Data...");
             console.log(signedUrl);
             let response = await fetch(signedUrl, {
                 method: "PUT",
@@ -36,9 +37,8 @@ export const useUploadPicture = () => {
             }
             else {
                 console.log("added picture");
+                setLoadingMessage("Finishing up...");
                 setTimeout(() => {
-                    setLoadingMessage("Success");
-                    setIsLoading(false);
                     window.location.reload();
                 }, +(process.env.NEXT_PUBLIC_REVALIDATE_SEC) * 1000);
             }
