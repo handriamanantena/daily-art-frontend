@@ -12,14 +12,14 @@ export const useUploadPicture = () => {
     const [isLoading, setIsLoading] = useState(false);
     const [errorText, setErrorText] = useState(undefined);
 
-    const handleSubmit = async (e) => {
+    const handleSubmit = async (pictureName, dailyChallenge) => {
         console.log("submit");
-        e.preventDefault();
         try {
             console.log("submit");
             setIsLoading(true);
             setLoadingMessage("Uploading...");
-            let signedUrl = await uploadImageToCloudflare(ctx.userName, e.target.pictureName?.value, ctx.token);
+            let signedUrl = await uploadImageToCloudflare(ctx.userName, pictureName, dailyChallenge, ctx.token);
+            setLoadingMessage("Saving Data...");
             console.log(signedUrl);
             let response = await fetch(signedUrl, {
                 method: "PUT",
@@ -37,9 +37,8 @@ export const useUploadPicture = () => {
             }
             else {
                 console.log("added picture");
+                setLoadingMessage("Finishing up...");
                 setTimeout(() => {
-                    setLoadingMessage("Success");
-                    setIsLoading(false);
                     window.location.reload();
                 }, +(process.env.NEXT_PUBLIC_REVALIDATE_SEC) * 1000);
             }

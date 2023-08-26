@@ -1,8 +1,15 @@
 
-export const uploadImageToCloudflare = async (userName, pictureName, token) => {
+export const uploadImageToCloudflare = async (userName, pictureName, dailyChallenge, token) => {
+
     console.log('upload to cloudflare')
     const cloudflareWorkerUrl = process.env.NEXT_PUBLIC_UPLOAD_PICTURE_API;
-    let responseSignedUrl = await fetch(cloudflareWorkerUrl + `picture?userName=${userName}&pictureName=${pictureName}`, {
+    let url = cloudflareWorkerUrl + `picture?userName=${userName}`;
+    url = url + `&pictureName=${pictureName}`;
+
+    if(dailyChallenge) {
+        url = url + `&dailyChallenge=${dailyChallenge}`;
+    }
+    let responseSignedUrl = await fetch(url, {
         method: 'GET',
         credentials: 'include',
         headers: {

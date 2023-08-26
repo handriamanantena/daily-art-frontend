@@ -6,7 +6,6 @@ import React from "react";
 import {default as NextImage} from "next/future/image";
 import {CancelButton} from "../button/cancelButton";
 import AuthContext from "../../common/context/auth-context";
-import {uploadImageToCloudflare} from "../../common/api/cloudflare/workers";
 import {useRouter} from "next/router";
 import Loading from "../loading/Loading";
 import {ImageInput} from "../button/ImageInput";
@@ -28,10 +27,15 @@ const AddPictureInfo = () => {
         return () => (document.body.style.overflow = "scroll");
     });
 
+    let uploadPicture = (e) => {
+        e.preventDefault();
+        handleSubmit(e.target.pictureName?.value);
+    };
+
 
     return (
-            <form className="flex flex-grow flex-col space-y-1 md:min-w-[24rem] px-10 pt-10 pb-10 min-h-[25rem] max-h-screen max-w-fit md:max-w-none" onSubmit={handleSubmit} encType="multipart/form-data">
-                <h2 className="font-extrabold">Create Daily イラスト</h2>
+            <form className="flex flex-grow flex-col space-y-1 md:min-w-[24rem] px-10 pt-10 pb-10 min-h-[25rem] max-h-screen max-w-fit md:max-w-none" onSubmit={uploadPicture} encType="multipart/form-data">
+                <h2 className="font-extrabold">Upload Drawing</h2>
                 <label htmlFor="pictureName">Title</label>
                 <BasicForumInput type="text" id="pictureName" name="pictureName" maxLength="15"/>
                 <ImageInput file={file} setFile={setFile} loadingMessage={loadingMessage} setLoadingMessage={setLoadingMessage}

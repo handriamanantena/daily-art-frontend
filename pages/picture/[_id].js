@@ -46,7 +46,7 @@ function _Id({ picture, pictures, _id, foundPicture, initialIndex }) {
     return (
         <BasicLayout>
             <div className="mt-5">
-                <div className="relative h-[300px] md:h-[1000px] bg-gradient-to-r from-yellow-50">
+                <div className="relative h-[300px] md:h-[1000px]">
                     <Image className="object-contain"
                            src={url}
                            layout="fill"
