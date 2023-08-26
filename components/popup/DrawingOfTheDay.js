@@ -45,9 +45,9 @@ export const DrawingOftheDay = () => {
     return <div className="flex flex-grow flex-col space-y-1 md:min-w-[24rem] px-10 pt-10 pb-10 max-w-fit md:max-w-none">
         <h2 className="font-extrabold mb-5">Daily Challenge 🚀</h2>
         <p>Today&apos;s Drawing Challenge:</p>
-        <h1 className="justify-self-center">{word.english}/{word.japanese}</h1>
         <div className="grid">
-            {isLoadingWord || word.english == undefined || word.japanese == undefined ? <Loading></Loading> : ctx.isLoggedIn ?
+            {isLoadingWord || word.english == undefined || word.japanese == undefined ? <Loading></Loading> : <h1 className="justify-self-center">{word.english}/{word.japanese}</h1>}
+            {ctx.isLoggedIn ?
                 <Fragment>
                     <form className="flex flex-col space-y-1" onSubmit={uploadPicture} encType="multipart/form-data">
                         <label htmlFor="pictureName">Title</label>
