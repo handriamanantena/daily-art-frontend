@@ -7,6 +7,7 @@ import axios from "axios";
 import {register} from "../common/Login";
 import { useRouter } from 'next/router'
 import ForumBackground from "./forum/ForumBackground";
+import useLogin from "../common/hooks/useLogin";
 
 export default function Welcome(props) {
 
@@ -14,6 +15,7 @@ export default function Welcome(props) {
 
     const ctx = useContext(AuthContext);
     const [errMsg, setErrMsg] = useState('');
+    const login = useLogin();
 
     useEffect(async () => {
         // Prefetch the dashboard page
@@ -59,7 +61,7 @@ export default function Welcome(props) {
                 }
             );
             //console.log(JSON.stringify(response?.data));
-            console.log("retrieved user", response);
+            console.log("retrieved user", JSON.stringify(response));
             const accessToken = response.credential;
             ctx.login(accessToken);
             await router.push("/dailyart");
@@ -78,16 +80,16 @@ export default function Welcome(props) {
     }
 
     const handleJoin = async (event) => {
-        event.preventDefault()
-        let response = await register(event.target.email.value, event.target.password.value);
-        console.log("success register ", response.ok);
-        if(response.ok) {
-            await router.push("/username");
+        event.preventDefault();
+        let email = event.target.email.value;
+        let response = await register(email, event.target.password.value);
+        if(response) {
+            console.log("response " + response);
+            await login(response);
         }
-        else if(response.status == 409) {
+        else {
             setErrMsg("Email Already in Use");
         }
-
     }
     let additionalProps = { // login
         artistInfoTitle: "Username",

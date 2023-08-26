@@ -6,6 +6,7 @@ const AuthContext = React.createContext({
     token: '',
     userName : '',
     email: '',
+    profilePicture: '',
     login: (token) => {},
     logout: () => {}
 });
@@ -15,6 +16,7 @@ export const AuthProvider = (props) => {
     const [isUserLoggedIn, setLoggedIn] = useState(false);
     const [userName, setUserName] = useState(null);
     const [email, setEmail] = useState(null);
+    const [profilePicture, setProfilePicture] = useState(null);
 
     const loginHandler = (token) => {
         setLoggedIn(true);
@@ -24,6 +26,7 @@ export const AuthProvider = (props) => {
             console.log("decoded" + JSON.stringify( decoded));
             setUserName(decoded.userName);
             setEmail(decoded.email);
+            setProfilePicture(decoded.profilePicture);
         }
     };
 
@@ -32,6 +35,7 @@ export const AuthProvider = (props) => {
         setToken('');
         setUserName('');
         setEmail('');
+        setProfilePicture('');
         console.log("logout");
         const host = process.env.NEXT_PUBLIC_PICTURES_API_HOST + process.env.NEXT_PUBLIC_PICTURES_API_PORT + "/logout";
         const res = await fetch(host, {
@@ -46,6 +50,7 @@ export const AuthProvider = (props) => {
         login: loginHandler,
         userName: userName,
         email: email,
+        profilePicture: profilePicture,
         logout: logoutHandler
     };
 

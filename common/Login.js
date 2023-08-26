@@ -31,6 +31,15 @@ async function register(email, password) {
         },
         body: body
     });
+    if(response.status === 200 || response.status === 201) {
+        let json = await response.json();
+        console.log("success register " + JSON.stringify(json));
+        return json;
+    }
+    else if(response.status === 409) {
+        //setErrMsg("Email Already in Use");
+        return null;
+    }
     return response;
 }
 

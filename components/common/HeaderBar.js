@@ -12,6 +12,8 @@ import {NavigationButton} from "../button/NavigationButton";
 import {NavigationImage} from "../image/NavigationImage";
 import {DropDown} from "../button/DropDown";
 import {DrawingOftheDay} from "../popup/DrawingOfTheDay";
+import Link from "next/link";
+import {ProfilePicture} from "../picture/ProfilePicture";
 
 
 export function HeaderBar() {
@@ -44,7 +46,14 @@ export function HeaderBar() {
         </button>
         <NavigationImageLink path="/" imagePath="/icons/pen-to-square-regular.svg" text="Daily イラスト"/>
         <div className="bg-slate-600 w-px h-5 mx-2"/>
-            {ctx.isLoggedIn && <NavigationImageLink path={`/dailyart/[username]`} as={`/dailyart/${ctx.userName}`} text="My Art" imagePath="/placeholder/user-solid.svg"/>}
+            {ctx.isLoggedIn &&
+            <Link href={`/dailyart/${encodeURIComponent(ctx.userName)}`}>
+                <a className="flex flex-row px-2">
+                    <div className="relative h-8 w-8">
+                        <ProfilePicture/>
+                    </div>
+                </a>
+            </Link>}
         <DropDown menuOption={
             <button className="z-40 hover:text-cyan-600">
                 <div className="flex flex-row group">
