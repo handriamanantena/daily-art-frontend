@@ -4,7 +4,6 @@ import {useContext, useState, useEffect } from "react";
 import LogInOptions from "./forum/LoginOptions";
 import AuthContext from "../common/context/auth-context";
 import axios from "axios";
-import {register} from "../common/Login";
 import { useRouter } from 'next/router'
 import ForumBackground from "./forum/ForumBackground";
 import useLogin from "../common/hooks/useLogin";
@@ -15,6 +14,7 @@ export default function Welcome(props) {
 
     const ctx = useContext(AuthContext);
     const [errMsg, setErrMsg] = useState('');
+    const [emailMsg, setEmailMsg] = useState('');
     const login = useLogin();
 
     useEffect(async () => {
@@ -82,15 +82,31 @@ export default function Welcome(props) {
     const handleJoin = async (event) => {
         event.preventDefault();
         let email = event.target.email.value;
-        let response = await register(email, event.target.password.value);
-        if(response) {
-            console.log("response " + response);
-            await login(response);
+        let password = event.target.password.value;
+        const host = process.env.NEXT_PUBLIC_PICTURES_API_HOST + process.env.NEXT_PUBLIC_PICTURES_API_PORT;
+        let body = JSON.stringify({
+            email,
+            password
+        })
+        const response = await fetch(host + '/register', {
+            method: 'POST',
+            credentials: 'include', // include, *same-origin, omit
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: body
+        });
+        if(response.status === 200 || response.status === 201) {
+            await login(await response.json());
+        }
+        else if(response.status === 409) {
+            setEmailMsg("Email in use");
         }
         else {
-            setErrMsg("Email Already in Use");
+            return setErrMsg("Unable to login");
         }
-    }
+    };
+
     let additionalProps = { // login
         artistInfoTitle: "Username",
         artistPasswordTitle: "Password",
@@ -99,7 +115,9 @@ export default function Welcome(props) {
         passwordStrength: "",
         onKeyDown: onKeyDown,
         artistInfoInputType: 'text',
-        welcomeTitle: props.welcomeTitle
+        welcomeTitle: props.welcomeTitle,
+        errMsg : errMsg,
+        emailMsg
     }
     if(props.welcomePage == 'join') {
         additionalProps = {
@@ -110,12 +128,13 @@ export default function Welcome(props) {
             passwordStrength: passwordStrength,
             onKeyDown: onKeyDown,
             artistInfoInputType: 'email',
-            welcomeTitle: props.welcomeTitle
+            welcomeTitle: props.welcomeTitle,
+            errMsg : errMsg,
+            emailMsg
         }
     }
 
         return (<ForumBackground>
-                <p>{errMsg}</p>
                 <ArtistCredentials {...additionalProps}/>
                 <LogInOptions/>
         </ForumBackground>);
