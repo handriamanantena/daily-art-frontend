@@ -40,6 +40,7 @@ function Username() {
             body : body
         });
         if (response.status == 200 || response.status == 201) {
+            ctx.login(ctx.token); // TODO backend needs to regenerate token after username update
             await router.push("/dailyart");
         }
         else if (response.status == 409){
@@ -64,13 +65,13 @@ function Username() {
             <GradiantBackground>
                 <ForumBackground>
                     <form className="grid grid-cols-1 w-96 px-10 pt-10" onSubmit={onSubmit}>
+                        <h2 className="font-extrabold">Username selection</h2>
                         <label htmlFor="userName" className="mt-10 mb-1">Chose a Username</label>
-                        <span className="text-red-500">{errText}</span>
-                        <BasicForumInput type="text" id="userName" name="userName">
-                        </BasicForumInput>
+                        <BasicForumInput type="text" id="userName" name="userName"/>
+                        <span className="text-red-500 mb-5">{errText}</span>
                         <SubmitButton text="Enter"/>
                     </form>
-                    <div className="grid grid-cols-1 w-96 px-10 pt-10">
+                    <div className="grid grid-cols-1 w-96 px-10 py-5 ">
                         <ForumButton onClick={onClickSkip} text="Skip" title="skip"></ForumButton>
                     </div>
                 </ForumBackground>

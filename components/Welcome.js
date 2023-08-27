@@ -8,7 +8,7 @@ import { useRouter } from 'next/router'
 import ForumBackground from "./forum/ForumBackground";
 import useLogin from "../common/hooks/useLogin";
 
-export default function Welcome(props) {
+export default function Welcome({welcomePage, welcomeTitle}) {
 
     const router = useRouter()
 
@@ -41,7 +41,7 @@ export default function Welcome(props) {
 
     const handleLogin = async (event) => {
         // Stop the form from submitting and refreshing the page.
-        event.preventDefault()
+        event.preventDefault();
 
         // Get data from the form.
         const data = {
@@ -50,7 +50,7 @@ export default function Welcome(props) {
         }
 
         // API endpoint where we send form data.
-        const endpoint = process.env.NEXT_PUBLIC_PICTURES_API_HOST + process.env.NEXT_PUBLIC_PICTURES_API_PORT + "/artist";
+        const endpoint = process.env.NEXT_PUBLIC_PICTURES_API_HOST + process.env.NEXT_PUBLIC_PICTURES_API_PORT + "/artist/login";
 
         try {
             const response = await axios.post(endpoint,
@@ -97,7 +97,7 @@ export default function Welcome(props) {
             body: body
         });
         if(response.status === 200 || response.status === 201) {
-            await login(await response.json());
+            await login(await response.json(), true);
         }
         else if(response.status === 409) {
             setEmailMsg("Email in use");
@@ -115,11 +115,11 @@ export default function Welcome(props) {
         passwordStrength: "",
         onKeyDown: onKeyDown,
         artistInfoInputType: 'text',
-        welcomeTitle: props.welcomeTitle,
+        welcomeTitle: welcomeTitle,
         errMsg : errMsg,
-        emailMsg
+        emailMsg,
     }
-    if(props.welcomePage == 'join') {
+    if(welcomePage == 'join') {
         additionalProps = {
             artistInfoTitle: "Add your email",
             artistPasswordTitle: "Choose a password",
@@ -128,14 +128,21 @@ export default function Welcome(props) {
             passwordStrength: passwordStrength,
             onKeyDown: onKeyDown,
             artistInfoInputType: 'email',
-            welcomeTitle: props.welcomeTitle,
+            welcomeTitle: welcomeTitle,
             errMsg : errMsg,
             emailMsg
         }
     }
-
+/*
         return (<ForumBackground>
                 <ArtistCredentials {...additionalProps}/>
                 <LogInOptions/>
-        </ForumBackground>);
+        </ForumBackground>);*/
+
+    return (<ForumBackground>
+        <div className="grid grid-cols-1 w-96 px-10 pt-10">
+            <h2 className="font-extrabold pb-5">{welcomeTitle}</h2>
+            <LogInOptions/>
+        </div>
+    </ForumBackground>);
 }
