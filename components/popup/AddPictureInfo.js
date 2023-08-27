@@ -1,13 +1,9 @@
 import {useEffect, useState, useContext} from "react";
 import BasicForumInput from "../forum/inputs/input";
 import SubmitButton from "../forum/inputs/SubmitButton";
-import style from "../../styles/AddPictureInfo.module.css";
 import React from "react";
-import {default as NextImage} from "next/future/image";
-import {CancelButton} from "../button/cancelButton";
 import AuthContext from "../../common/context/auth-context";
 import {useRouter} from "next/router";
-import Loading from "../loading/Loading";
 import {ImageInput} from "../button/ImageInput";
 import useUploadPicture from "../../common/hooks/useUploadPicture";
 
@@ -25,7 +21,7 @@ const AddPictureInfo = () => {
         }
         document.body.style.overflow = "hidden";
         return () => (document.body.style.overflow = "scroll");
-    });
+    }, []);
 
     let uploadPicture = (e) => {
         e.preventDefault();
