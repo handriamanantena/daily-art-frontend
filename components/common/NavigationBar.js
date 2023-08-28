@@ -11,7 +11,7 @@ export const NavigationBar = ({children}) => {
     }, []);
 
 
-    return <div id="sidenav" className="flex pl-5 items-center" data-te-sidenav-init>
+    return <div className="flex pl-5 items-center">
         <button className="flex-none pt-2"
                 type="button"
                 data-te-sidenav-toggle-ref

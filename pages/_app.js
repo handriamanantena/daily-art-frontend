@@ -1,6 +1,5 @@
 import 'dotenv/config';
 import '../styles/globals.css'
-import "tw-elements/dist/css/tw-elements.min.css";
 import {AuthProvider} from "../common/context/auth-context";
 import Script from 'next/script'
 
