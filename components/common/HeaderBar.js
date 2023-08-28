@@ -83,10 +83,9 @@ export function HeaderBar() {
                     </div>}
                 </NavigationBar>
             </div>
-            <div className="absolute bg-red-100 h-full" id="sidenav"
-                 data-te-sidenav-init
-                 data-te-ripple-init
-                 data-te-sidenav-hidden="false">
+            <div id="sidenav"
+                 className="fixed left-0 top-0 z-[1035] h-screen w-60 -translate-x-full overflow-hidden bg-white shadow-[0_4px_12px_0_rgba(0,0,0,0.07),_0_2px_4px_rgba(0,0,0,0.05)] data-[te-sidenav-hidden='false']:translate-x-0 dark:bg-zinc-800 sidenav-primary perfect-scrollbar group/ps [overflow-anchor:none] touch-none"
+                 data-te-sidenav-init>
                 <p>stuff</p>
                 <p>stuff2</p>
             </div>
