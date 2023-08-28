@@ -41,7 +41,7 @@ export function HeaderBar() {
 
     return (
         <Fragment>
-            <div className="sticky grid top-0 z-50 border-b h-16 bg-white content-center flex items-center">
+            <div className="sticky grid top-0 z-50 border-b h-16 bg-white content-center flex items-center z-[1034]" id="slim-content">
                 <PopUp popup={<AddPictureInfo/>}
                        isShowPopup={isShowAddPicture}
                        hidePopUp={hideAddPicture}/>
@@ -49,11 +49,15 @@ export function HeaderBar() {
                        isShowPopup={isShowDailyChallenge}
                        hidePopUp={hideDailyChallenge}/>
                 <NavigationBar>
-                    <button className="flex-none pt-2"
+                    <button className="flex-none"
                             type="button"
                             data-te-sidenav-toggle-ref
                             data-te-target="#sidenav">
-                        <Image src="/icons/bars-solid.svg" width={24} height={24} unoptimized/>
+                        <svg className="hover:fill-cyan-600" width={24} height={24} xmlns="http://www.w3.org/2000/svg"
+                             viewBox="0 0 448 512">
+                            <path
+                                d="M0 96C0 78.3 14.3 64 32 64H416c17.7 0 32 14.3 32 32s-14.3 32-32 32H32C14.3 128 0 113.7 0 96zM0 256c0-17.7 14.3-32 32-32H416c17.7 0 32 14.3 32 32s-14.3 32-32 32H32c-17.7 0-32-14.3-32-32zM448 416c0 17.7-14.3 32-32 32H32c-17.7 0-32-14.3-32-32s14.3-32 32-32H416c17.7 0 32 14.3 32 32z"/>
+                        </svg>
                     </button>
                     <NavigationImageLink path="/" imagePath="/icons/pen-to-square-regular.svg" text="Daily イラスト"/>
                     <div className="bg-slate-600 w-px h-5 mx-2"/>
@@ -99,8 +103,9 @@ export function HeaderBar() {
                 </NavigationBar>
             </div>
             <div id="sidenav"
-                 className="fixed bg-white -translate-x-full z-50 border-r"
-                 data-te-sidenav-init>
+                 className="z-[300] h-full w-60 -translate-x-full bg-white"
+                 data-te-sidenav-init
+                 data-te-backdrop-show>
                 <p>stuff</p>
                 <p>stuff2</p>
             </div>
