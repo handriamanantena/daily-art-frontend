@@ -1,4 +1,4 @@
-import React, {Fragment, useContext} from "react";
+import React, {Fragment, useContext, useEffect} from "react";
 import {NavigationImageLink} from "../button/NavigationImageLink";
 import AuthContext from "../../common/context/auth-context";
 import {useRouter} from "next/router";
@@ -13,6 +13,7 @@ import {DropDown} from "../button/DropDown";
 import {DrawingOftheDay} from "../popup/DrawingOfTheDay";
 import Link from "next/link";
 import {ProfilePicture} from "../picture/ProfilePicture";
+import Image from "next/image";
 
 
 export function HeaderBar() {
@@ -30,6 +31,14 @@ export function HeaderBar() {
         await router.push("/signin");
     };
 
+    useEffect(async () => {
+        const init = async () => {
+            const { Sidenav, initTE } = await import("tw-elements");
+            initTE({ Sidenav });
+        };
+        await init();
+    }, []);
+
     return (
         <Fragment>
             <div className="sticky grid top-0 z-50 border-b h-16 bg-white content-center flex items-center">
@@ -40,6 +49,12 @@ export function HeaderBar() {
                        isShowPopup={isShowDailyChallenge}
                        hidePopUp={hideDailyChallenge}/>
                 <NavigationBar>
+                    <button className="flex-none pt-2"
+                            type="button"
+                            data-te-sidenav-toggle-ref
+                            data-te-target="#sidenav">
+                        <Image src="/icons/bars-solid.svg" width={24} height={24} unoptimized/>
+                    </button>
                     <NavigationImageLink path="/" imagePath="/icons/pen-to-square-regular.svg" text="Daily イラスト"/>
                     <div className="bg-slate-600 w-px h-5 mx-2"/>
                     {ctx.isLoggedIn &&
