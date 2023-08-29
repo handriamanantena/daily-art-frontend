@@ -103,12 +103,20 @@ export function HeaderBar() {
                 </NavigationBar>
             </div>
             <div id="sidenav"
-                 className="z-[300] h-[0px] -translate-x-full bg-white"
+                 className="z-[300] h-[0px] -translate-x-full bg-white absolute overflow-hidden shadow-[0_4px_12px_0_rgba(0,0,0,0.07),_0_2px_4px_rgba(0,0,0,0.05)] data-[te-sidenav-hidden='false']:translate-x-0 dark:bg-zinc-800"
                  data-te-sidenav-init
-                 data-te-backdrop-show>
-                <SlideMenuImageLink path="/" imagePath="/icons/house-solid.svg" text="Home"/>
-                <SlideMenuImageLink path="/" imagePath="/icons/rocket-solid.svg" text="Challenges"/>
-                <SlideMenuImageLink path="/" imagePath="/icons/trophy-solid.svg" text="Leader board"/>
+                 data-te-sidenav-backdropClass="bg-black">
+                <ul>
+                    <li className="relative">
+                        <SlideMenuImageLink path="/dailyart" imagePath="/icons/house-solid.svg" text="Home"/>
+                    </li>
+                    <li className="relative">
+                    <SlideMenuImageLink path="/" imagePath="/icons/rocket-solid.svg" text="Challenges"/>
+                    </li>
+                    <li className="relative">
+                        <SlideMenuImageLink path="/" imagePath="/icons/trophy-solid.svg" text="Leader board"/>
+                    </li>
+                </ul>
             </div>
             <div className="grid content-center bg-white md:h-24 border-b md:pb-3">
                 <h1 className="text-center md:text-7xl">Daily イラスト</h1>
