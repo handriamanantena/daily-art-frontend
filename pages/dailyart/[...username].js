@@ -61,7 +61,7 @@ function Username({ pictures, userInfo }) {
            <div className="flex flex-col-reverse bg-black md:h-[300px]">
                <div className="relative h-[100px] w-[100px] m-5 md:m-10">
                    <div className="ml-[110px] mt-5 grow">
-                       <ProfilePicture userInfo={userInfo.profilePicture}/>
+                       <ProfilePicture profilePicture={userInfo.profilePicture}/>
                        <h1 className="text-white">{userInfo.userName}</h1>
                    </div>
                    <div className="ml-[110px] flex flex-row grow">
