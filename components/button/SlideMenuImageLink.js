@@ -1,5 +1,5 @@
-import {H3NavHideOnMobile} from "../common/H3NavHideOnMobile";
 import React from "react";
+import {H3Menu} from "../common/H3Menu";
 
 export function SlideMenuImageLink({path, text, children}) {
 
@@ -11,6 +11,6 @@ export function SlideMenuImageLink({path, text, children}) {
             <div className="flex items-center justify-center pr-5">
                 {children}
             </div>
-            <H3NavHideOnMobile text={text}/>
+            <H3Menu text={text}/>
     </a>)
 }
