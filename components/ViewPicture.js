@@ -36,7 +36,7 @@ export const ViewPicture = ({picture}) => {
             <div className="absolute bottom-0 left-0 m-3 h-[30px] w-[30px]" hidden={hideInfo}>
                 <Link href={`/dailyart/${encodeURIComponent(userInfo.userName)}`}>
                     <a className="flex flex-row">
-                        <ProfilePicture userInfo={userInfo}/>
+                        <ProfilePicture userInfo={userInfo.profilePicture}/>
                         <h3 className="text-white ml-9">{userInfo.userName}</h3>
                     </a>
                 </Link>

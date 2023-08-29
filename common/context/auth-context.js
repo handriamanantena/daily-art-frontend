@@ -8,7 +8,8 @@ const AuthContext = React.createContext({
     email: '',
     profilePicture: '',
     login: (token) => {},
-    logout: () => {}
+    logout: () => {},
+    isAuthorized: (userName) => {}
 });
 
 export const AuthProvider = (props) => {
@@ -44,6 +45,10 @@ export const AuthProvider = (props) => {
         });
     };
 
+    const isAuthorizedHandler = (pageUserName) => {
+        return userName == pageUserName;
+    }
+
     const contextValue = {
         isLoggedIn : isUserLoggedIn,
         token : token,
@@ -51,7 +56,8 @@ export const AuthProvider = (props) => {
         userName: userName,
         email: email,
         profilePicture: profilePicture,
-        logout: logoutHandler
+        logout: logoutHandler,
+        isAuthorized: isAuthorizedHandler
     };
 
     return (<AuthContext.Provider value={contextValue}>

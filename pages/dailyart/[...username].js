@@ -48,7 +48,7 @@ function Username({ pictures, userInfo }) {
             default:
             return (<InfiniteScroll getObjects={getPictures} maxPage={100} lastElement={lastElement}>
                 <Gallery pictures={newPictures} setLastElement={setLastElement}>
-                    {ctx.userName == userInfo.userName ?
+                    {ctx.isAuthorized(userInfo.userName) ?
                         <StyledAddPicture showPopUp={showPopUp} text="+"/> : <Fragment/>}
                 </Gallery>
                 <PopUp popup={<AddPictureInfo/>} isShowPopup={isShowPopup} hidePopUp={hidePopUp}/>
@@ -61,7 +61,7 @@ function Username({ pictures, userInfo }) {
            <div className="flex flex-col-reverse bg-black md:h-[300px]">
                <div className="relative h-[100px] w-[100px] m-5 md:m-10">
                    <div className="ml-[110px] mt-5 grow">
-                       <ProfilePicture userInfo={userInfo}/>
+                       <ProfilePicture userInfo={userInfo.profilePicture}/>
                        <h1 className="text-white">{userInfo.userName}</h1>
                    </div>
                    <div className="ml-[110px] flex flex-row grow">
