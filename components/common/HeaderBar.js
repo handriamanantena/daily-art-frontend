@@ -1,4 +1,4 @@
-import React, {Fragment, useContext, useEffect} from "react";
+import React, {Fragment, useContext, useEffect, useState} from "react";
 import {NavigationImageLink} from "../button/NavigationImageLink";
 import AuthContext from "../../common/context/auth-context";
 import {useRouter} from "next/router";
@@ -13,7 +13,7 @@ import {DropDown} from "../button/DropDown";
 import {DrawingOftheDay} from "../popup/DrawingOfTheDay";
 import Link from "next/link";
 import {ProfilePicture} from "../picture/ProfilePicture";
-import Image from "next/image";
+import {SlideMenuImageLink} from "../button/SlideMenuImageLink";
 
 
 export function HeaderBar() {
@@ -103,11 +103,12 @@ export function HeaderBar() {
                 </NavigationBar>
             </div>
             <div id="sidenav"
-                 className="z-[300] h-full w-60 -translate-x-full bg-white"
+                 className="z-[300] h-[0px] -translate-x-full bg-white"
                  data-te-sidenav-init
                  data-te-backdrop-show>
-                <p>stuff</p>
-                <p>stuff2</p>
+                <SlideMenuImageLink path="/" imagePath="/icons/house-solid.svg" text="Home"/>
+                <SlideMenuImageLink path="/" imagePath="/icons/rocket-solid.svg" text="Challenges"/>
+                <SlideMenuImageLink path="/" imagePath="/icons/trophy-solid.svg" text="Leader board"/>
             </div>
             <div className="grid content-center bg-white md:h-24 border-b md:pb-3">
                 <h1 className="text-center md:text-7xl">Daily イラスト</h1>
