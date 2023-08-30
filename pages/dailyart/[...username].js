@@ -13,6 +13,7 @@ import {ArtistNavBar} from "../../components/common/ArtistNavBar";
 import {About} from "../../components/page/About";
 import {PopUp} from "../../components/popup/Popup";
 import {AddPictureInfo} from "../../components/popup/AddPictureInfo";
+import {EditButton} from "../../components/button/EditButton";
 
 let pageSize = +(process.env.NEXT_PUBLIC_PAGE_SIZE);
 
@@ -59,15 +60,23 @@ function Username({ pictures, userInfo }) {
     return (
        <BasicLayout>
            <div className="flex flex-col-reverse bg-black md:h-[300px]">
-               <div className="relative h-[100px] w-[100px] m-5 md:m-10">
-                   <div className="ml-[110px] mt-5 grow">
-                       <ProfilePicture profilePicture={userInfo.profilePicture}/>
-                       <h1 className="text-white">{userInfo.userName}</h1>
-                   </div>
-                   <div className="ml-[110px] flex flex-row grow">
-                       <h3 className="text-white whitespace-nowrap hidden md:block">{userInfo.streak} 記録破り Record Daily Streak</h3>
-                       <div className="border-l-2 border-white h-5 mx-4 hidden md:block"/>
-                       <h3 className="text-white whitespace-nowrap hidden md:block">{userInfo.streak} 規律 Current Daily Streak</h3>
+               <div className="relative m-5 md:m-10">
+                   <div className="flex mt-5 grow">
+                       <div className="relative h-[100px] w-[100px]">
+                            <ProfilePicture profilePicture={userInfo.profilePicture}/>
+                       </div>
+                       <div className="self-center ml-2">
+                           <div className="md:flex self-center">
+                               <h1 className="text-white">{userInfo.userName}</h1>
+                               {ctx.isAuthorized(userInfo.userName) ?
+                               <div className="w-[80px] self-center"><EditButton/></div> : <></>}
+                           </div>
+                           <div className="flex flex-row grow">
+                               <h3 className="text-white whitespace-nowrap hidden md:block">{userInfo.streak} 記録破り Record Daily Streak</h3>
+                               <div className="border-l-2 border-white h-5 mx-4 hidden md:block"/>
+                               <h3 className="text-white whitespace-nowrap hidden md:block">{userInfo.streak} 規律 Current Daily Streak</h3>
+                           </div>
+                       </div>
                    </div>
                </div>
            </div>
