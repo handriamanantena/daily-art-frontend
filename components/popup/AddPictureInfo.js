@@ -33,10 +33,8 @@ const AddPictureInfo = () => {
                 <h1>Upload Drawing</h1>
                 <label htmlFor="pictureName">Title</label>
                 <BasicForumInput type="text" id="pictureName" name="pictureName" maxLength="15"/>
-                <div className="flex min-h-[174px]">
-                    <ImageInput file={file} setFile={setFile} loadingMessage={loadingMessage} setLoadingMessage={setLoadingMessage}
+                <ImageInput file={file} setFile={setFile} loadingMessage={loadingMessage} setLoadingMessage={setLoadingMessage}
                             isLoading={isLoading} setIsLoading={setIsLoading} errorText={errorText} setErrorText={setErrorText}/>
-                </div>
                 <SubmitButton text="Submit"/>
             </PopupForm>);
 };

@@ -80,7 +80,7 @@ export const ImageInput = ({file, setFile, loadingMessage, setLoadingMessage, is
                     </div>
                 </div>
             ) :
-        <div className="flex flex-grow bg-slate-100 hover:bg-slate-200">
+        <div className="flex flex-grow bg-slate-100 hover:bg-slate-200 h-auto md:min-h-[174px]">
             <label htmlFor="file" className="flex-grow grid grid-cols-1 content-center text-center justify-center" name="file">
                 <div className="pl-[45%]">
                     <NextImage src="/icons/palette-solid.svg" width={24} height={24} unoptimized alt="Image"/>
