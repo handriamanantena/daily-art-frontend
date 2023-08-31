@@ -68,10 +68,10 @@ export const ImageInput = ({file, setFile, loadingMessage, setLoadingMessage, is
     return fileDataURL && errorText == undefined ?
         Object.keys(imageDimensions).length === 0 ? (<b>Processing Image...</b>) :
             (
-                <div className="content-center text-center justify-center md:min-h-[250px]">
-                    <div className={isLoading ? "brightness-50 bg-slate-100 md:bg-inherit" : "bg-slate-100 md:bg-inherit"}>
+                <div className="flex justify-center grow bg-slate-100">
+                    <div className={isLoading ? "flex justify-center grow brightness-50 md:bg-inherit" : "flex justify-center grow md:bg-inherit"}>
                         <NextImage data-testid="preview-picture" src={fileDataURL} width={1035}
-                                   height={1228} className="pt-1 max-h-[250px] md:max-h-[500px] max-w-max inline" alt="Image"/>
+                                   height={1228} className="justify-center self-center pt-1 max-h-[390px] md:max-h-[500px] max-w-max" alt="Image"/>
                     </div>
                     <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2" hidden={!isLoading}>
                         <Loading>
