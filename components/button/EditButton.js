@@ -4,7 +4,7 @@ import useShowPopUp from "../../common/hooks/useShowPopUp";
 import {PopUp} from "../popup/PopUp";
 import {EditProfile} from "../popup/EditProfile";
 
-export const EditButton = () => {
+export const EditButton = ({userInfo}) => {
 
     const [isShowEdit, hideEdit, showEdit] = useShowPopUp();
 
@@ -12,7 +12,7 @@ export const EditButton = () => {
     return <Fragment>
         <PopUp isShowPopup={isShowEdit}
                 hidePopUp={hideEdit}>
-            <EditProfile/>
+            <EditProfile userInfo={userInfo}/>
         </PopUp>
         <button onClick={showEdit} className="grid grid-cols-2 content-center group md:px-3">
             <EditProfileSVG/>

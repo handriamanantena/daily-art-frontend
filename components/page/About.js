@@ -10,7 +10,7 @@ export const About = ({userInfo}) => {
                 <div className="md:flex">
                     <h1 className="text-white whitespace-normal">{userInfo.userName}</h1>
                     {ctx.isAuthorized(userInfo.userName) ?
-                        <EditButton/> : <></>}
+                        <EditButton userInfo={userInfo}/> : <></>}
                 </div>
                 <p className="text-white mt-5">{userInfo.about}</p>
             </div>
