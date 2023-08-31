@@ -69,7 +69,7 @@ function Username({ pictures, userInfo }) {
                            <div className="md:flex self-center">
                                <h1 className="text-white">{userInfo.userName}</h1>
                                {ctx.isAuthorized(userInfo.userName) ?
-                               <div className="w-[80px] self-center"><EditButton/></div> : <></>}
+                               <EditButton/> : <></>}
                            </div>
                            <div className="flex flex-row grow">
                                <h3 className="text-white whitespace-nowrap hidden md:block">{userInfo.streak} 記録破り Record Daily Streak</h3>
