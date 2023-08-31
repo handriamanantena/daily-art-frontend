@@ -11,9 +11,9 @@ import {ProfilePicture} from "../../components/picture/ProfilePicture";
 import {useRouter} from "next/router";
 import {ArtistNavBar} from "../../components/common/ArtistNavBar";
 import {About} from "../../components/page/About";
-import {PopUp} from "../../components/popup/Popup";
 import {AddPictureInfo} from "../../components/popup/AddPictureInfo";
 import {EditButton} from "../../components/button/EditButton";
+import {PopUp} from "../../components/popup/PopUp";
 
 let pageSize = +(process.env.NEXT_PUBLIC_PAGE_SIZE);
 
@@ -52,7 +52,9 @@ function Username({ pictures, userInfo }) {
                     {ctx.isAuthorized(userInfo.userName) ?
                         <StyledAddPicture showPopUp={showPopUp} text="+"/> : <Fragment/>}
                 </Gallery>
-                <PopUp popup={<AddPictureInfo/>} isShowPopup={isShowPopup} hidePopUp={hidePopUp}/>
+                <PopUp isShowPopup={isShowPopup} hidePopUp={hidePopUp}>
+                    <AddPictureInfo/>
+                </PopUp>
             </InfiniteScroll>);
         }
     }

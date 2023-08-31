@@ -5,7 +5,6 @@ import {useRouter} from "next/router";
 import useShowPopUp from "../../common/hooks/useShowPopUp";
 import {H3NavHideOnMobile} from "./H3NavHideOnMobile";
 import {NavigationBar} from "./NavigationBar";
-import {PopUp} from "../popup/Popup";
 import {AddPictureInfo} from "../popup/AddPictureInfo";
 import {NavigationButton} from "../button/NavigationButton";
 import {NavigationImage} from "../image/NavigationImage";
@@ -14,6 +13,7 @@ import {DrawingOftheDay} from "../popup/DrawingOfTheDay";
 import Link from "next/link";
 import {ProfilePicture} from "../picture/ProfilePicture";
 import {SlideMenuImageLink} from "../button/SlideMenuImageLink";
+import {PopUp} from "../popup/PopUp";
 
 
 export function HeaderBar() {
@@ -42,12 +42,14 @@ export function HeaderBar() {
     return (
         <Fragment>
             <div className="sticky grid top-0 z-50 border-b h-16 bg-white content-center flex items-center z-[1034]" id="slim-content">
-                <PopUp popup={<AddPictureInfo/>}
-                       isShowPopup={isShowAddPicture}
-                       hidePopUp={hideAddPicture}/>
-                <PopUp popup={<DrawingOftheDay/>}
-                       isShowPopup={isShowDailyChallenge}
-                       hidePopUp={hideDailyChallenge}/>
+                <PopUp isShowPopup={isShowAddPicture}
+                        hidePopUp={hideAddPicture}>
+                    <AddPictureInfo/>
+                </PopUp>
+                <PopUp isShowPopup={isShowDailyChallenge}
+                       hidePopUp={hideDailyChallenge}>
+                    <DrawingOftheDay/>
+                </PopUp>
                 <NavigationBar>
                     <button className="flex-none"
                             type="button"
