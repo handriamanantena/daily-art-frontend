@@ -15,7 +15,7 @@ export const EditProfile = ({userInfo}) => {
         <label htmlFor="userName">User name</label>
         <BasicForumInput type="text" id="userName" name="userName" defaultValue={userInfo.userName}/>
         <label htmlFor="about">About</label>
-        <textarea className="h-[80px] bg-slate-200 mw-80" defaultValue={userInfo.about}/>
+        <textarea className="grow h-auto md:h-96 bg-slate-200 mw-80" defaultValue={userInfo.about}/>
         <SubmitButton text="Submit"/>
     </PopupForm>
 
