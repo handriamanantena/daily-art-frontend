@@ -12,9 +12,11 @@ export const PopUp = ({children, isShowPopup, hidePopUp, onSubmit, encType}) => 
 
 
     useEffect(() => {
-        document.body.style.overflow = "hidden";
+        if(isShowPopup) {
+            document.body.style.overflow = "hidden";
+        }
         return () => (document.body.style.overflow = "scroll");
-    }, []);
+    }, [isShowPopup]);
 
 
     return (
