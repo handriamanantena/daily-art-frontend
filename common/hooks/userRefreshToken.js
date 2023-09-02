@@ -9,7 +9,8 @@ const useRefreshToken = () => {
         const response = await axios.get('/refresh', {
             withCredentials: true
         });
-        ctx.login(response.data.accessToken)
+        console.log("edit response" + JSON.stringify(response));
+        ctx.login(await response.json())
         return response.data.accessToken;
     }
     return refresh;

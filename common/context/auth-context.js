@@ -19,7 +19,9 @@ export const AuthProvider = (props) => {
     const [email, setEmail] = useState(null);
     const [profilePicture, setProfilePicture] = useState(null);
 
-    const loginHandler = (token) => {
+    const loginHandler = (loginResponse) => {
+        console.log("change " + JSON.stringify(loginResponse));
+        let token = loginResponse.accessToken;
         setLoggedIn(true);
         setToken(token);
         if(token) {
@@ -27,7 +29,7 @@ export const AuthProvider = (props) => {
             console.log("decoded" + JSON.stringify( decoded));
             setUserName(decoded.userName);
             setEmail(decoded.email);
-            setProfilePicture(decoded.profilePicture);
+            //setProfilePicture(loginResponse.artist.profilePicture);
         }
     };
 

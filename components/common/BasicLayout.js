@@ -17,7 +17,7 @@ export function BasicLayout({children}) {
         if(ctx.token == undefined) { // get access token when browser is closed (no log out)
             console.log("refresh");
             try {
-                const response = await axiosPrivate.post(endpoint,
+                const response = await axiosPrivate.post(endpoint, //TODO check if ur calling this endpoint twice from other hook
                     {},
                     {
                         headers: {'Content-Type': 'application/json'},
@@ -25,8 +25,7 @@ export function BasicLayout({children}) {
                     }
                 );
                 console.log(JSON.stringify(response?.data));
-                const accessToken = response?.data?.accessToken;
-                ctx.login(accessToken);
+                ctx.login(response?.data);
             } catch (err) {
                 console.log(err);
             }

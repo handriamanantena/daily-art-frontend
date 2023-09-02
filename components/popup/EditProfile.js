@@ -17,7 +17,7 @@ export const EditProfile = ({userInfo}) => {
                 userName: event.target.userName.value
             });
         const host = process.env.NEXT_PUBLIC_PICTURES_API_HOST + process.env.NEXT_PUBLIC_PICTURES_API_PORT;
-        let path = host + `/artist/${ctx.email}`;
+        let path = host + `/artist`;
         let response = await fetch(path, {
             method: 'PATCH',
             credentials: 'include', // include, *same-origin, omit
@@ -27,10 +27,12 @@ export const EditProfile = ({userInfo}) => {
             },
             body : data
         });
+        console.log("edit response" + JSON.stringify(response));
         if(response.status == 201) {
-            setTimeout(() => {
+            ctx.login(await response.json());
+            /*setTimeout(() => {
                 window.location.reload();
-            }, +(process.env.NEXT_PUBLIC_REVALIDATE_SEC) * 1000);
+            }, +(process.env.NEXT_PUBLIC_REVALIDATE_SEC) * 1000);*/
         }
     };
 
