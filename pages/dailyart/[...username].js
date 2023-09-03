@@ -142,6 +142,11 @@ export async function getStaticProps(context) {
     const { params } = context;
     const user = params.username;
     let response = await getArtists(null, null, user[0]); //TODO we already get the information in getStaticPaths, but we can't pass it to getStaticProps. need to upgrade to next 13 to avoid 2 api calls
+    if(response.length == 0) {
+        return {
+            notFound: true
+        };
+    }
     const pictures = await getPicturesByArtistUserName(user[0], pageSize, 0); // TODO maybe use caching to avoid getting info multiple times for each sub path
     let userInfo = response[0];
     console.log("artist by username" +JSON.stringify(response));
