@@ -10,7 +10,7 @@ const useRefreshToken = () => {
             withCredentials: true
         });
         console.log("edit response" + JSON.stringify(response));
-        ctx.login(await response.json())
+        ctx.login(response.data)
         return response.data.accessToken;
     }
     return refresh;

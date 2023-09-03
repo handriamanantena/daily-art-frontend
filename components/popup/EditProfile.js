@@ -30,9 +30,9 @@ export const EditProfile = ({userInfo}) => {
         console.log("edit response" + JSON.stringify(response));
         if(response.status == 201) {
             ctx.login(await response.json());
-            /*setTimeout(() => {
+            setTimeout(() => {
                 window.location.reload();
-            }, +(process.env.NEXT_PUBLIC_REVALIDATE_SEC) * 1000);*/
+            }, +(process.env.NEXT_PUBLIC_REVALIDATE_SEC) * 1000);
         }
     };
 
