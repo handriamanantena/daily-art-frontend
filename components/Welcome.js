@@ -62,8 +62,7 @@ export default function Welcome({welcomePage, welcomeTitle}) {
             );
             //console.log(JSON.stringify(response?.data));
             console.log("retrieved user", JSON.stringify(response));
-            const accessToken = response.credential;
-            ctx.login(accessToken);
+            ctx.login(response.data);
             await router.push("/dailyart");
         } catch (err) {
             if (err?.response) {

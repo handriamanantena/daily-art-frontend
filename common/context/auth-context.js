@@ -7,9 +7,10 @@ const AuthContext = React.createContext({
     userName : '',
     email: '',
     profilePicture: '',
-    login: (token) => {},
+    login: (loginResponse) => {},
     logout: () => {},
-    isAuthorized: (userName) => {}
+    isAuthorized: (userName) => {},
+    editUserData: (editResponse) => {},
 });
 
 export const AuthProvider = (props) => {
@@ -29,9 +30,20 @@ export const AuthProvider = (props) => {
             console.log("decoded" + JSON.stringify( decoded));
             setUserName(decoded.userName);
             setEmail(decoded.email);
-            //setProfilePicture(loginResponse.artist.profilePicture);
+            setProfilePicture(loginResponse.artist.profilePicture);
         }
     };
+
+    const editUserDataHandler = (editResponse) => {
+        let token = editResponse.accessToken;
+        setToken(token);
+        if(token) {
+            let decoded = jwt_decode(token, {alg :"HS256"});
+            console.log("decoded" + JSON.stringify( decoded));
+            setUserName(decoded.userName);
+            setEmail(decoded.email);
+        }
+    }
 
     const logoutHandler = async () => {
         setLoggedIn(false);
@@ -59,7 +71,8 @@ export const AuthProvider = (props) => {
         email: email,
         profilePicture: profilePicture,
         logout: logoutHandler,
-        isAuthorized: isAuthorizedHandler
+        isAuthorized: isAuthorizedHandler,
+        editUserData: editUserDataHandler
     };
 
     return (<AuthContext.Provider value={contextValue}>

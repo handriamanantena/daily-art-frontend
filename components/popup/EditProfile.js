@@ -29,7 +29,7 @@ export const EditProfile = ({userInfo}) => {
         });
         console.log("edit response" + JSON.stringify(response));
         if(response.status == 201) {
-            ctx.login(await response.json());
+            ctx.editUserData(await response.json());
             setTimeout(() => {
                 window.location.reload();
             }, +(process.env.NEXT_PUBLIC_REVALIDATE_SEC) * 1000);
