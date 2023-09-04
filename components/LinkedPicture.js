@@ -1,5 +1,4 @@
 import React, {useEffect, useState} from "react";
-import gallery from "../styles/Gallery.module.scss";
 import Link from 'next/link'
 import {ViewPicture} from "./ViewPicture";
 
