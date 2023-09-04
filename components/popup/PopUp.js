@@ -2,7 +2,7 @@ import {Fragment, useEffect} from "react";
 import React from "react";
 import {CancelButton} from "../button/cancelButton";
 
-export const PopUp2 = ({children, isShowPopup, hidePopUp, onSubmit, encType}) => {
+export const PopUp = ({children, isShowPopup, hidePopUp, onSubmit, encType}) => {
 
     let onclick = (e) => {
         if(e.target === e.currentTarget) {
