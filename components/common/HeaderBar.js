@@ -13,7 +13,7 @@ import {DrawingOftheDay} from "../popup/DrawingOfTheDay";
 import Link from "next/link";
 import {ProfilePicture} from "../picture/ProfilePicture";
 import {SlideMenuImageLink} from "../button/SlideMenuImageLink";
-import {PopUp} from "../popup/PopUp";
+import {PopUp2} from "../popup/PopUp2";
 
 
 export function HeaderBar() {
@@ -42,14 +42,14 @@ export function HeaderBar() {
     return (
         <Fragment>
             <div className="sticky grid top-0 z-50 border-b h-16 bg-white content-center flex items-center z-[1034]" id="slim-content">
-                <PopUp isShowPopup={isShowAddPicture}
+                <PopUp2 isShowPopup={isShowAddPicture}
                         hidePopUp={hideAddPicture}>
                     <AddPictureInfo/>
-                </PopUp>
-                <PopUp isShowPopup={isShowDailyChallenge}
-                       hidePopUp={hideDailyChallenge}>
+                </PopUp2>
+                <PopUp2 isShowPopup={isShowDailyChallenge}
+                        hidePopUp={hideDailyChallenge}>
                     <DrawingOftheDay/>
-                </PopUp>
+                </PopUp2>
                 <NavigationBar>
                     <button className="flex-none"
                             type="button"

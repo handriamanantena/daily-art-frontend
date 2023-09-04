@@ -13,7 +13,7 @@ import {ArtistNavBar} from "../../components/common/ArtistNavBar";
 import {About} from "../../components/page/About";
 import {AddPictureInfo} from "../../components/popup/AddPictureInfo";
 import {EditButton} from "../../components/button/EditButton";
-import {PopUp} from "../../components/popup/PopUp";
+import {PopUp2} from "../../components/popup/PopUp2";
 
 let pageSize = +(process.env.NEXT_PUBLIC_PAGE_SIZE);
 
@@ -52,9 +52,9 @@ function Username({ pictures, userInfo }) {
                     {ctx.isAuthorized(userInfo.userName) ?
                         <StyledAddPicture showPopUp={showPopUp} text="+"/> : <Fragment/>}
                 </Gallery>
-                <PopUp isShowPopup={isShowPopup} hidePopUp={hidePopUp}>
+                <PopUp2 isShowPopup={isShowPopup} hidePopUp={hidePopUp}>
                     <AddPictureInfo/>
-                </PopUp>
+                </PopUp2>
             </InfiniteScroll>);
         }
     }
