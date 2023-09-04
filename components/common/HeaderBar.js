@@ -68,7 +68,10 @@ export function HeaderBar() {
                     </NavigationSVGLink>
                     <div className="bg-slate-600 w-px h-5 mx-2"/>
                     {ctx.isLoggedIn &&
-                    <Link href={`/dailyart/${encodeURIComponent(ctx.userName)}`}>
+                    <Link href={{
+                        pathname: "/dailyart/[userName]",
+                        query: { userName: encodeURIComponent(ctx.userName)},
+                    }} as={`/dailyart/${encodeURIComponent(ctx.userName)}`}>
                         <a className="flex flex-row px-2">
                             <div className="relative h-8 w-8">
                                 <ProfilePicture profilePicture={localStorage.getItem("profilePicture")}/>
