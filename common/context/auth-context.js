@@ -30,7 +30,7 @@ export const AuthProvider = (props) => {
             console.log("decoded" + JSON.stringify( decoded));
             setUserName(decoded.userName);
             setEmail(decoded.email);
-            setProfilePicture(loginResponse.artist.profilePicture);
+            localStorage.setItem("profilePicture", loginResponse.artist.profilePicture);
         }
     };
 
@@ -46,6 +46,7 @@ export const AuthProvider = (props) => {
     }
 
     const logoutHandler = async () => {
+        localStorage.clear();
         setLoggedIn(false);
         setToken('');
         setUserName('');

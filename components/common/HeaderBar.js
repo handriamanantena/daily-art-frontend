@@ -71,7 +71,7 @@ export function HeaderBar() {
                     <Link href={`/dailyart/${encodeURIComponent(ctx.userName)}`}>
                         <a className="flex flex-row px-2">
                             <div className="relative h-8 w-8">
-                                <ProfilePicture profilePicture={ctx.profilePicture}/>
+                                <ProfilePicture profilePicture={localStorage.getItem("profilePicture")}/>
                             </div>
                         </a>
                     </Link>}
