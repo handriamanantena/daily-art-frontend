@@ -5,6 +5,7 @@ import {PopupForm} from "./PopupForm";
 import {TextArea} from "../forum/inputs/TextArea";
 import AuthContext from "../../common/context/auth-context";
 import {LoadingScreen} from "../loading/LoadingScreen";
+import {useRouter} from "next/router";
 
 export const EditProfile = ({userInfo}) => {
 
@@ -12,6 +13,7 @@ export const EditProfile = ({userInfo}) => {
     let [isLoadingHidden, setisLoadingHidden] = useState(true);
     let [loadingText, setLoadingText] = useState(true);
     let [errMsg, setErrMsg] = useState('');
+    let router = useRouter();
 
     let onSubmit = async (e) => {
         e.preventDefault();
@@ -33,11 +35,11 @@ export const EditProfile = ({userInfo}) => {
                 },
                 body: data
             });
-            console.log("edit response" + JSON.stringify(response));
-            if (response.status == 201) {
-                ctx.editUserData(await response.json());
-                setTimeout(() => {
-                    window.location.reload();
+            if (response.status == 201 || response.status == 200) {
+                console.log("201");
+                setTimeout(async () => {
+                    ctx.editUserData(await response.json());
+                    await router.push(`/dailyart`);
                 }, +(process.env.NEXT_PUBLIC_REVALIDATE_SEC) * 1000);
             }
             else {
