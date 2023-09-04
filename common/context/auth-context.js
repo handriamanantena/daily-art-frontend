@@ -7,8 +7,10 @@ const AuthContext = React.createContext({
     userName : '',
     email: '',
     profilePicture: '',
-    login: (token) => {},
-    logout: () => {}
+    login: (loginResponse) => {},
+    logout: () => {},
+    isAuthorized: (userName) => {},
+    editUserData: (editResponse) => {},
 });
 
 export const AuthProvider = (props) => {
@@ -18,7 +20,9 @@ export const AuthProvider = (props) => {
     const [email, setEmail] = useState(null);
     const [profilePicture, setProfilePicture] = useState(null);
 
-    const loginHandler = (token) => {
+    const loginHandler = (loginResponse) => {
+        console.log("change " + JSON.stringify(loginResponse));
+        let token = loginResponse.accessToken;
         setLoggedIn(true);
         setToken(token);
         if(token) {
@@ -26,11 +30,23 @@ export const AuthProvider = (props) => {
             console.log("decoded" + JSON.stringify( decoded));
             setUserName(decoded.userName);
             setEmail(decoded.email);
-            setProfilePicture(decoded.profilePicture);
+            localStorage.setItem("profilePicture", loginResponse.artist.profilePicture);
         }
     };
 
+    const editUserDataHandler = (editResponse) => {
+        let token = editResponse.accessToken;
+        setToken(token);
+        if(token) {
+            let decoded = jwt_decode(token, {alg :"HS256"});
+            console.log("decoded" + JSON.stringify( decoded));
+            setUserName(decoded.userName);
+            setEmail(decoded.email);
+        }
+    }
+
     const logoutHandler = async () => {
+        localStorage.clear();
         setLoggedIn(false);
         setToken('');
         setUserName('');
@@ -44,6 +60,10 @@ export const AuthProvider = (props) => {
         });
     };
 
+    const isAuthorizedHandler = (pageUserName) => {
+        return userName == pageUserName;
+    }
+
     const contextValue = {
         isLoggedIn : isUserLoggedIn,
         token : token,
@@ -51,7 +71,9 @@ export const AuthProvider = (props) => {
         userName: userName,
         email: email,
         profilePicture: profilePicture,
-        logout: logoutHandler
+        logout: logoutHandler,
+        isAuthorized: isAuthorizedHandler,
+        editUserData: editUserDataHandler
     };
 
     return (<AuthContext.Provider value={contextValue}>

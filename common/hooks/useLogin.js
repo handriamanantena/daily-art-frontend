@@ -8,7 +8,7 @@ const useLogin = () => {
     let router = useRouter();
 
     let login = async (loginResponse) => {
-        ctx.login(loginResponse.accessToken);
+        ctx.login(loginResponse);
         console.log("jwt from backend " + JSON.stringify(loginResponse));
         if(loginResponse.artist?.userName) {
             await router.push("/dailyart");

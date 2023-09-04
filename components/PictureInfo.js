@@ -17,7 +17,7 @@ function PictureInfo({userInfo, picture}) {
                     <Link href={`/dailyart/${encodeURIComponent(picture.userName)}`}>
                         <a className="flex flex-row">
                             <div className="relative h-20 w-20">
-                                <ProfilePicture userInfo={userInfo}/>
+                                <ProfilePicture profilePicture={userInfo.profilePicture}/>
                             </div>
                         </a>
                     </Link>

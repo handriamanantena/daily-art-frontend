@@ -5,7 +5,6 @@ import {useRouter} from "next/router";
 import useShowPopUp from "../../common/hooks/useShowPopUp";
 import {H3NavHideOnMobile} from "./H3NavHideOnMobile";
 import {NavigationBar} from "./NavigationBar";
-import {PopUp} from "../popup/Popup";
 import {AddPictureInfo} from "../popup/AddPictureInfo";
 import {NavigationButton} from "../button/NavigationButton";
 import {NavigationImage} from "../image/NavigationImage";
@@ -14,6 +13,7 @@ import {DrawingOftheDay} from "../popup/DrawingOfTheDay";
 import Link from "next/link";
 import {ProfilePicture} from "../picture/ProfilePicture";
 import {SlideMenuImageLink} from "../button/SlideMenuImageLink";
+import {PopUp} from "../popup/PopUp";
 
 
 export function HeaderBar() {
@@ -42,12 +42,14 @@ export function HeaderBar() {
     return (
         <Fragment>
             <div className="sticky grid top-0 z-50 border-b h-16 bg-white content-center flex items-center z-[1034]" id="slim-content">
-                <PopUp popup={<AddPictureInfo/>}
-                       isShowPopup={isShowAddPicture}
-                       hidePopUp={hideAddPicture}/>
-                <PopUp popup={<DrawingOftheDay/>}
-                       isShowPopup={isShowDailyChallenge}
-                       hidePopUp={hideDailyChallenge}/>
+                <PopUp isShowPopup={isShowAddPicture}
+                       hidePopUp={hideAddPicture}>
+                    <AddPictureInfo/>
+                </PopUp>
+                <PopUp isShowPopup={isShowDailyChallenge}
+                       hidePopUp={hideDailyChallenge}>
+                    <DrawingOftheDay/>
+                </PopUp>
                 <NavigationBar>
                     <button className="flex-none"
                             type="button"
@@ -69,7 +71,7 @@ export function HeaderBar() {
                     <Link href={`/dailyart/${encodeURIComponent(ctx.userName)}`}>
                         <a className="flex flex-row px-2">
                             <div className="relative h-8 w-8">
-                                <ProfilePicture/>
+                                <ProfilePicture profilePicture={localStorage.getItem("profilePicture")}/>
                             </div>
                         </a>
                     </Link>}
@@ -108,8 +110,7 @@ export function HeaderBar() {
             </div>
             <div id="sidenav"
                  className="z-[300] h-[0px] -translate-x-full bg-white absolute overflow-hidden shadow-[0_4px_12px_0_rgba(0,0,0,0.07),_0_2px_4px_rgba(0,0,0,0.05)] data-[te-sidenav-hidden='false']:translate-x-0 dark:bg-zinc-800"
-                 data-te-sidenav-init
-                 data-te-sidenav-backdropClass="bg-black">
+                 data-te-sidenav-init>
                 <ul>
                     <li className="relative">
                         <SlideMenuImageLink path="/dailyart" text="Home">

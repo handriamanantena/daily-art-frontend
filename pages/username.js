@@ -25,12 +25,11 @@ function Username() {
     let onSubmit = async (e) => {
         e.preventDefault();
         console.log("clicked");
-        let email = ctx.email;
         let body = JSON.stringify({
             userName: e.target.userName.value
         })
         const host = process.env.NEXT_PUBLIC_PICTURES_API_HOST + process.env.NEXT_PUBLIC_PICTURES_API_PORT;
-        const response = await fetch(host + `/artist/${encodeURIComponent(email)}`, {
+        const response = await fetch(host + "/artist", {
             method: 'PATCH',
             credentials: 'include', // include, *same-origin, omit
             headers: {
@@ -40,7 +39,7 @@ function Username() {
             body : body
         });
         if (response.status == 200 || response.status == 201) {
-            ctx.login(ctx.token); // TODO backend needs to regenerate token after username update
+            ctx.editUserData(await response.json());
             await router.push("/dailyart");
         }
         else if (response.status == 409){
