@@ -1,6 +1,5 @@
 .blurryBackground {
-    @apply fixed flex inset-0 backdrop-blur-sm items-center justify-center;
-    z-index: 200;
+    @apply fixed flex inset-0 backdrop-blur-sm items-center justify-center z-[1999];
     background-color: #0003;
 }
 .popup {

@@ -4,10 +4,11 @@ import {googleLogin} from "../../../common/Login"
 import Head from "next/head";
 import { useRouter } from 'next/router'
 import AuthContext from "../../../common/context/auth-context";
+import useLogin from "../../../common/hooks/useLogin";
 
 function GoogleButton (){
-    const router = useRouter()
-    const authCtx = useContext(AuthContext);
+
+    const login = useLogin();
 
     useEffect(() => {
         const script = document.createElement('script');
@@ -40,14 +41,7 @@ function GoogleButton (){
         console.log("Encoded JWT ID token: " + response.credential);
         console.log(jwt_decode(response.credential))
         let loginResponse = await googleLogin(response.credential)
-        authCtx.login(loginResponse.accessToken);
-        console.log("jwt from backend " + JSON.stringify(loginResponse));
-        if(loginResponse.artist.userName) {
-            await router.push("/dailyart");
-        }
-        else {
-            await router.push("/username");
-        }
+        await login(loginResponse);
     }
 
     return (

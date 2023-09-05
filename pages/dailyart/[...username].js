@@ -11,8 +11,9 @@ import {ProfilePicture} from "../../components/picture/ProfilePicture";
 import {useRouter} from "next/router";
 import {ArtistNavBar} from "../../components/common/ArtistNavBar";
 import {About} from "../../components/page/About";
-import {PopUp} from "../../components/popup/Popup";
 import {AddPictureInfo} from "../../components/popup/AddPictureInfo";
+import {EditButton} from "../../components/button/EditButton";
+import {PopUp} from "../../components/popup/PopUp";
 
 let pageSize = +(process.env.NEXT_PUBLIC_PAGE_SIZE);
 
@@ -48,10 +49,12 @@ function Username({ pictures, userInfo }) {
             default:
             return (<InfiniteScroll getObjects={getPictures} maxPage={100} lastElement={lastElement}>
                 <Gallery pictures={newPictures} setLastElement={setLastElement}>
-                    {ctx.userName == userInfo.userName ?
+                    {ctx.isAuthorized(userInfo.userName) ?
                         <StyledAddPicture showPopUp={showPopUp} text="+"/> : <Fragment/>}
                 </Gallery>
-                <PopUp popup={<AddPictureInfo/>} isShowPopup={isShowPopup} hidePopUp={hidePopUp}/>
+                <PopUp isShowPopup={isShowPopup} hidePopUp={hidePopUp}>
+                    <AddPictureInfo/>
+                </PopUp>
             </InfiniteScroll>);
         }
     }
@@ -59,15 +62,23 @@ function Username({ pictures, userInfo }) {
     return (
        <BasicLayout>
            <div className="flex flex-col-reverse bg-black md:h-[300px]">
-               <div className="relative h-[100px] w-[100px] m-5 md:m-10">
-                   <div className="ml-[110px] mt-5 grow">
-                       <ProfilePicture userInfo={userInfo}/>
-                       <h1 className="text-white">{userInfo.userName}</h1>
-                   </div>
-                   <div className="ml-[110px] flex flex-row grow">
-                       <h3 className="text-white whitespace-nowrap hidden md:block">{userInfo.streak} 記録破り Record Daily Streak</h3>
-                       <div className="border-l-2 border-white h-5 mx-4 hidden md:block"/>
-                       <h3 className="text-white whitespace-nowrap hidden md:block">{userInfo.streak} 規律 Current Daily Streak</h3>
+               <div className="relative m-5 md:m-10">
+                   <div className="flex mt-5 grow">
+                       <div className="relative h-[100px] w-[100px]">
+                            <ProfilePicture profilePicture={userInfo.profilePicture}/>
+                       </div>
+                       <div className="self-center ml-2">
+                           <div className="md:flex self-center">
+                               <h1 className="text-white">{userInfo.userName}</h1>
+                               {ctx.isAuthorized(userInfo.userName) ?
+                               <EditButton userInfo={userInfo}/> : <></>}
+                           </div>
+                           <div className="flex flex-row grow">
+                               <h3 className="text-white whitespace-nowrap hidden md:block">{userInfo.streak} 記録破り Record Daily Streak</h3>
+                               <div className="border-l-2 border-white h-5 mx-4 hidden md:block"/>
+                               <h3 className="text-white whitespace-nowrap hidden md:block">{userInfo.streak} 規律 Current Daily Streak</h3>
+                           </div>
+                       </div>
                    </div>
                </div>
            </div>
@@ -131,6 +142,11 @@ export async function getStaticProps(context) {
     const { params } = context;
     const user = params.username;
     let response = await getArtists(null, null, user[0]); //TODO we already get the information in getStaticPaths, but we can't pass it to getStaticProps. need to upgrade to next 13 to avoid 2 api calls
+    if(response.length == 0) {
+        return {
+            notFound: true
+        };
+    }
     const pictures = await getPicturesByArtistUserName(user[0], pageSize, 0); // TODO maybe use caching to avoid getting info multiple times for each sub path
     let userInfo = response[0];
     console.log("artist by username" +JSON.stringify(response));

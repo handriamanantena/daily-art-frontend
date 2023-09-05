@@ -9,6 +9,7 @@ import AuthContext from "../../common/context/auth-context";
 import {Button} from "../button/Button";
 import { useRouter } from 'next/router'
 import BasicForumInput from "../forum/inputs/input";
+import {PopupForm} from "./PopupForm";
 
 export const DrawingOftheDay = () => {
 
@@ -42,25 +43,21 @@ export const DrawingOftheDay = () => {
         handleSubmit(e.target.pictureName?.value, word.english);
     }
 
-    return <div className="flex flex-grow flex-col space-y-1 md:min-w-[24rem] px-10 pt-10 pb-10 max-w-fit md:max-w-none">
-        <h2 className="font-extrabold mb-5">Daily Challenge 🚀</h2>
+    return <PopupForm onSubmit={uploadPicture} encType="multipart/form-data">
+        <h1>Daily Challenge 🚀</h1>
         <p>Today&apos;s Drawing Challenge:</p>
-        <div className="grid">
-            {isLoadingWord || word.english == undefined || word.japanese == undefined ? <Loading></Loading> : <h1 className="justify-self-center">{word.english}/{word.japanese}</h1>}
+        <div className="flex flex-col grow space-y-1">
+            {isLoadingWord || word.english == undefined || word.japanese == undefined ? <Loading></Loading> : <h1 className="flex justify-center">{word.english}/{word.japanese}</h1>}
             {ctx.isLoggedIn ?
                 <Fragment>
-                    <form className="flex flex-col space-y-1" onSubmit={uploadPicture} encType="multipart/form-data">
                         <label htmlFor="pictureName">Title</label>
                         <BasicForumInput type="text" id="pictureName" name="pictureName" maxLength="15"/>
-                        <div className="flex min-h-[174px]">
-                            <ImageInput file={file} setFile={setFile} loadingMessage={loadingMessage}
+                        <ImageInput file={file} setFile={setFile} loadingMessage={loadingMessage}
                                         setLoadingMessage={setLoadingMessage}
                                         isLoading={isLoading} setIsLoading={setIsLoading} errorText={errorText}
                                         setErrorText={setErrorText}/>
-                        </div>
                         <SubmitButton text="Submit"/>
-                    </form>
                 </Fragment> : <Button onclick={joinUs} text="Join Us"/>}
         </div>
-    </div>
+    </PopupForm>
 }

@@ -4,16 +4,18 @@ import {useContext, useState, useEffect } from "react";
 import LogInOptions from "./forum/LoginOptions";
 import AuthContext from "../common/context/auth-context";
 import axios from "axios";
-import {register} from "../common/Login";
 import { useRouter } from 'next/router'
 import ForumBackground from "./forum/ForumBackground";
+import useLogin from "../common/hooks/useLogin";
 
-export default function Welcome(props) {
+export default function Welcome({welcomePage, welcomeTitle}) {
 
     const router = useRouter()
 
     const ctx = useContext(AuthContext);
     const [errMsg, setErrMsg] = useState('');
+    const [emailMsg, setEmailMsg] = useState('');
+    const login = useLogin();
 
     useEffect(async () => {
         // Prefetch the dashboard page
@@ -39,7 +41,7 @@ export default function Welcome(props) {
 
     const handleLogin = async (event) => {
         // Stop the form from submitting and refreshing the page.
-        event.preventDefault()
+        event.preventDefault();
 
         // Get data from the form.
         const data = {
@@ -48,7 +50,7 @@ export default function Welcome(props) {
         }
 
         // API endpoint where we send form data.
-        const endpoint = process.env.NEXT_PUBLIC_PICTURES_API_HOST + process.env.NEXT_PUBLIC_PICTURES_API_PORT + "/artist";
+        const endpoint = process.env.NEXT_PUBLIC_PICTURES_API_HOST + process.env.NEXT_PUBLIC_PICTURES_API_PORT + "/artist/login";
 
         try {
             const response = await axios.post(endpoint,
@@ -59,9 +61,8 @@ export default function Welcome(props) {
                 }
             );
             //console.log(JSON.stringify(response?.data));
-            console.log("retrieved user", response);
-            const accessToken = response.credential;
-            ctx.login(accessToken);
+            console.log("retrieved user", JSON.stringify(response));
+            ctx.login(response.data);
             await router.push("/dailyart");
         } catch (err) {
             if (err?.response) {
@@ -78,17 +79,33 @@ export default function Welcome(props) {
     }
 
     const handleJoin = async (event) => {
-        event.preventDefault()
-        let response = await register(event.target.email.value, event.target.password.value);
-        console.log("success register ", response.ok);
-        if(response.ok) {
-            await router.push("/username");
+        event.preventDefault();
+        let email = event.target.email.value;
+        let password = event.target.password.value;
+        const host = process.env.NEXT_PUBLIC_PICTURES_API_HOST + process.env.NEXT_PUBLIC_PICTURES_API_PORT;
+        let body = JSON.stringify({
+            email,
+            password
+        })
+        const response = await fetch(host + '/register', {
+            method: 'POST',
+            credentials: 'include', // include, *same-origin, omit
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: body
+        });
+        if(response.status === 200 || response.status === 201) {
+            await login(await response.json(), true);
         }
-        else if(response.status == 409) {
-            setErrMsg("Email Already in Use");
+        else if(response.status === 409) {
+            setEmailMsg("Email in use");
         }
+        else {
+            return setErrMsg("Unable to login");
+        }
+    };
 
-    }
     let additionalProps = { // login
         artistInfoTitle: "Username",
         artistPasswordTitle: "Password",
@@ -97,9 +114,11 @@ export default function Welcome(props) {
         passwordStrength: "",
         onKeyDown: onKeyDown,
         artistInfoInputType: 'text',
-        welcomeTitle: props.welcomeTitle
+        welcomeTitle: welcomeTitle,
+        errMsg : errMsg,
+        emailMsg,
     }
-    if(props.welcomePage == 'join') {
+    if(welcomePage == 'join') {
         additionalProps = {
             artistInfoTitle: "Add your email",
             artistPasswordTitle: "Choose a password",
@@ -108,13 +127,21 @@ export default function Welcome(props) {
             passwordStrength: passwordStrength,
             onKeyDown: onKeyDown,
             artistInfoInputType: 'email',
-            welcomeTitle: props.welcomeTitle
+            welcomeTitle: welcomeTitle,
+            errMsg : errMsg,
+            emailMsg
         }
     }
-
+/*
         return (<ForumBackground>
-                <p>{errMsg}</p>
                 <ArtistCredentials {...additionalProps}/>
                 <LogInOptions/>
-        </ForumBackground>);
+        </ForumBackground>);*/
+
+    return (<ForumBackground>
+        <div className="grid grid-cols-1 w-96 px-10 pt-10">
+            <h2 className="font-extrabold pb-5">{welcomeTitle}</h2>
+            <LogInOptions/>
+        </div>
+    </ForumBackground>);
 }

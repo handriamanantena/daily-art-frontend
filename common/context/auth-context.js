@@ -6,8 +6,11 @@ const AuthContext = React.createContext({
     token: '',
     userName : '',
     email: '',
-    login: (token) => {},
-    logout: () => {}
+    profilePicture: '',
+    login: (loginResponse) => {},
+    logout: () => {},
+    isAuthorized: (userName) => {},
+    editUserData: (editResponse) => {},
 });
 
 export const AuthProvider = (props) => {
@@ -15,8 +18,11 @@ export const AuthProvider = (props) => {
     const [isUserLoggedIn, setLoggedIn] = useState(false);
     const [userName, setUserName] = useState(null);
     const [email, setEmail] = useState(null);
+    const [profilePicture, setProfilePicture] = useState(null);
 
-    const loginHandler = (token) => {
+    const loginHandler = (loginResponse) => {
+        console.log("change " + JSON.stringify(loginResponse));
+        let token = loginResponse.accessToken;
         setLoggedIn(true);
         setToken(token);
         if(token) {
@@ -24,14 +30,28 @@ export const AuthProvider = (props) => {
             console.log("decoded" + JSON.stringify( decoded));
             setUserName(decoded.userName);
             setEmail(decoded.email);
+            localStorage.setItem("profilePicture", loginResponse.artist.profilePicture);
         }
     };
 
+    const editUserDataHandler = (editResponse) => {
+        let token = editResponse.accessToken;
+        setToken(token);
+        if(token) {
+            let decoded = jwt_decode(token, {alg :"HS256"});
+            console.log("decoded" + JSON.stringify( decoded));
+            setUserName(decoded.userName);
+            setEmail(decoded.email);
+        }
+    }
+
     const logoutHandler = async () => {
+        localStorage.clear();
         setLoggedIn(false);
         setToken('');
         setUserName('');
         setEmail('');
+        setProfilePicture('');
         console.log("logout");
         const host = process.env.NEXT_PUBLIC_PICTURES_API_HOST + process.env.NEXT_PUBLIC_PICTURES_API_PORT + "/logout";
         const res = await fetch(host, {
@@ -40,13 +60,20 @@ export const AuthProvider = (props) => {
         });
     };
 
+    const isAuthorizedHandler = (pageUserName) => {
+        return userName == pageUserName;
+    }
+
     const contextValue = {
         isLoggedIn : isUserLoggedIn,
         token : token,
         login: loginHandler,
         userName: userName,
         email: email,
-        logout: logoutHandler
+        profilePicture: profilePicture,
+        logout: logoutHandler,
+        isAuthorized: isAuthorizedHandler,
+        editUserData: editUserDataHandler
     };
 
     return (<AuthContext.Provider value={contextValue}>
