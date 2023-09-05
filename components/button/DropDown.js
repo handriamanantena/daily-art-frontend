@@ -1,18 +1,19 @@
-import React, {useState} from "react";
+import React, {useEffect, useState} from "react";
 
-export const DropDown = ({children, menuOption}) => {
+export const DropDown = ({children, menuOption, hideDropDownArrow}) => {
 
     let [hidden, setHidden] = useState(true);
 
-    let dropDown = () => {
+    let dropDown = (e) => {
         console.log("clicked")
         setHidden(!hidden);
+        e.stopPropagation();
     };
 
     return <div className="group flex static">
         <div onClick={dropDown} className="flex z-10">
         {menuOption}
-            <div className="grid content-center pl-1">
+            <div className={`grid content-center pl-1 ${hideDropDownArrow ? 'hidden' : 'block'}`}>
                 <svg xmlns="http://www.w3.org/2000/svg" height="0.9em" viewBox="0 0 448 512"
                      className="group-hover:fill-cyan-600 mt-1">
                     <path
