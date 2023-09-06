@@ -1,8 +1,26 @@
-import React, {useState} from "react";
+import React, {useEffect, useRef, useState} from "react";
 
 export const DropDown = ({children, menuOption, hideDropDownArrow}) => {
 
     let [showDropDown, setShowDropDown] = useState(false);
+    let ref = useRef();
+    useEffect(() => {
+        function handleClickOutside(event) {
+            console.log(event.target);
+            console.log(ref.current);
+            console.log(ref.current.contains(event.target));
+            if (ref.current && !ref.current.contains(event.target)) {
+                setShowDropDown(false);
+                console.log("outside");
+            }
+        }
+        // Bind the event listener
+        document.addEventListener("click", handleClickOutside, false);
+        return () => {
+            // Unbind the event listener on clean up
+            document.removeEventListener("click", handleClickOutside, false);
+        };
+    }, []);
 
     let dropDown = (e) => {
         console.log("clicked")
@@ -10,7 +28,7 @@ export const DropDown = ({children, menuOption, hideDropDownArrow}) => {
         e.stopPropagation();
     };
 
-    return <div className="group flex">
+    return <div className="group flex" ref={ref}>
         <div onClick={dropDown} className="flex z-10">
         {menuOption}
             <div className={`grid content-center pl-1 ${hideDropDownArrow ? 'hidden' : 'block'}`}>
