@@ -1,12 +1,12 @@
-import React, {useEffect, useState} from "react";
+import React, {useState} from "react";
 
 export const DropDown = ({children, menuOption, hideDropDownArrow}) => {
 
-    let [hidden, setHidden] = useState(true);
+    let [showDropDown, setShowDropDown] = useState(false);
 
     let dropDown = (e) => {
         console.log("clicked")
-        setHidden(!hidden);
+        setShowDropDown(!showDropDown);
         e.stopPropagation();
     };
 
@@ -21,10 +21,6 @@ export const DropDown = ({children, menuOption, hideDropDownArrow}) => {
                 </svg>
             </div>
         </div>
-        <div hidden={hidden}
-             className="flex-col-reverse grow absolute w-40 h-36 top-[17px] hidden group-hover:flex hover:flex">
-            {children}
-        </div>
-
+        {showDropDown ? children : <></>}
     </div>
 }

@@ -14,6 +14,7 @@ import Link from "next/link";
 import {ProfilePicture} from "../picture/ProfilePicture";
 import {SlideMenuImageLink} from "../button/SlideMenuImageLink";
 import {PopUp} from "../popup/PopUp";
+import {NavDropDownOptions} from "../button/NavDropDownOptions";
 
 
 export function HeaderBar() {
@@ -22,6 +23,7 @@ export function HeaderBar() {
     const ctx = useContext(AuthContext);
     const [isShowAddPicture, hideAddPicture, showAddPicture] = useShowPopUp();
     const [isShowDailyChallenge, hideDailyChallenge, showDailyChallenge] = useShowPopUp();
+    let options = [{ onClick: showAddPicture, title: "Add Drawing"}, {onClick: showDailyChallenge, title: "Daily Challenge"}];
 
     const logout = () => {
       ctx.logout();
@@ -85,18 +87,7 @@ export function HeaderBar() {
                                 <H3NavHideOnMobile text="Submit"/>
                             </div>
                         </button>}>
-                        <div className="bg-black">
-                            <div className="hover:bg-cyan-600 p-3 slate-400 border-b border-x">
-                                <NavigationButton onClick={showAddPicture} title="Add Drawing">
-                                    <h3 className="font-bold text-white">Add Drawing</h3>
-                                </NavigationButton>
-                            </div>
-                            <div className="hover:bg-cyan-600 p-3 slate-400 border-b border-x">
-                                <NavigationButton onClick={showDailyChallenge} title="Daily Challenge">
-                                    <h3 className="font-bold text-white">Daily Challenge</h3>
-                                </NavigationButton>
-                            </div>
-                        </div>
+                        <NavDropDownOptions options={options}/>
                     </DropDown>
                     {ctx.isLoggedIn && <div className="bg-slate-600 w-px h-5 ml-5 mx-2"/>}
                     {ctx.isLoggedIn && <div className="flex ml-auto mr-2">
