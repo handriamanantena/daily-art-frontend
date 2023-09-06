@@ -10,7 +10,7 @@ export const DropDown = ({children, menuOption, hideDropDownArrow}) => {
         e.stopPropagation();
     };
 
-    return <div className="group flex static">
+    return <div className="group flex">
         <div onClick={dropDown} className="flex z-10">
         {menuOption}
             <div className={`grid content-center pl-1 ${hideDropDownArrow ? 'hidden' : 'block'}`}>
