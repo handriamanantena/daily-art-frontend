@@ -8,25 +8,24 @@ import {OptionsDropDown} from "./button/options/OptionsDropDown";
 import {Delete} from "./svg/Delete";
 import {PopUp} from "./popup/PopUp";
 import {useShowPopUp} from "../common/hooks/useShowPopUp";
+import {EditPicture} from "./popup/EditPicture";
 
 export const ViewPicture = ({picture, isEditable}) => {
 
     let [hideInfo, setHidePictureInfo] = useState(true);
-    let [isShowEdit, hideEdit , showEdit] = useShowPopUp();
+    let [isShowEdit, hideEdit , showEdit] = useShowPopUp(false);
 
     let profilePic = picture.profile[0]?.profilePicture ? picture.profile[0]?.profilePicture : "/placeholder/user-solid.svg";
     let userInfo = { userName: picture.userName, profilePicture: profilePic};
 
     let deletePicture = (e) => {
-
-        e.stopPropagation();
     };
 
     let editPicture = (e) => {
-        e.stopPropagation();
+        showEdit();
     }
 
-    let options = [{ onClick: deletePicture, title: "Delete", svg: <Delete/>}, {onClick: editPicture, title: "Test", svg: <Delete/>}];
+    let options = [{ onClick: deletePicture, title: "Delete", svg: <Delete/>}, {onClick: editPicture, title: "Edit Picture", svg: <Delete/>}];
 
 
 
@@ -69,6 +68,8 @@ export const ViewPicture = ({picture, isEditable}) => {
                     <OptionsDropDown options={options}/>
                 </DropDown> : <></>}
         </div>
-        <PopUp hidePopUp={hideEdit} isShowPopup={isShowEdit}/>
+        <PopUp hidePopUp={hideEdit} isShowPopup={isShowEdit}>
+            <EditPicture pictureInfo={picture}/>
+        </PopUp>
     </div>);
 };

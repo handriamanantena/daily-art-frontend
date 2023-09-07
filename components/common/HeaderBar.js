@@ -6,7 +6,6 @@ import useShowPopUp from "../../common/hooks/useShowPopUp";
 import {H3NavHideOnMobile} from "./H3NavHideOnMobile";
 import {NavigationBar} from "./NavigationBar";
 import {AddPictureInfo} from "../popup/AddPictureInfo";
-import {NavigationButton} from "../button/NavigationButton";
 import {NavigationImage} from "../image/NavigationImage";
 import {DropDown} from "../button/DropDown";
 import {DrawingOftheDay} from "../popup/DrawingOfTheDay";
