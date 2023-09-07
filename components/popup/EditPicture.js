@@ -5,18 +5,43 @@ import BasicForumInput from "../forum/inputs/input";
 import {TextArea} from "../forum/inputs/TextArea";
 import SubmitButton from "../forum/inputs/SubmitButton";
 import Moment from "moment";
+import useAxiosPrivate from "../../common/hooks/useAxiosPrivate";
 
 export const EditPicture = ({pictureInfo, userInfo}) => {
 
     let [isLoadingHidden, setIsLoadingHidden] = useState(true);
     let [errMsg, setErrMsg] = useState('');
     let date = Moment(pictureInfo.date).format('YYYY年 MMM月 D日');
+    let axiosPrivate = useAxiosPrivate();
 
-    let onSubmit = (e) => {
+    let onSubmit = async (e) => {
         e.preventDefault();
+        const host = process.env.NEXT_PUBLIC_PICTURES_API_HOST + process.env.NEXT_PUBLIC_PICTURES_API_PORT;
+
         setIsLoadingHidden(false);
-        let body = {
-            pictureName: e.target.title?.value.trim()
+        try {
+            let body = {
+                pictureName: e.target.pictureName?.value.trim()
+            }
+            setIsLoadingHidden(false);
+            const response = await axiosPrivate.patch(host + `/pictures/${pictureInfo._id}`, body,
+                {
+                    headers: {'Content-Type': 'application/json'},
+                    withCredentials: true
+                });
+            if(response.status == 200) {
+                setTimeout(async () => {
+                    window.location.reload();
+                }, +(process.env.NEXT_PUBLIC_REVALIDATE_SEC) * 1000);
+            }
+            else {
+                setIsLoadingHidden(true);
+                setErrMsg('There was a problem updating');
+            }
+        }
+        catch (e) {
+            setIsLoadingHidden(true);
+            setErrMsg('There was a problem updating');
         }
     };
 
@@ -27,8 +52,8 @@ export const EditPicture = ({pictureInfo, userInfo}) => {
         <h1>Edit Picture</h1>
         <span className="text-gray-400 text-xs mb-5">Upload date: {date}</span>
         <p className="text-red-500">{errMsg}</p>
-        <label htmlFor="title">Title</label>
-        <BasicForumInput type="text" id="userName" name="userName" maxLength={32} defaultValue={pictureInfo.pictureName}/>
+        <label htmlFor="pictureName">Title</label>
+        <BasicForumInput type="text" id="pictureName" name="pictureName" maxLength={32} defaultValue={pictureInfo.pictureName}/>
         <label htmlFor="tags">Tags</label>
         <TextArea id="tags" name="tags"/>
         <SubmitButton text="Submit"/>
