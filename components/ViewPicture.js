@@ -10,6 +10,7 @@ import {PopUp} from "./popup/PopUp";
 import {useShowPopUp} from "../common/hooks/useShowPopUp";
 import {EditPicture} from "./popup/EditPicture";
 import {DeletePicture} from "./popup/DeletePicture";
+import {EditSVG} from "./svg/EditSVG";
 
 export const ViewPicture = ({picture, isEditable}) => {
 
@@ -28,7 +29,7 @@ export const ViewPicture = ({picture, isEditable}) => {
         showEdit();
     }
 
-    let options = [{ onClick: deletePicture, title: "Delete", svg: <Delete/>}, {onClick: editPicture, title: "Edit Picture", svg: <Delete/>}];
+    let options = [{ onClick: deletePicture, title: "Delete", svg: <Delete/>}, {onClick: editPicture, title: "Edit Picture", svg: <EditSVG/>}];
 
 
 
