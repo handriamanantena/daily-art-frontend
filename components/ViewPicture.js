@@ -38,15 +38,19 @@ export const ViewPicture = ({picture, isEditable}) => {
         e.preventDefault();
         setHidePictureInfo(false);
     };
-    return (<div className="relative grow h-96">
+    return (<div className="relative grow h-96 md:ml-1 md:mr-1 mt-1 mb-1 z-49">
         <div className="flex items-center justify-center h-96 bg-gray-300 md:rounded-lg dark:bg-gray-700"
              onMouseEnter={showPicInfo}
               onMouseLeave={hidePicInfo}>
-            <Image className="object-cover h-full md:rounded-lg grow hover:brightness-50"
-                   layout="fill"
-                   src={picture.url}
-                   objectPosition = "center"
-                   unoptimized/>
+            <Link href={`/picture/${picture._id}`}>
+                <a>
+                    <Image className="object-cover h-full md:rounded-lg grow hover:brightness-50"
+                           layout="fill"
+                           src={picture.url}
+                           objectPosition="center"
+                           unoptimized/>
+                </a>
+            </Link>
             <Link href="/picture/[picture]" as={`/picture/${picture._id}`}>
                 <a hidden={hideInfo}>
                     <h2 className="absolute top-0 right-0 p-3 text-white">{picture.pictureName}</h2>

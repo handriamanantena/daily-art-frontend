@@ -14,14 +14,7 @@ function LinkedPicture({picture, isEditable}) {
             picture.url = url;
         }
     }, [picture]);
-    return (
-           <Link href={`/picture/${picture._id}`}>
-            <div className="md:ml-1 md:mr-1 mt-1 mb-1 z-49">
-                <a>
-                    <ViewPicture picture = {picture} isEditable={isEditable}/>
-                </a>
-            </div>
-           </Link>);
+    return (<ViewPicture picture = {picture} isEditable={isEditable}/>);
 }
 
 export { LinkedPicture }

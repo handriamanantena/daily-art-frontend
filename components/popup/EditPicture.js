@@ -13,19 +13,18 @@ export const EditPicture = ({pictureInfo, userInfo}) => {
     let date = Moment(pictureInfo.date).format('YYYY年 MMM月 D日');
 
     let onSubmit = (e) => {
-        e.stopPropagation();
         e.preventDefault();
         setIsLoadingHidden(false);
     };
 
     return <PopupForm onSubmit={onSubmit}>
         <LoadingScreen isLoadingHidden={isLoadingHidden}>
-            <p className="text-black">Test</p>
+            <p className="text-black">Loading...</p>
         </LoadingScreen>
         <h1>Edit Picture</h1>
         <span className="text-gray-400 text-xs mb-5">Upload date: {date}</span>
         <p className="text-red-500">{errMsg}</p>
-        <label htmlFor="title">{pictureInfo.pictureName}</label>
+        <label htmlFor="title">Title</label>
         <BasicForumInput type="text" id="userName" name="userName" maxLength={32} defaultValue={pictureInfo.pictureName}/>
         <label htmlFor="tags">Tags</label>
         <TextArea id="tags" name="tags"/>
