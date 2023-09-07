@@ -5,24 +5,40 @@ import {ProfilePicture} from "./picture/ProfilePicture";
 import {Options} from "./button/options/Options";
 import {DropDown} from "./button/DropDown";
 import {OptionsDropDown} from "./button/options/OptionsDropDown";
+import {Delete} from "./svg/Delete";
+import {PopUp} from "./popup/PopUp";
+import {useShowPopUp} from "../common/hooks/useShowPopUp";
 
 export const ViewPicture = ({picture, isEditable}) => {
 
     let [hideInfo, setHidePictureInfo] = useState(true);
+    let [isShowEdit, hideEdit , showEdit] = useShowPopUp();
 
     let profilePic = picture.profile[0]?.profilePicture ? picture.profile[0]?.profilePicture : "/placeholder/user-solid.svg";
     let userInfo = { userName: picture.userName, profilePicture: profilePic};
-    let options = [{ onClick: undefined, title: "Delete"}, {onClick: undefined, title: "Test"}];
+
+    let deletePicture = (e) => {
+
+        e.stopPropagation();
+    };
+
+    let editPicture = (e) => {
+        e.stopPropagation();
+    }
+
+    let options = [{ onClick: deletePicture, title: "Delete", svg: <Delete/>}, {onClick: editPicture, title: "Test", svg: <Delete/>}];
+
+
 
     let hidePicInfo = (e) => {
         e.preventDefault();
         setHidePictureInfo(true);
-    }
+    };
 
     let showPicInfo = (e) => {
         e.preventDefault();
         setHidePictureInfo(false);
-    }
+    };
     return (<div className="relative grow h-96">
         <div className="flex items-center justify-center h-96 bg-gray-300 md:rounded-lg dark:bg-gray-700"
              onMouseEnter={showPicInfo}
@@ -53,5 +69,6 @@ export const ViewPicture = ({picture, isEditable}) => {
                     <OptionsDropDown options={options}/>
                 </DropDown> : <></>}
         </div>
-        </div>);
+        <PopUp hidePopUp={hideEdit} isShowPopup={isShowEdit}/>
+    </div>);
 };
