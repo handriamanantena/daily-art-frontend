@@ -1,5 +1,4 @@
 import React, {useEffect} from "react";
-import Link from 'next/link'
 import {ViewPicture} from "./ViewPicture";
 
 function LinkedPicture({picture, isEditable}) {

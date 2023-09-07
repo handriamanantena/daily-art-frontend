@@ -15,6 +15,9 @@ export const EditPicture = ({pictureInfo, userInfo}) => {
     let onSubmit = (e) => {
         e.preventDefault();
         setIsLoadingHidden(false);
+        let body = {
+            pictureName: e.target.title?.value.trim()
+        }
     };
 
     return <PopupForm onSubmit={onSubmit}>
