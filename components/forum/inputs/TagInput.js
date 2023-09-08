@@ -8,6 +8,9 @@ export const TagInput = ({}) => {
     let [tag, setTag] = useState();
     let [listTags, setTagList] = useState([]);
 
+    let deleteTag = (text) => {
+        setTagList((listTags) => listTags.filter((tagInList) => tagInList != text));
+    };
 
     useEffect(() => {
 
@@ -32,10 +35,8 @@ export const TagInput = ({}) => {
         }
 
         document.addEventListener("keyup", createNewTagFromKey);
-        document.addEventListener("click", createNewTag);
         return () => {
             document.removeEventListener("keyup", createNewTagFromKey);
-            document.removeEventListener("click", createNewTag);
         };
 
 
@@ -43,11 +44,11 @@ export const TagInput = ({}) => {
 
 
     // TODO need a scroll wheel when text to large (y axis)
-    return <InputBorder>
+    return <div><InputBorder>
         <div className="flex flex-wrap w-full break-all">
             <div className="flex flex-wrap">
                 {listTags.map((text) => {
-                    return <Tag tag={text}/>
+                    return <Tag tag={text} deleteTag={deleteTag}/>
                 })}
             </div>
         <span className="flex flex-wrap grow self-center bg-transparent focus:outline-none"
@@ -57,4 +58,5 @@ export const TagInput = ({}) => {
         </span>
         </div>
     </InputBorder>
+    </div>
 };
