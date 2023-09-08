@@ -1,5 +1,12 @@
-export const Tag = ({text}) => {
+import {useEffect} from "react";
 
-    return <div className="bg-red-200">test</div>
+export const Tag = ({tag}) => {
+
+
+    useEffect(() => {
+
+    }, []);
+
+    return <div className="bg-red-200">{tag}</div>
 
 }

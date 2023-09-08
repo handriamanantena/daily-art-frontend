@@ -1,38 +1,54 @@
 import {InputBorder} from "./InputBorder";
 import {Tag} from "../../button/Tag";
-import {useEffect, useRef} from "react";
+import {useEffect, useRef, useState} from "react";
 
 export const TagInput = ({}) => {
 
     let ref = useRef();
+    let [tag, setTag] = useState();
+    let [listTags, setTagList] = useState([]);
+
 
     useEffect(() => {
+
 
         let createNewTagFromKey = (e) => {
             if(e.key === ' ' || e.key.toLowerCase() === "enter") {
                 createNewTag();
             }
+            else {
+                let text = ref.current.innerText.toString();
+                if(text) {
+                    setTag(text);
+                }
+            }
         };
 
         let createNewTag = () => {
-            console.log(ref.current.innerHTML);
+            if(tag && ref.current) {
+                ref.current.innerText = '';
+                setTagList([...listTags, tag]);
+            }
         }
 
-        document.addEventListener("keydown", createNewTagFromKey, false);
-        document.addEventListener("click", createNewTag, false);
+        document.addEventListener("keyup", createNewTagFromKey);
+        document.addEventListener("click", createNewTag);
         return () => {
-            document.removeEventListener("keydown", createNewTagFromKey, false);
-            document.removeEventListener("click", createNewTag, false);
+            document.removeEventListener("keyup", createNewTagFromKey);
+            document.removeEventListener("click", createNewTag);
         };
 
 
-    }, []);
-    return <InputBorder>
-        <Tag/>
+    }, [tag]);
+
+
+    return <div><InputBorder>
+        <Tag tag={tag}/>
         <span className="w-full bg-transparent focus:outline-none"
             role="textbox"
             contentEditable
         ref={ref}>
         </span>
-    </InputBorder>
+    </InputBorder><p>{JSON.stringify(listTags)}</p>
+    </div>
 };
