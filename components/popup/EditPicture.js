@@ -2,10 +2,10 @@ import {PopupForm} from "./PopupForm";
 import React, {useState} from "react";
 import {LoadingScreen} from "../loading/LoadingScreen";
 import BasicForumInput from "../forum/inputs/input";
-import {TextArea} from "../forum/inputs/TextArea";
 import SubmitButton from "../forum/inputs/SubmitButton";
 import Moment from "moment";
 import useAxiosPrivate from "../../common/hooks/useAxiosPrivate";
+import {TagInput} from "../forum/inputs/TagInput";
 
 export const EditPicture = ({pictureInfo, userInfo}) => {
 
@@ -55,7 +55,7 @@ export const EditPicture = ({pictureInfo, userInfo}) => {
         <label htmlFor="pictureName">Title</label>
         <BasicForumInput type="text" id="pictureName" name="pictureName" maxLength={32} defaultValue={pictureInfo.pictureName}/>
         <label htmlFor="tags">Tags</label>
-        <TextArea id="tags" name="tags"/>
+        <TagInput id="tags" name="tags"/>
         <SubmitButton text="Submit"/>
     </PopupForm>
 
