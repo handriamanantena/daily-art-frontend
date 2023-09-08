@@ -7,6 +7,6 @@ export const Tag = ({tag}) => {
 
     }, []);
 
-    return <div className="bg-red-200">{tag}</div>
+    return <div className="flex flex-wrap bg-red-200 border-4 w-fit">{tag}</div>
 
 }

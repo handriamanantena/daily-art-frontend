@@ -42,13 +42,19 @@ export const TagInput = ({}) => {
     }, [tag]);
 
 
-    return <div><InputBorder>
-        <Tag tag={tag}/>
-        <span className="w-full bg-transparent focus:outline-none"
+    // TODO need a scroll wheel when text to large (y axis)
+    return <InputBorder>
+        <div className="flex flex-wrap w-full break-all">
+            <div className="flex flex-wrap">
+                {listTags.map((text) => {
+                    return <Tag tag={text}/>
+                })}
+            </div>
+        <span className="flex flex-wrap grow self-center bg-transparent focus:outline-none"
             role="textbox"
             contentEditable
         ref={ref}>
         </span>
-    </InputBorder><p>{JSON.stringify(listTags)}</p>
-    </div>
+        </div>
+    </InputBorder>
 };
