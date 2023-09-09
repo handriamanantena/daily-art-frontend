@@ -3,7 +3,7 @@ import {useEffect, useRef, useState} from "react";
 import React from "react";
 import {TextAreaBorder} from "./TextAreaBorder";
 
-export const TagInput = ({listTags, setTagList}) => {
+export const TagInput = ({listTags, setTagList, objectId}) => {
 
     let ref = useRef();
     let [tag, setTag] = useState('');
@@ -67,7 +67,7 @@ export const TagInput = ({listTags, setTagList}) => {
         <TextAreaBorder>
             <div className="flex flex-wrap w-full break-all">
                 {listTags.map((text) => {
-                    return <Tag tag={text} deleteTag={deleteTag}/>
+                    return <Tag tag={text} deleteTag={deleteTag} objectId={objectId} key={text + objectId}/>
                 })}
                 <span className="flex flex-wrap grow self-center bg-transparent focus:outline-none px-1.5 py-1 my-1"
                       role="textbox"

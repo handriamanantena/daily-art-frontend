@@ -48,7 +48,7 @@ export const DeletePicture = ({picture, hidePopUp}) => {
         <LoadingScreen isLoadingHidden={isLoadingHidden}>
             <p className="text-black">Loading...</p>
         </LoadingScreen>
-        <h3>Are you sure you want't to delete this picture?</h3>
+        <h3>Are you sure you want&apos;t to delete this picture?</h3>
         <div className="flex grow space-x-1">
             <SubmitButton text="Yes"/>
             <ForumButton text="No" onClick={cancel} title="No"/>

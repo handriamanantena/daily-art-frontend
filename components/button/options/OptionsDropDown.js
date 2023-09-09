@@ -1,7 +1,7 @@
 import {NavigationButton} from "../NavigationButton";
 import React from "react";
 
-export const OptionsDropDown = ({options}) => {
+export const OptionsDropDown = ({options, objectId}) => {
 
     return <div className="flex-col grow absolute top-[37px] left-[20px] w-48">
         <svg height={12} viewBox="0 0 21 12" width={21} className="-scale-y-100 fill-white group-hover:flex hover:flex">
@@ -9,7 +9,7 @@ export const OptionsDropDown = ({options}) => {
         </svg>
         <ul className="bg-white grow">
             {options.map(({ onClick, title, svg}) => {
-                return <li className="group-hover:flex hover:flex hover:bg-cyan-600 p-2 slate-400 border-b border-x w-30">
+                return <li className="group-hover:flex hover:flex hover:bg-cyan-600 p-2 slate-400 border-b border-x w-30" key={title + objectId}>
                     <NavigationButton onClick={onClick} title={title}>
                         {svg}
                         <h3>{title}</h3>

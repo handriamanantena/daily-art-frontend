@@ -1,7 +1,7 @@
 import {XSVG} from "../svg/XSVG";
 import React, {useEffect, useState} from "react";
 
-export const Tag = ({tag, deleteTag}) => {
+export const Tag = ({tag, deleteTag , objectId}) => {
 
     let [isTagTooLong, setTagTooLong] = useState(false);
 
@@ -18,7 +18,7 @@ export const Tag = ({tag, deleteTag}) => {
         }
     }, [tag]);
 
-    return <div className={`m-0.5 inline-flex items-center font-bold leading-sm uppercase px-3 py-1 rounded-full ${isTagTooLong ? `bg-red-200 text-red-700`: `bg-blue-200 text-blue-500`}`}>
+    return <div className={`m-0.5 inline-flex items-center font-bold leading-sm uppercase px-3 py-1 rounded-full ${isTagTooLong ? `bg-red-200 text-red-700`: `bg-blue-200 text-blue-500`}`} key={tag + objectId}>
         <div className="flex flex-row">
         {tag}
             <div className="flex self-center w-fit h-fit" onClick={deleteTagOnClick}>

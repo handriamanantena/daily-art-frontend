@@ -34,6 +34,7 @@ export const EditPicture = ({pictureInfo, userInfo}) => {
             if(response.status == 200) {
                 setTimeout(async () => {
                     window.location.reload();
+                    localStorage.setItem("forceReload", true);
                 }, +(process.env.NEXT_PUBLIC_REVALIDATE_SEC) * 1000);
             }
             else {
@@ -57,7 +58,7 @@ export const EditPicture = ({pictureInfo, userInfo}) => {
         <label htmlFor="pictureName">Title</label>
         <BasicForumInput type="text" id="pictureName" name="pictureName" maxLength={32} defaultValue={pictureInfo.pictureName}/>
         <label htmlFor="tags">Tags</label>
-        <TagInput id="tags" name="tags" listTags={listTags} setTagList={setTagList}/>
+        <TagInput id="tags" name="tags" listTags={listTags} setTagList={setTagList} objectId={pictureInfo._id}/>
         <SubmitButton text="Submit"/>
     </PopupForm>
 
