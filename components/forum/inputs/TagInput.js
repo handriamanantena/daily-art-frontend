@@ -1,12 +1,14 @@
 import {InputBorder} from "./InputBorder";
 import {Tag} from "../../button/Tag";
 import {useEffect, useRef, useState} from "react";
+import React from "react";
 
 export const TagInput = ({}) => {
 
     let ref = useRef();
-    let [tag, setTag] = useState();
+    let [tag, setTag] = useState('');
     let [listTags, setTagList] = useState([]);
+    let [errMsg, setErrMsg] = useState('');
 
     let deleteTag = (text) => {
         setTagList((listTags) => listTags.filter((tagInList) => tagInList != text));
@@ -23,6 +25,9 @@ export const TagInput = ({}) => {
                 let text = ref.current.innerText.toString();
                 if(text) {
                     setTag(text);
+                    if(tag.length > +(process.env.NEXT_PUBLIC_MAX_TAG_SIZE)) {
+                        setErrMsg('Max tag length is ' + +(process.env.NEXT_PUBLIC_MAX_TAG_SIZE))
+                    }
                 }
             }
         };
@@ -44,7 +49,8 @@ export const TagInput = ({}) => {
 
 
     // TODO need a scroll wheel when text to large (y axis)
-    return <div><InputBorder>
+    return <div>
+        <InputBorder>
         <div className="flex flex-wrap w-full break-all">
             <div className="flex flex-wrap">
                 {listTags.map((text) => {
@@ -58,5 +64,6 @@ export const TagInput = ({}) => {
         </span>
         </div>
     </InputBorder>
+        <span className="text-red-500 text-xs mb-1">{errMsg}</span>
     </div>
 };
