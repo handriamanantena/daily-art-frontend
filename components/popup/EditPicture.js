@@ -13,6 +13,7 @@ export const EditPicture = ({pictureInfo, userInfo}) => {
     let [errMsg, setErrMsg] = useState('');
     let date = Moment(pictureInfo.date).format('YYYY年 MMM月 D日');
     let axiosPrivate = useAxiosPrivate();
+    let [listTags, setTagList] = useState(pictureInfo.tags ? pictureInfo.tags : []);
 
     let onSubmit = async (e) => {
         e.preventDefault();
@@ -21,7 +22,8 @@ export const EditPicture = ({pictureInfo, userInfo}) => {
         setIsLoadingHidden(false);
         try {
             let body = {
-                pictureName: e.target.pictureName?.value.trim()
+                pictureName: e.target.pictureName?.value.trim(),
+                tags: listTags
             }
             setIsLoadingHidden(false);
             const response = await axiosPrivate.patch(host + `/pictures/${pictureInfo._id}`, body,
@@ -55,7 +57,7 @@ export const EditPicture = ({pictureInfo, userInfo}) => {
         <label htmlFor="pictureName">Title</label>
         <BasicForumInput type="text" id="pictureName" name="pictureName" maxLength={32} defaultValue={pictureInfo.pictureName}/>
         <label htmlFor="tags">Tags</label>
-        <TagInput id="tags" name="tags"/>
+        <TagInput id="tags" name="tags" listTags={listTags} setTagList={setTagList}/>
         <SubmitButton text="Submit"/>
     </PopupForm>
 

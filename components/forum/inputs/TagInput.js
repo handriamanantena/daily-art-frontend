@@ -3,11 +3,10 @@ import {useEffect, useRef, useState} from "react";
 import React from "react";
 import {TextAreaBorder} from "./TextAreaBorder";
 
-export const TagInput = ({}) => {
+export const TagInput = ({listTags, setTagList}) => {
 
     let ref = useRef();
     let [tag, setTag] = useState('');
-    let [listTags, setTagList] = useState([]);
     let [errMsg, setErrMsg] = useState('');
 
     let deleteTag = (text) => {
