@@ -11,6 +11,7 @@ export const EditPicture = ({pictureInfo, userInfo}) => {
 
     let [isLoadingHidden, setIsLoadingHidden] = useState(true);
     let [errMsg, setErrMsg] = useState('');
+    let [tagErrMsg, setTagErrMsg] = useState('');
     let date = Moment(pictureInfo.date).format('YYYY年 MMM月 D日');
     let axiosPrivate = useAxiosPrivate();
     let [listTags, setTagList] = useState(pictureInfo.tags ? pictureInfo.tags : []);
@@ -58,7 +59,8 @@ export const EditPicture = ({pictureInfo, userInfo}) => {
         <label htmlFor="pictureName">Title</label>
         <BasicForumInput type="text" id="pictureName" name="pictureName" maxLength={32} defaultValue={pictureInfo.pictureName}/>
         <label htmlFor="tags">Tags</label>
-        <TagInput id="tags" name="tags" listTags={listTags} setTagList={setTagList} objectId={pictureInfo._id}/>
+        <TagInput id="tags" name="tags" listTags={listTags} setTagList={setTagList} objectId={pictureInfo._id} setErrMsg={setTagErrMsg}/>
+        <span className="text-red-500 text-xs mb-1">{tagErrMsg}</span>
         <SubmitButton text="Submit"/>
     </PopupForm>
 

@@ -3,11 +3,10 @@ import {useEffect, useRef, useState} from "react";
 import React from "react";
 import {TextAreaBorder} from "./TextAreaBorder";
 
-export const TagInput = ({listTags, setTagList, objectId}) => {
+export const TagInput = ({listTags, setTagList, objectId, setErrMsg}) => {
 
     let ref = useRef();
     let [tag, setTag] = useState('');
-    let [errMsg, setErrMsg] = useState('');
 
     let deleteTag = (text) => {
         setTagList((listTags) => listTags.filter((tagInList) => tagInList != text));
@@ -63,19 +62,16 @@ export const TagInput = ({listTags, setTagList, objectId}) => {
 
 
     // TODO need a scroll wheel when text to large (y axis)
-    return <div>
-        <TextAreaBorder>
-            <div className="flex flex-wrap w-full break-all">
+    return <TextAreaBorder>
+            <div className="flex flex-wrap w-full break-all h-fit">
                 {listTags.map((text) => {
                     return <Tag tag={text} deleteTag={deleteTag} objectId={objectId} key={text + objectId}/>
                 })}
-                <span className="flex flex-wrap grow self-center bg-transparent focus:outline-none px-1.5 py-1 my-1"
+                <span className="flex flex-wrap grow self-center bg-transparent focus:outline-none px-1.5 py-1 my-1 h-fit"
                       role="textbox"
                       contentEditable
                       ref={ref}>
                 </span>
             </div>
         </TextAreaBorder>
-        <span className="text-red-500 text-xs mb-1">{errMsg}</span>
-    </div>
 };
