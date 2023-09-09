@@ -1,8 +1,7 @@
-import React, {useEffect, useState} from "react";
-import Link from 'next/link'
+import React, {useEffect} from "react";
 import {ViewPicture} from "./ViewPicture";
 
-function LinkedPicture({picture}) {
+function LinkedPicture({picture, isEditable}) {
     let host = process.env.NEXT_PUBLIC_CDN_IMAGES;
     let url = encodeURI(host + picture.url)
 
@@ -14,14 +13,7 @@ function LinkedPicture({picture}) {
             picture.url = url;
         }
     }, [picture]);
-    return (
-           <Link href={`/picture/${picture._id}`}>
-            <div className="md:ml-1 md:mr-1 mt-1 mb-1 z-49">
-                <a>
-                    <ViewPicture picture = {picture}/>
-                </a>
-            </div>
-           </Link>);
+    return (<ViewPicture picture = {picture} isEditable={isEditable}/>);
 }
 
 export { LinkedPicture }
