@@ -118,7 +118,8 @@ export async function getStaticProps({params}) {
             _id : _id,
             foundPicture : foundPicture,
             initialIndex
-        }
+        },
+        revalidate: +(process.env.NEXT_PUBLIC_REVALIDATE_SEC)
     }
 }
 

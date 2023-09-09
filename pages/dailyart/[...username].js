@@ -48,7 +48,7 @@ function Username({ pictures, userInfo }) {
             case 'about': return <About userInfo={userInfo}/>;
             default:
             return (<InfiniteScroll getObjects={getPictures} maxPage={100} lastElement={lastElement}>
-                <Gallery pictures={newPictures} setLastElement={setLastElement}>
+                <Gallery pictures={newPictures} setLastElement={setLastElement} isEditable={userInfo.userName == ctx.userName}>
                     {ctx.isAuthorized(userInfo.userName) ?
                         <StyledAddPicture showPopUp={showPopUp} text="+"/> : <Fragment/>}
                 </Gallery>
