@@ -10,7 +10,8 @@ export const DeletePicture = ({picture, hidePopUp}) => {
     const axiosPrivate = useAxiosPrivate();
     const [isLoadingHidden, setIsLoadingHidden] = useState(true);
 
-    let deletePicture = async () => {
+    let deletePicture = async (e) => {
+        e.preventDefault();
         const host = process.env.NEXT_PUBLIC_PICTURES_API_HOST + process.env.NEXT_PUBLIC_PICTURES_API_PORT;
         try {
             const response = await axiosPrivate.delete(host + `/pictures/${picture._id}`,
@@ -23,16 +24,15 @@ export const DeletePicture = ({picture, hidePopUp}) => {
             if(response.status == 200) {
                 setTimeout(async () => {
                     window.location.reload();
-                }, +(process.env.NEXT_PUBLIC_REVALIDATE_SEC) * 1000);
+                }, (+(process.env.NEXT_PUBLIC_REVALIDATE_SEC) * 1000) + +(process.env.NEXT_PUBLIC_RELOAD_DELAY));
             }
             else {
                 // TODO open error window
                 console.error("error deleting picture");
                 setTimeout(async () => {
                     window.location.reload();
-                }, +(process.env.NEXT_PUBLIC_REVALIDATE_SEC) * 1000);
+                }, (+(process.env.NEXT_PUBLIC_REVALIDATE_SEC) * 1000) + +(process.env.NEXT_PUBLIC_RELOAD_DELAY));
             }
-            console.log(JSON.stringify(response?.data));
         } catch (err) {
             console.log(err);
         }

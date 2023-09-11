@@ -36,7 +36,7 @@ export const EditPicture = ({pictureInfo, userInfo}) => {
                 setTimeout(async () => {
                     window.location.reload();
                     localStorage.setItem("forceReload", true);
-                }, +(process.env.NEXT_PUBLIC_REVALIDATE_SEC) * 1000);
+                }, (+(process.env.NEXT_PUBLIC_REVALIDATE_SEC) * 1000) + +(process.env.NEXT_PUBLIC_RELOAD_DELAY));
             }
             else {
                 setIsLoadingHidden(true);
