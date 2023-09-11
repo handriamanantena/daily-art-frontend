@@ -107,6 +107,11 @@ export async function getStaticProps({params}) {
     const _id = params._id;
     console.log("this is the path id: " + _id);
     const picture = await getPictureWithProfilePicture(params._id) // TODO need to add a filter on id. right now it returns all ids less than id
+    if(picture == undefined || picture.length == 0) {
+        return {
+            notFound: true
+        };
+    }
     const pictures = await getPicturesByArtistUserName(picture.userName, pageSize, 0);
     const initialIndex = pictures ? pictures[pictures.length -1]._id : undefined
     let foundPicture = { foundPicture : false };
