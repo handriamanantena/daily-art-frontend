@@ -40,7 +40,7 @@ export const EditProfile = ({userInfo}) => {
                 setTimeout(async () => {
                     ctx.editUserData(await response.json());
                     await router.push(`/dailyart`);
-                }, +(process.env.NEXT_PUBLIC_REVALIDATE_SEC) * 1000);
+                }, (+(process.env.NEXT_PUBLIC_REVALIDATE_SEC) * 1000) + +(process.env.NEXT_PUBLIC_RELOAD_DELAY));
             }
             else {
                 setisLoadingHidden(true);

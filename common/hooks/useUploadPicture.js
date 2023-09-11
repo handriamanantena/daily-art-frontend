@@ -40,7 +40,7 @@ export const useUploadPicture = () => {
                 setLoadingMessage("Finishing up...");
                 setTimeout(() => {
                     window.location.reload();
-                }, +(process.env.NEXT_PUBLIC_REVALIDATE_SEC) * 1000);
+                }, (+(process.env.NEXT_PUBLIC_REVALIDATE_SEC) * 1000) + +(process.env.NEXT_PUBLIC_RELOAD_DELAY));
             }
             console.log(response);
         } catch (error) {
