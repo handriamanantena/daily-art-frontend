@@ -1,8 +1,7 @@
 import Gallery from "../../components/Gallery";
-import React, {useState, useRef, useContext, Fragment} from 'react';
+import React, {useState, useContext, Fragment} from 'react';
 import {BasicLayout} from "../../components/common/BasicLayout";
 import {getArtists} from "../../common/api/artists";
-import {getPicturesByArtistUserName} from "../../common/api/pictures";
 import {InfiniteScroll} from "../../components/InfiniteScroll"
 import AuthContext from "../../common/context/auth-context";
 import {StyledAddPicture} from "../../components/button/StyledAddPicture";
@@ -14,14 +13,22 @@ import {About} from "../../components/page/About";
 import {AddPictureInfo} from "../../components/popup/AddPictureInfo";
 import {EditButton} from "../../components/button/EditButton";
 import {PopUp} from "../../components/popup/PopUp";
+import useGetPictures from "../../common/hooks/useGetPictures";
+import Loading from "../../components/loading/Loading";
+import {getPicturesByArtistUserName as serverSideGetPicturesByUserName} from "../../common/api/pictures";
 
 let pageSize = +(process.env.NEXT_PUBLIC_PAGE_SIZE);
+let maxPage = 100;
 
 function Username({ pictures, userInfo }) {
     const ctx = useContext(AuthContext);
+    let isUserAccount = ctx.token && ctx.token.userName && userInfo && ctx.token.userName == userInfo.userName;
 
-    let [newPictures, setPictures] = useState(pictures)
-    let [isLoading, setIsLoading] = useState(false)
+    let [getPicturesByArtistUserName] = useGetPictures();
+    let [isLoading, setIsLoading] = useState(true)
+
+    let [newPictures, setPictures] = useState(isUserAccount ?
+        getPicturesByArtistUserName(userInfo.userName, pageSize, 0, setIsLoading) : pictures);
     let [lastElement, setLastElement] = useState(null);
     let initialIndex = pictures?.length > 0 ? pictures[pictures.length - 1]?._id : null;
     let [pageIndex, setPageIndex] = useState(initialIndex);
@@ -29,7 +36,7 @@ function Username({ pictures, userInfo }) {
     let getPictures = async () => {
         console.log(JSON.stringify(userInfo))
         setIsLoading(true)
-        let response = await getPicturesByArtistUserName(userInfo.userName, pageSize, pageIndex);
+        let response = await getPicturesByArtistUserName(userInfo.userName, pageSize, pageIndex, setIsLoading);
         if(response.length > 0) {
             setPageIndex(response[response.length-1]._id);
             pictures.push(...response);
@@ -37,6 +44,10 @@ function Username({ pictures, userInfo }) {
             setIsLoading(false)
         }
     };
+
+    let pictureDeleted = (deleteId) => {
+        setPictures((pictures) => pictures.filter((picture) => picture._id != deleteId));
+    }
     const router = useRouter();
 
     if (router.isFallback) {
@@ -47,11 +58,12 @@ function Username({ pictures, userInfo }) {
         switch(query) {
             case 'about': return <About userInfo={userInfo}/>;
             default:
-            return (<InfiniteScroll getObjects={getPictures} maxPage={100} lastElement={lastElement}>
-                <Gallery pictures={newPictures} setLastElement={setLastElement} isEditable={userInfo.userName == ctx.userName}>
+            return (<InfiniteScroll getObjects={getPictures} maxPage={maxPage} lastElement={lastElement}>
+                <Gallery pictures={newPictures} setLastElement={setLastElement} isEditable={userInfo.userName == ctx.userName} deletePicture={pictureDeleted}>
                     {ctx.isAuthorized(userInfo.userName) ?
                         <StyledAddPicture showPopUp={showPopUp} text="+"/> : <Fragment/>}
                 </Gallery>
+                { isLoading ? <Loading><p>Loading...</p></Loading> : <Fragment></Fragment>}
                 <PopUp isShowPopup={isShowPopup} hidePopUp={hidePopUp}>
                     <AddPictureInfo/>
                 </PopUp>
@@ -148,7 +160,7 @@ export async function getStaticProps(context) {
             notFound: true
         };
     }
-    const pictures = await getPicturesByArtistUserName(user[0], pageSize, 0); // TODO maybe use caching to avoid getting info multiple times for each sub path
+    const pictures = await serverSideGetPicturesByUserName(user[0], pageSize, 0); // TODO maybe use caching to avoid getting info multiple times for each sub path
     let userInfo = response[0];
     //userInfo.userName = user[0];
     return {

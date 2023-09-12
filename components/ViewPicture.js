@@ -12,7 +12,7 @@ import {EditPicture} from "./popup/EditPicture";
 import {DeletePicture} from "./popup/DeletePicture";
 import {EditSVG} from "./svg/EditSVG";
 
-export const ViewPicture = ({picture, isEditable}) => {
+export const ViewPicture = ({picture, isEditable, deletePicture}) => {
 
     let [hideInfo, setHidePictureInfo] = useState(true);
     let [isShowEdit, hideEdit, showEdit] = useShowPopUp(false);
@@ -21,7 +21,7 @@ export const ViewPicture = ({picture, isEditable}) => {
     let profilePic = picture.profile[0]?.profilePicture ? picture.profile[0]?.profilePicture : "/placeholder/user-solid.svg";
     let userInfo = { userName: picture.userName, profilePicture: profilePic};
 
-    let deletePicture = (e) => {
+    let requestDeletePicture = (e) => {
         showDelete();
     };
 
@@ -29,7 +29,7 @@ export const ViewPicture = ({picture, isEditable}) => {
         showEdit();
     }
 
-    let options = [{ onClick: deletePicture, title: "Delete", svg: <Delete/>}, {onClick: editPicture, title: "Edit Picture", svg: <EditSVG/>}];
+    let options = [{ onClick: requestDeletePicture, title: "Delete", svg: <Delete/>}, {onClick: editPicture, title: "Edit Picture", svg: <EditSVG/>}];
 
 
 
@@ -80,7 +80,7 @@ export const ViewPicture = ({picture, isEditable}) => {
             <EditPicture pictureInfo={picture}/>
         </PopUp>
         <PopUp hidePopUp={hideDelete} isShowPopup={isShowDelete}>
-            <DeletePicture picture={picture} hidePopUp={hideDelete}/>
+            <DeletePicture picture={picture} hidePopUp={hideDelete} deletePicture={deletePicture}/>
         </PopUp>
     </div>);
 };
