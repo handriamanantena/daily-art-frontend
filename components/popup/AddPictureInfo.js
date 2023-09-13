@@ -22,9 +22,9 @@ const AddPictureInfo = ({hidePopUp}) => {
         }
     }, []);
 
-    let uploadPicture = (e) => {
+    let uploadPicture = async (e) => {
         e.preventDefault();
-        let isAdded = handleSubmit(e.target.pictureName?.value);
+        let isAdded = await handleSubmit(e.target.pictureName?.value);
         if(isAdded) {
             hidePopUp();
         }

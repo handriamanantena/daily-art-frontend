@@ -38,9 +38,9 @@ export const DrawingOftheDay = ({hidePopUp}) => {
         router.push("/join");
     }
 
-    let uploadPicture = (e) => {
+    let uploadPicture = async (e) => {
         e.preventDefault();
-        let isAdded = handleSubmit(e.target.pictureName?.value, word.english);
+        let isAdded = await handleSubmit(e.target.pictureName?.value, word.english);
         if(isAdded) {
             hidePopUp();
         }

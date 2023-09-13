@@ -1,12 +1,13 @@
 import {uploadImageToCloudflare} from "../api/cloudflare/workers";
 import {useContext, useState} from "react";
 import AuthContext from "../context/auth-context";
+import {useRouter} from "next/router";
 
 
 export const useUploadPicture = () => {
 
     const ctx = useContext(AuthContext);
-
+    const router = useRouter();
     const [file, setFile] = useState("");
     const [loadingMessage, setLoadingMessage] = useState(false);
     const [isLoading, setIsLoading] = useState(false);
@@ -37,8 +38,11 @@ export const useUploadPicture = () => {
                 return false;
             }
             else {
+                let urlSplit = signedUrl.split("/");
+                let pictureId = urlSplit[urlSplit.length-1].split("?")[0];
                 console.log("added picture");
                 setLoadingMessage("Finishing up...");
+                await router.push(`/picture/${pictureId}`);
                 return true;
             }
             console.log(response);
