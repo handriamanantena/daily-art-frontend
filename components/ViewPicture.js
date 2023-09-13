@@ -48,13 +48,14 @@ export const ViewPicture = ({picture, isEditable, deletePicture}) => {
               onMouseLeave={hidePicInfo}>
             <Link href={`/picture/${picture._id}`}>
                 <a>
-                    <Image className="object-cover h-full md:rounded-lg grow hover:brightness-50"
+                    <Image className="object-cover h-full md:rounded-lg grow md:hover:brightness-50"
                            layout="fill"
                            src={picture.url}
                            objectPosition="center"
                            unoptimized/>
                 </a>
             </Link>
+            <div className="hidden md:flex">
             <Link href="/picture/[picture]" as={`/picture/${picture._id}`}>
                 <a hidden={hideInfo}>
                     <h2 className="absolute top-0 right-0 p-3 text-white">{picture.pictureName}</h2>
@@ -67,6 +68,7 @@ export const ViewPicture = ({picture, isEditable, deletePicture}) => {
                         <h3 className="text-white ml-9">{userInfo.userName}</h3>
                     </a>
                 </Link>
+            </div>
             </div>
             <svg className="w-10 h-10 text-gray-200 dark:text-gray-600" aria-hidden="true"
                  xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 18">
