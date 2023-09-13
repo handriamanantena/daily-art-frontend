@@ -33,6 +33,8 @@ export const EditPicture = ({pictureInfo, userInfo, hidePopUp}) => {
                     withCredentials: true
                 });
             if(response.status == 200) {
+                pictureInfo.tags = listTags;
+                pictureInfo.pictureName = body.pictureName;
                 setIsLoadingHidden(true);
                 hidePopUp();
             }
