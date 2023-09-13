@@ -7,12 +7,16 @@ import React from "react";
 export default function Home() {
   return (
     <div className={styles.container}>
+
       <Head>
         <title>Daily Art</title>
         <meta name="description" content="Daily Art" />
         <link rel="icon" href="/icons/pen-to-square-regular.svg" />
       </Head>
-
+        <canvas id="gradient-canvas" data-transition-in="true"
+                style={{clipPath: "polygon(100px 0px, 100% 0px, calc(100% + 225px) 100%, 480px 100%)"}}
+                className="fixed top-0 right-[-2px] w-[80%] md:w-1/2 h-screen bg-[#c3e4ff]" width="932"
+                height="600"></canvas>
       <main className={styles.main}>
         <h1 className={styles.title}>
             Simple Art
@@ -30,6 +34,7 @@ export default function Home() {
           </Link>
         </div>
       </main>
+
     </div>
   )
 }
