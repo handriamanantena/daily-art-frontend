@@ -7,6 +7,7 @@ import {PictureInfo} from "../../components/PictureInfo"
 import {BasicLayout} from "../../components/common/BasicLayout";
 import {InfiniteScroll} from "../../components/InfiniteScroll";
 import { useRouter } from 'next/router'
+import {LoadingScreen} from "../../components/loading/LoadingScreen";
 
 let pageSize = process.env.NEXT_PUBLIC_PAGE_SIZE;
 
@@ -40,7 +41,7 @@ function _Id({ picture, pictures, _id, foundPicture, initialIndex }) {
     // If the page is not yet generated, this will be displayed
     // initially until getStaticProps() finishes running
     if (router.isFallback) {
-        return <div>Loading...</div>
+        return <LoadingScreen isLoadingHidden={false}><p className="text-black">Loading...</p></LoadingScreen>
     }
 
     return (
@@ -107,6 +108,11 @@ export async function getStaticProps({params}) {
     const _id = params._id;
     console.log("this is the path id: " + _id);
     const picture = await getPictureWithProfilePicture(params._id) // TODO need to add a filter on id. right now it returns all ids less than id
+    if(picture == undefined || picture.length == 0) {
+        return {
+            notFound: true
+        };
+    }
     const pictures = await getPicturesByArtistUserName(picture.userName, pageSize, 0);
     const initialIndex = pictures ? pictures[pictures.length -1]._id : undefined
     let foundPicture = { foundPicture : false };

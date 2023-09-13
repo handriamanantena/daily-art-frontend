@@ -45,11 +45,11 @@ export function HeaderBar() {
             <div className="sticky grid top-0 z-50 border-b h-16 bg-white content-center flex items-center z-[1034]" id="slim-content">
                 <PopUp isShowPopup={isShowAddPicture}
                        hidePopUp={hideAddPicture}>
-                    <AddPictureInfo/>
+                    <AddPictureInfo hidePopUp={hideAddPicture}/>
                 </PopUp>
                 <PopUp isShowPopup={isShowDailyChallenge}
                        hidePopUp={hideDailyChallenge}>
-                    <DrawingOftheDay/>
+                    <DrawingOftheDay hidePopUp={hideDailyChallenge}/>
                 </PopUp>
                 <NavigationBar>
                     <button className="flex-none"

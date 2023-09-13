@@ -5,12 +5,12 @@ import React, {useState} from "react";
 import useAxiosPrivate from "../../common/hooks/useAxiosPrivate";
 import {ForumButton} from "../forum/inputs/ForumButton";
 
-export const DeletePicture = ({picture, hidePopUp}) => {
+export const DeletePicture = ({picture, hidePopUp, deletePicture}) => {
 
     const axiosPrivate = useAxiosPrivate();
     const [isLoadingHidden, setIsLoadingHidden] = useState(true);
 
-    let deletePicture = async (e) => {
+    let confirmDeletePicture = async (e) => {
         e.preventDefault();
         const host = process.env.NEXT_PUBLIC_PICTURES_API_HOST + process.env.NEXT_PUBLIC_PICTURES_API_PORT;
         try {
@@ -22,16 +22,13 @@ export const DeletePicture = ({picture, hidePopUp}) => {
             );
             setIsLoadingHidden(false);
             if(response.status == 200) {
-                setTimeout(async () => {
-                    window.location.reload();
-                }, (+(process.env.NEXT_PUBLIC_REVALIDATE_SEC) * 1000) + +(process.env.NEXT_PUBLIC_RELOAD_DELAY));
+                deletePicture(picture._id);
+                hidePopUp();
             }
             else {
                 // TODO open error window
                 console.error("error deleting picture");
-                setTimeout(async () => {
-                    window.location.reload();
-                }, (+(process.env.NEXT_PUBLIC_REVALIDATE_SEC) * 1000) + +(process.env.NEXT_PUBLIC_RELOAD_DELAY));
+
             }
         } catch (err) {
             console.log(err);
@@ -44,7 +41,7 @@ export const DeletePicture = ({picture, hidePopUp}) => {
         e.preventDefault();
     };
 
-    return <PopupForm onSubmit={deletePicture}>
+    return <PopupForm onSubmit={confirmDeletePicture}>
         <LoadingScreen isLoadingHidden={isLoadingHidden}>
             <p className="text-black">Loading...</p>
         </LoadingScreen>

@@ -71,7 +71,7 @@ export const ImageInput = ({file, setFile, loadingMessage, setLoadingMessage, is
                 <div className="flex justify-center grow bg-slate-100">
                     <div className={isLoading ? "flex justify-center grow brightness-50 md:bg-inherit" : "flex justify-center grow md:bg-inherit"}>
                         <NextImage data-testid="preview-picture" src={fileDataURL} width={1035}
-                                   height={1228} className="justify-center self-center pt-1 max-h-[390px] md:max-h-[500px] max-w-max" alt="Image"/>
+                                   height={1228} className="justify-center self-center pt-1 max-h-[390px] md:max-h-[500px] w-fit" alt="Image"/>
                     </div>
                     <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2" hidden={!isLoading}>
                         <Loading>

@@ -12,7 +12,7 @@ import {EditPicture} from "./popup/EditPicture";
 import {DeletePicture} from "./popup/DeletePicture";
 import {EditSVG} from "./svg/EditSVG";
 
-export const ViewPicture = ({picture, isEditable}) => {
+export const ViewPicture = ({picture, isEditable, deletePicture}) => {
 
     let [hideInfo, setHidePictureInfo] = useState(true);
     let [isShowEdit, hideEdit, showEdit] = useShowPopUp(false);
@@ -21,7 +21,7 @@ export const ViewPicture = ({picture, isEditable}) => {
     let profilePic = picture.profile[0]?.profilePicture ? picture.profile[0]?.profilePicture : "/placeholder/user-solid.svg";
     let userInfo = { userName: picture.userName, profilePicture: profilePic};
 
-    let deletePicture = (e) => {
+    let requestDeletePicture = (e) => {
         showDelete();
     };
 
@@ -29,7 +29,7 @@ export const ViewPicture = ({picture, isEditable}) => {
         showEdit();
     }
 
-    let options = [{ onClick: deletePicture, title: "Delete", svg: <Delete/>}, {onClick: editPicture, title: "Edit Picture", svg: <EditSVG/>}];
+    let options = [{ onClick: requestDeletePicture, title: "Delete", svg: <Delete/>}, {onClick: editPicture, title: "Edit Picture", svg: <EditSVG/>}];
 
 
 
@@ -48,13 +48,14 @@ export const ViewPicture = ({picture, isEditable}) => {
               onMouseLeave={hidePicInfo}>
             <Link href={`/picture/${picture._id}`}>
                 <a>
-                    <Image className="object-cover h-full md:rounded-lg grow hover:brightness-50"
+                    <Image className="object-cover h-full md:rounded-lg grow md:hover:brightness-50"
                            layout="fill"
                            src={picture.url}
                            objectPosition="center"
                            unoptimized/>
                 </a>
             </Link>
+            <div className="hidden md:flex">
             <Link href="/picture/[picture]" as={`/picture/${picture._id}`}>
                 <a hidden={hideInfo}>
                     <h2 className="absolute top-0 right-0 p-3 text-white">{picture.pictureName}</h2>
@@ -68,6 +69,7 @@ export const ViewPicture = ({picture, isEditable}) => {
                     </a>
                 </Link>
             </div>
+            </div>
             <svg className="w-10 h-10 text-gray-200 dark:text-gray-600" aria-hidden="true"
                  xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 18">
                 <path d="M18 0H2a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2Zm-5.5 4a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3Zm4.376 10.481A1 1 0 0 1 16 15H4a1 1 0 0 1-.895-1.447l3.5-7A1 1 0 0 1 7.468 6a.965.965 0 0 1 .9.5l2.775 4.757 1.546-1.887a1 1 0 0 1 1.618.1l2.541 4a1 1 0 0 1 .028 1.011Z"/>
@@ -77,10 +79,10 @@ export const ViewPicture = ({picture, isEditable}) => {
                 </DropDown> : <></>}
         </div>
         <PopUp hidePopUp={hideEdit} isShowPopup={isShowEdit}>
-            <EditPicture pictureInfo={picture}/>
+            <EditPicture pictureInfo={picture} hidePopUp={hideEdit}/>
         </PopUp>
         <PopUp hidePopUp={hideDelete} isShowPopup={isShowDelete}>
-            <DeletePicture picture={picture} hidePopUp={hideDelete}/>
+            <DeletePicture picture={picture} hidePopUp={hideDelete} deletePicture={deletePicture}/>
         </PopUp>
     </div>);
 };

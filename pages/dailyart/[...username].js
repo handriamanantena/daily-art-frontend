@@ -1,8 +1,7 @@
 import Gallery from "../../components/Gallery";
-import React, {useState, useRef, useContext, Fragment} from 'react';
+import React, {useState, useContext, Fragment, useEffect} from 'react';
 import {BasicLayout} from "../../components/common/BasicLayout";
 import {getArtists} from "../../common/api/artists";
-import {getPicturesByArtistUserName} from "../../common/api/pictures";
 import {InfiniteScroll} from "../../components/InfiniteScroll"
 import AuthContext from "../../common/context/auth-context";
 import {StyledAddPicture} from "../../components/button/StyledAddPicture";
@@ -14,29 +13,48 @@ import {About} from "../../components/page/About";
 import {AddPictureInfo} from "../../components/popup/AddPictureInfo";
 import {EditButton} from "../../components/button/EditButton";
 import {PopUp} from "../../components/popup/PopUp";
-
+import Loading from "../../components/loading/Loading";
+import {getPicturesByArtistUserName} from "../../common/api/pictures";
 let pageSize = +(process.env.NEXT_PUBLIC_PAGE_SIZE);
+let maxPage = 100;
 
-function Username({ pictures, userInfo }) {
+function Username({ userInfo }) {
     const ctx = useContext(AuthContext);
 
-    let [newPictures, setPictures] = useState(pictures)
-    let [isLoading, setIsLoading] = useState(false)
+    let [isLoading, setIsLoading] = useState(true)
+
+    let [newPictures, setPictures] = useState([]);
+
     let [lastElement, setLastElement] = useState(null);
-    let initialIndex = pictures?.length > 0 ? pictures[pictures.length - 1]?._id : null;
-    let [pageIndex, setPageIndex] = useState(initialIndex);
+    let [pageIndex, setPageIndex] = useState(0);
     let [isShowPopup, hidePopUp , showPopUp] = useShowPopUp();
+
+    useEffect(async () => {
+        let pictures = await getPicturesByArtistUserName(userInfo.userName, pageSize, 0);
+
+        if(pictures) {
+            setPictures([...pictures]);
+            setPageIndex(pictures[pictures.length-1]._id);
+        }
+    }, []);
+
     let getPictures = async () => {
-        console.log(JSON.stringify(userInfo))
-        setIsLoading(true)
-        let response = await getPicturesByArtistUserName(userInfo.userName, pageSize, pageIndex);
+        setIsLoading(true);
+        let response;
+        response = await getPicturesByArtistUserName(userInfo.userName, pageSize, pageIndex, setIsLoading);
         if(response.length > 0) {
             setPageIndex(response[response.length-1]._id);
-            pictures.push(...response);
-            setPictures(pictures)
-            setIsLoading(false)
+            newPictures.push(...response);
+            setPictures([...newPictures])
         }
+        setIsLoading(false)
     };
+
+    let pictureDeleted = (deleteId) => {
+        setIsLoading(true);
+        setPictures((newPictures) => newPictures.filter((picture) => picture._id != deleteId));
+        setIsLoading(false);
+    }
     const router = useRouter();
 
     if (router.isFallback) {
@@ -47,13 +65,14 @@ function Username({ pictures, userInfo }) {
         switch(query) {
             case 'about': return <About userInfo={userInfo}/>;
             default:
-            return (<InfiniteScroll getObjects={getPictures} maxPage={100} lastElement={lastElement}>
-                <Gallery pictures={newPictures} setLastElement={setLastElement} isEditable={userInfo.userName == ctx.userName}>
+            return (<InfiniteScroll getObjects={getPictures} maxPage={maxPage} lastElement={lastElement}>
+                <Gallery pictures={newPictures} setLastElement={setLastElement} isEditable={userInfo.userName == ctx.userName} deletePicture={pictureDeleted}>
                     {ctx.isAuthorized(userInfo.userName) ?
                         <StyledAddPicture showPopUp={showPopUp} text="+"/> : <Fragment/>}
                 </Gallery>
+                { isLoading ? <Loading><p>Loading...</p></Loading> : <Fragment></Fragment>}
                 <PopUp isShowPopup={isShowPopup} hidePopUp={hidePopUp}>
-                    <AddPictureInfo/>
+                    <AddPictureInfo hidePopUp={hidePopUp}/>
                 </PopUp>
             </InfiniteScroll>);
         }
@@ -142,18 +161,16 @@ export async function getStaticProps(context) {
     const { params } = context;
     const user = params.username;
     let response = await getArtists(null, null, user[0]); //TODO we already get the information in getStaticPaths, but we can't pass it to getStaticProps. need to upgrade to next 13 to avoid 2 api calls
+    console.log("artist by username" +JSON.stringify(response));
     if(response.length == 0) {
         return {
             notFound: true
         };
     }
-    const pictures = await getPicturesByArtistUserName(user[0], pageSize, 0); // TODO maybe use caching to avoid getting info multiple times for each sub path
     let userInfo = response[0];
-    console.log("artist by username" +JSON.stringify(response));
     //userInfo.userName = user[0];
     return {
         props: {
-            pictures : pictures,
             userInfo
         },
         revalidate: +(process.env.NEXT_PUBLIC_REVALIDATE_SEC)

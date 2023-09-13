@@ -8,7 +8,7 @@ import {ImageInput} from "../button/ImageInput";
 import useUploadPicture from "../../common/hooks/useUploadPicture";
 import {PopupForm} from "./PopupForm";
 
-const AddPictureInfo = () => {
+const AddPictureInfo = ({hidePopUp}) => {
 
     const ctx = useContext(AuthContext);
     const router = useRouter();
@@ -22,9 +22,12 @@ const AddPictureInfo = () => {
         }
     }, []);
 
-    let uploadPicture = (e) => {
+    let uploadPicture = async (e) => {
         e.preventDefault();
-        handleSubmit(e.target.pictureName?.value);
+        let isAdded = await handleSubmit(e.target.pictureName?.value);
+        if(isAdded) {
+            hidePopUp();
+        }
     };
 
 

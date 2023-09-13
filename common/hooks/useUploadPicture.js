@@ -1,12 +1,13 @@
 import {uploadImageToCloudflare} from "../api/cloudflare/workers";
 import {useContext, useState} from "react";
 import AuthContext from "../context/auth-context";
+import {useRouter} from "next/router";
 
 
 export const useUploadPicture = () => {
 
     const ctx = useContext(AuthContext);
-
+    const router = useRouter();
     const [file, setFile] = useState("");
     const [loadingMessage, setLoadingMessage] = useState(false);
     const [isLoading, setIsLoading] = useState(false);
@@ -34,19 +35,22 @@ export const useUploadPicture = () => {
                 // TODO need to delete picture in backend and send error message to front end
                 setErrorText("Unable to upload");
                 console.error("unable to upload picture");
+                return false;
             }
             else {
+                let urlSplit = signedUrl.split("/");
+                let pictureId = urlSplit[urlSplit.length-1].split("?")[0];
                 console.log("added picture");
                 setLoadingMessage("Finishing up...");
-                setTimeout(() => {
-                    window.location.reload();
-                }, (+(process.env.NEXT_PUBLIC_REVALIDATE_SEC) * 1000) + +(process.env.NEXT_PUBLIC_RELOAD_DELAY));
+                await router.push(`/picture/${pictureId}`);
+                return true;
             }
             console.log(response);
         } catch (error) {
             setIsLoading(false);
             setErrorText("Unable to upload");
             console.error("Error:", error);
+            return false;
         }
     };
 
