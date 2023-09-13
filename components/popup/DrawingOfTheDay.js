@@ -11,7 +11,7 @@ import { useRouter } from 'next/router'
 import BasicForumInput from "../forum/inputs/input";
 import {PopupForm} from "./PopupForm";
 
-export const DrawingOftheDay = () => {
+export const DrawingOftheDay = ({hidePopUp}) => {
 
     let ctx = useContext(AuthContext);
     let [isLoadingWord, setLoadingWord] = useState(true);
@@ -40,7 +40,10 @@ export const DrawingOftheDay = () => {
 
     let uploadPicture = (e) => {
         e.preventDefault();
-        handleSubmit(e.target.pictureName?.value, word.english);
+        let isAdded = handleSubmit(e.target.pictureName?.value, word.english);
+        if(isAdded) {
+            hidePopUp();
+        }
     }
 
     return <PopupForm onSubmit={uploadPicture} encType="multipart/form-data">

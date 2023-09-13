@@ -4,22 +4,11 @@ import {Footer} from "./Footer"
 import AuthContext from "../../common/context/auth-context";
 import useAxiosPrivate from "../../common/hooks/useAxiosPrivate";
 import React from "react";
-import {LoadingScreen} from "../loading/LoadingScreen";
 
 export function BasicLayout({children}) {
 
     const ctx = useContext(AuthContext);
     const axiosPrivate = useAxiosPrivate();
-    const [isLoadingHidden, setLoadingHidden] = useState(true);
-
-    useEffect(() => {
-        let forceReload = localStorage.getItem("forceReload");
-        if(forceReload === "true") {
-            setLoadingHidden(false);
-            localStorage.setItem("forceReload", false);
-            window.location.reload();
-        }
-    }, []);
 
     useEffect(async () => {
         console.log("testing login")
@@ -64,9 +53,6 @@ export function BasicLayout({children}) {
     }, [ctx.token])
 
     return (<Fragment>
-        <LoadingScreen isLoadingHidden={isLoadingHidden}>
-            <p className="text-black">Loading...</p>
-        </LoadingScreen>
         <HeaderBar/>
             <main>{children}</main>
         <Footer/>

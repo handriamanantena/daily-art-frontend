@@ -77,7 +77,7 @@ export const ViewPicture = ({picture, isEditable, deletePicture}) => {
                 </DropDown> : <></>}
         </div>
         <PopUp hidePopUp={hideEdit} isShowPopup={isShowEdit}>
-            <EditPicture pictureInfo={picture}/>
+            <EditPicture pictureInfo={picture} hidePopUp={hideEdit}/>
         </PopUp>
         <PopUp hidePopUp={hideDelete} isShowPopup={isShowDelete}>
             <DeletePicture picture={picture} hidePopUp={hideDelete} deletePicture={deletePicture}/>

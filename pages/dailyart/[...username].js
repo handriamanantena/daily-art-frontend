@@ -1,5 +1,5 @@
 import Gallery from "../../components/Gallery";
-import React, {useState, useContext, Fragment} from 'react';
+import React, {useState, useContext, Fragment, useEffect} from 'react';
 import {BasicLayout} from "../../components/common/BasicLayout";
 import {getArtists} from "../../common/api/artists";
 import {InfiniteScroll} from "../../components/InfiniteScroll"
@@ -13,40 +13,49 @@ import {About} from "../../components/page/About";
 import {AddPictureInfo} from "../../components/popup/AddPictureInfo";
 import {EditButton} from "../../components/button/EditButton";
 import {PopUp} from "../../components/popup/PopUp";
-import useGetPictures from "../../common/hooks/useGetPictures";
 import Loading from "../../components/loading/Loading";
-import {getPicturesByArtistUserName as serverSideGetPicturesByUserName} from "../../common/api/pictures";
-
+import {getPicturesByArtistUserName} from "../../common/api/pictures";
 let pageSize = +(process.env.NEXT_PUBLIC_PAGE_SIZE);
 let maxPage = 100;
 
-function Username({ pictures, userInfo }) {
+function Username({ userInfo }) {
     const ctx = useContext(AuthContext);
     let isUserAccount = ctx.token && ctx.token.userName && userInfo && ctx.token.userName == userInfo.userName;
 
-    let [getPicturesByArtistUserName] = useGetPictures();
     let [isLoading, setIsLoading] = useState(true)
 
-    let [newPictures, setPictures] = useState(isUserAccount ?
-        getPicturesByArtistUserName(userInfo.userName, pageSize, 0, setIsLoading) : pictures);
+    let [newPictures, setPictures] = useState([]);
+
     let [lastElement, setLastElement] = useState(null);
-    let initialIndex = pictures?.length > 0 ? pictures[pictures.length - 1]?._id : null;
-    let [pageIndex, setPageIndex] = useState(initialIndex);
+    let [pageIndex, setPageIndex] = useState(0);
     let [isShowPopup, hidePopUp , showPopUp] = useShowPopUp();
+
+    useEffect(async () => {
+        let pictures = await getPicturesByArtistUserName(userInfo.userName, pageSize, 0);
+
+        if(pictures) {
+            setPictures([...pictures]);
+            setPageIndex(pictures[pictures.length-1]._id);
+        }
+    }, []);
+
     let getPictures = async () => {
-        console.log(JSON.stringify(userInfo))
-        setIsLoading(true)
-        let response = await getPicturesByArtistUserName(userInfo.userName, pageSize, pageIndex, setIsLoading);
+        setIsLoading(true);
+        let response;
+        response = await getPicturesByArtistUserName(userInfo.userName, pageSize, pageIndex, setIsLoading);
+        console.log(JSON.stringify(response));
         if(response.length > 0) {
             setPageIndex(response[response.length-1]._id);
-            pictures.push(...response);
-            setPictures(pictures)
-            setIsLoading(false)
+            newPictures.push(...response);
+            setPictures([...newPictures])
         }
+        setIsLoading(false)
     };
 
     let pictureDeleted = (deleteId) => {
-        setPictures((pictures) => pictures.filter((picture) => picture._id != deleteId));
+        setIsLoading(true);
+        setPictures((newPictures) => newPictures.filter((picture) => picture._id != deleteId));
+        setIsLoading(false);
     }
     const router = useRouter();
 
@@ -65,7 +74,7 @@ function Username({ pictures, userInfo }) {
                 </Gallery>
                 { isLoading ? <Loading><p>Loading...</p></Loading> : <Fragment></Fragment>}
                 <PopUp isShowPopup={isShowPopup} hidePopUp={hidePopUp}>
-                    <AddPictureInfo/>
+                    <AddPictureInfo hidePopUp={hidePopUp}/>
                 </PopUp>
             </InfiniteScroll>);
         }
@@ -160,12 +169,10 @@ export async function getStaticProps(context) {
             notFound: true
         };
     }
-    const pictures = await serverSideGetPicturesByUserName(user[0], pageSize, 0); // TODO maybe use caching to avoid getting info multiple times for each sub path
     let userInfo = response[0];
     //userInfo.userName = user[0];
     return {
         props: {
-            pictures : pictures,
             userInfo
         },
         revalidate: +(process.env.NEXT_PUBLIC_REVALIDATE_SEC)

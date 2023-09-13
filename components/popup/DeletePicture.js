@@ -23,6 +23,7 @@ export const DeletePicture = ({picture, hidePopUp, deletePicture}) => {
             setIsLoadingHidden(false);
             if(response.status == 200) {
                 deletePicture(picture._id);
+                hidePopUp();
             }
             else {
                 // TODO open error window
