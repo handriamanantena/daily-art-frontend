@@ -20,7 +20,6 @@ let maxPage = 100;
 
 function Username({ userInfo }) {
     const ctx = useContext(AuthContext);
-    let isUserAccount = ctx.token && ctx.token.userName && userInfo && ctx.token.userName == userInfo.userName;
 
     let [isLoading, setIsLoading] = useState(true)
 
@@ -43,7 +42,6 @@ function Username({ userInfo }) {
         setIsLoading(true);
         let response;
         response = await getPicturesByArtistUserName(userInfo.userName, pageSize, pageIndex, setIsLoading);
-        console.log(JSON.stringify(response));
         if(response.length > 0) {
             setPageIndex(response[response.length-1]._id);
             newPictures.push(...response);
