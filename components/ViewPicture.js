@@ -11,13 +11,14 @@ import {useShowPopUp} from "../common/hooks/useShowPopUp";
 import {EditPicture} from "./popup/EditPicture";
 import {DeletePicture} from "./popup/DeletePicture";
 import {EditSVG} from "./svg/EditSVG";
+import {createPicturePath} from "../common/api/pictures";
 
 export const ViewPicture = ({picture, isEditable, deletePicture}) => {
 
     let [hideInfo, setHidePictureInfo] = useState(true);
     let [isShowEdit, hideEdit, showEdit] = useShowPopUp(false);
     let [isShowDelete, hideDelete, showDelete] = useShowPopUp(false);
-
+    let picturePath = createPicturePath(picture);
     let profilePic = picture.profile[0]?.profilePicture ? picture.profile[0]?.profilePicture : "/placeholder/user-solid.svg";
     let userInfo = { userName: picture.userName, profilePicture: profilePic};
 
@@ -46,7 +47,7 @@ export const ViewPicture = ({picture, isEditable, deletePicture}) => {
         <div className="flex items-center justify-center h-96 bg-gray-300 md:rounded-lg dark:bg-gray-700"
              onMouseEnter={showPicInfo}
               onMouseLeave={hidePicInfo}>
-            <Link href={`/picture/${picture._id}`}>
+            <Link href={`/picture/${picturePath}`}>
                 <a>
                     <Image className="object-cover h-full md:rounded-lg grow md:hover:brightness-50"
                            layout="fill"
@@ -56,7 +57,7 @@ export const ViewPicture = ({picture, isEditable, deletePicture}) => {
                 </a>
             </Link>
             <div className="hidden md:flex">
-            <Link href="/picture/[picture]" as={`/picture/${picture._id}`}>
+            <Link href="/picture/[picture]" as={`/picture/${picturePath}`}>
                 <a hidden={hideInfo}>
                     <h2 className="absolute top-0 right-0 p-3 text-white">{picture.pictureName}</h2>
                 </a>
