@@ -2,7 +2,12 @@ import React, {useEffect, useRef, useState} from "react";
 import {getAllPictures} from "../../common/GetPictures";
 import Image from "next/image";
 import Gallery from "../../components/Gallery";
-import {getPicturesByArtistUserName, getPicturesByPage, getPictureWithProfilePicture} from "../../common/api/pictures";
+import {
+    createPicturePath,
+    getPicturesByArtistUserName,
+    getPictureWithProfilePicture,
+    getPictureIdFromPath
+} from "../../common/api/pictures";
 import {PictureInfo} from "../../components/PictureInfo"
 import {BasicLayout} from "../../components/common/BasicLayout";
 import {InfiniteScroll} from "../../components/InfiniteScroll";
@@ -85,7 +90,7 @@ export async function setPicturesToParams() {
     return pictures.map(picture => {
         return {
                 params: {
-                    _id: picture._id.replace(/\.md$/, '')
+                    _id: createPicturePath(picture)
                 }
         }
     })
@@ -105,9 +110,9 @@ export async function getStaticPaths() {
 }
 
 export async function getStaticProps({params}) {
-    const _id = params._id;
+    const _id = getPictureIdFromPath(params._id);
     console.log("this is the path id: " + _id);
-    const picture = await getPictureWithProfilePicture(params._id) // TODO need to add a filter on id. right now it returns all ids less than id
+    const picture = await getPictureWithProfilePicture(_id) // TODO need to add a filter on id. right now it returns all ids less than id
     if(picture == undefined || picture.length == 0) {
         return {
             notFound: true

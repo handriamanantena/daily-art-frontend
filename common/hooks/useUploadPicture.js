@@ -2,6 +2,7 @@ import {uploadImageToCloudflare} from "../api/cloudflare/workers";
 import {useContext, useState} from "react";
 import AuthContext from "../context/auth-context";
 import {useRouter} from "next/router";
+import {createPicturePath} from "../api/pictures";
 
 
 export const useUploadPicture = () => {
@@ -42,7 +43,8 @@ export const useUploadPicture = () => {
                 let pictureId = urlSplit[urlSplit.length-1].split("?")[0];
                 console.log("added picture");
                 setLoadingMessage("Finishing up...");
-                await router.push(`/picture/${pictureId}`);
+                let picturePath = createPicturePath({ pictureName: pictureName, _id : pictureId});
+                await router.push(`/picture/${picturePath}`);
                 return true;
             }
             console.log(response);

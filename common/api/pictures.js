@@ -71,4 +71,14 @@ async function getPicturesByArtistUserName(userName, pageSize, pageIndex) {
     return await res.json()
 }
 
-export {getNextGallery, getPictures, getPictureById, getPicturesByPage, getPicturesByArtistUserName, getPictureWithProfilePicture}
+function createPicturePath(picture) {
+    let pictureName = picture.pictureName.replace(/ /g, "-");
+    return pictureName + "-" + picture._id.replace(/\.md$/, '');
+}
+
+function getPictureIdFromPath(path) {
+    let pathArray = path.split("-");
+    return  pathArray[pathArray.length-1];
+}
+
+export {getNextGallery, getPictures, getPictureById, getPicturesByPage, getPicturesByArtistUserName, getPictureWithProfilePicture, createPicturePath, getPictureIdFromPath}
