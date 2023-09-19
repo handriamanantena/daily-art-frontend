@@ -56,7 +56,7 @@ function _Id({ picture, pictures, _id, foundPicture, initialIndex }) {
     return (
         <BasicLayout>
             <div className="mt-5">
-                <div>
+                <div className="flex flex-col justify-center">
                     <div className="flex ml-2 mb-2 md:hidden">
                         <Link href={`/dailyart/${encodeURIComponent(picture.userName)}`}>
                             <a className="flex">
@@ -79,12 +79,11 @@ function _Id({ picture, pictures, _id, foundPicture, initialIndex }) {
                             </div>
                         </div>
                     </div>
-                    <div className="relative h-[300px] md:h-[1000px]">
-                        <Image className="object-contain"
+                        <Image className="flex object-contain"
                                src={url}
-                               layout="fill"
+                               width={1000}
+                               height={1000}
                                unoptimized/>
-                    </div>
                 </div>
                 <PictureInfo picture={picture} userInfo={userInfo}></PictureInfo>
                 <InfiniteScroll getObjects = {getPictures} maxPage = {100} lastElement={lastElement}>
