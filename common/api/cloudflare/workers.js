@@ -7,7 +7,7 @@ export const uploadImageToCloudflare = async (userName, pictureName, dailyChalle
     url = url + `&pictureName=${pictureName}`;
 
     if(dailyChallenge) {
-        url = url + `&dailyChallenge=${dailyChallenge}`;
+        url = url + `&dailyChallenge=${encodeURIComponent(dailyChallenge)}`;
     }
     let responseSignedUrl = await fetch(url, {
         method: 'GET',
