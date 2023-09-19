@@ -1,0 +1,1 @@
+export const MAX_NUMBER_CHAR_TO_DISPLAY=24;

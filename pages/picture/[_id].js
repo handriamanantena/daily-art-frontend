@@ -21,6 +21,8 @@ let pageSize = process.env.NEXT_PUBLIC_PAGE_SIZE;
 
 function _Id({ picture, pictures, _id, foundPicture, initialIndex }) {
 
+    console.log("picture" + JSON.stringify(pictures));
+    console.log("id" + _id);
     let host = process.env.NEXT_PUBLIC_CDN_IMAGES;
     let url = encodeURI(host + picture?.url)
     let profilePic = picture?.profile[0]?.profilePicture ? picture.profile[0]?.profilePicture : "/placeholder/user-solid.svg";
@@ -30,7 +32,7 @@ function _Id({ picture, pictures, _id, foundPicture, initialIndex }) {
     let [isLoading, setIsLoading] = useState(false)
     let [lastElement, setLastElement] = useState(null);
     let [pageIndex, setPageIndex] = useState(initialIndex);
-    let date = Moment(picture.date).format('YYYY年 MMM月 D日');
+    let [date, setDate] = useState(Moment(picture?.date).format('YYYY年 MMM月 D日'))
 
     let getPictures = async () => {
         setIsLoading(true)

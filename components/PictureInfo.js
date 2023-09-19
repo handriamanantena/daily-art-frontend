@@ -3,6 +3,7 @@ import Moment from 'moment';
 import Link from "next/link";
 import {ProfilePicture} from "./picture/ProfilePicture";
 import {DailyChallengeLabel} from "./picture/DailyChallengeLabel";
+import {MAX_NUMBER_CHAR_TO_DISPLAY} from "../common/Constants";
 
 
 function PictureInfo({userInfo, picture}) {
@@ -24,7 +25,7 @@ function PictureInfo({userInfo, picture}) {
                     </div>
                     <div className="flex flex-col ml-3">
                         <div className="flex flex-row">
-                            <h1 className="">{picture.pictureName}</h1>
+                            <h1 className="">{picture.pictureName.substring(0, MAX_NUMBER_CHAR_TO_DISPLAY)}</h1>
                         </div>
                         <div className="hidden md:flex flex-row">
                             <p className="text-slate-500 mr-1 text-lg">Posted by:</p>

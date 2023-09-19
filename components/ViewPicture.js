@@ -13,6 +13,7 @@ import {DeletePicture} from "./popup/DeletePicture";
 import {EditSVG} from "./svg/EditSVG";
 import {createPicturePath} from "../common/api/pictures";
 import {DailyChallengeLabel} from "./picture/DailyChallengeLabel";
+import {MAX_NUMBER_CHAR_TO_DISPLAY} from "../common/Constants";
 
 export const ViewPicture = ({picture, isEditable, deletePicture}) => {
 
@@ -53,7 +54,7 @@ export const ViewPicture = ({picture, isEditable, deletePicture}) => {
                 <div className="absolute top-0 right-0 mt-3 mr-3 hidden group-hover:grid grid-cols-1 justify-items-end">
                 <Link href="/picture/[picture]" as={`/picture/${picturePath}`}>
                 <a>
-                    <h2 className="text-white">{picture.pictureName}</h2>
+                    <h2 className="text-white">{picture.pictureName.substring(0, MAX_NUMBER_CHAR_TO_DISPLAY)}</h2>
                 </a>
                 </Link>
                 <DailyChallengeLabel picture={picture}/>

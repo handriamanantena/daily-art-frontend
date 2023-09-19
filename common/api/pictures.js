@@ -73,7 +73,7 @@ async function getPicturesByArtistUserName(userName, pageSize, pageIndex) {
 
 function createPicturePath(picture) {
     let pictureName = picture.pictureName.replace(/ /g, "-");
-    return pictureName + "-" + picture._id.replace(/\.md$/, '');
+    return encodeURIComponent(pictureName) + "-" + picture._id.replace(/\.md$/, '');
 }
 
 function getPictureIdFromPath(path) {
