@@ -40,7 +40,7 @@ export const DrawingOftheDay = ({hidePopUp}) => {
 
     let uploadPicture = async (e) => {
         e.preventDefault();
-        let isAdded = await handleSubmit(e.target.pictureName?.value, word.english);
+        let isAdded = await handleSubmit(e.target.pictureName?.value, word.english + "/" + word.japanese);
         if(isAdded) {
             hidePopUp();
         }
