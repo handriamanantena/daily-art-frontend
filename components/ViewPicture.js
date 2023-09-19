@@ -12,10 +12,11 @@ import {EditPicture} from "./popup/EditPicture";
 import {DeletePicture} from "./popup/DeletePicture";
 import {EditSVG} from "./svg/EditSVG";
 import {createPicturePath} from "../common/api/pictures";
+import {DailyChallengeLabel} from "./picture/DailyChallengeLabel";
 
 export const ViewPicture = ({picture, isEditable, deletePicture}) => {
 
-    let [hideInfo, setHidePictureInfo] = useState(true);
+    let [isLoadingComplete, setLoadingComplete] = useState(false);
     let [isShowEdit, hideEdit, showEdit] = useShowPopUp(false);
     let [isShowDelete, hideDelete, showDelete] = useShowPopUp(false);
     let picturePath = createPicturePath(picture);
@@ -33,36 +34,31 @@ export const ViewPicture = ({picture, isEditable, deletePicture}) => {
     let options = [{ onClick: requestDeletePicture, title: "Delete", svg: <Delete/>}, {onClick: editPicture, title: "Edit Picture", svg: <EditSVG/>}];
 
 
-
-    let hidePicInfo = (e) => {
-        e.preventDefault();
-        setHidePictureInfo(true);
-    };
-
-    let showPicInfo = (e) => {
-        e.preventDefault();
-        setHidePictureInfo(false);
-    };
     return (<div className="relative grow h-96 md:ml-1 md:mr-1 mt-1 mb-1 z-49">
-        <div className="flex items-center justify-center h-96 bg-gray-300 md:rounded-lg dark:bg-gray-700"
-             onMouseEnter={showPicInfo}
-              onMouseLeave={hidePicInfo}>
+        <div className="flex items-center justify-center h-96 bg-gray-300 md:rounded-lg dark:bg-gray-700 group">
             <Link href={`/picture/${picturePath}`}>
                 <a>
-                    <Image className="object-cover h-full md:rounded-lg grow md:hover:brightness-50"
+                    <Image className="object-cover h-full md:rounded-lg grow md:group-hover:brightness-50"
+                           onLoadingComplete={setLoadingComplete}
                            layout="fill"
                            src={picture.url}
                            objectPosition="center"
                            unoptimized/>
                 </a>
             </Link>
+            <div className="absolute top-0 right-0 mt-3 mr-3 md:hidden" hidden={!isLoadingComplete}>
+                <DailyChallengeLabel picture={picture}/>
+            </div>
             <div className="hidden md:flex">
-            <Link href="/picture/[picture]" as={`/picture/${picturePath}`}>
-                <a hidden={hideInfo}>
-                    <h2 className="absolute top-0 right-0 p-3 text-white">{picture.pictureName}</h2>
+                <div className="absolute top-0 right-0 mt-3 mr-3 hidden group-hover:grid grid-cols-1 justify-items-end">
+                <Link href="/picture/[picture]" as={`/picture/${picturePath}`}>
+                <a>
+                    <h2 className="text-white">{picture.pictureName}</h2>
                 </a>
-            </Link>
-            <div className="absolute bottom-0 left-0 m-3 h-[30px] w-[30px]" hidden={hideInfo}>
+                </Link>
+                <DailyChallengeLabel picture={picture}/>
+            </div>
+            <div className="absolute bottom-0 left-0 m-3 h-[30px] w-[30px] hidden group-hover:flex">
                 <Link href={`/dailyart/${encodeURIComponent(userInfo.userName)}`}>
                     <a className="flex flex-row">
                         <ProfilePicture profilePicture={userInfo.profilePicture}/>
