@@ -10,7 +10,6 @@
 
 .main {
   padding: 5rem 0;
-  flex: 1;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -45,7 +44,6 @@
 }
 
 .title {
-  @apply animate-bounce;
   margin: 0;
   line-height: 1.15;
   font-size: 4rem;
@@ -89,6 +87,18 @@
   border-radius: 10px;
   transition: color 0.15s ease, border-color 0.15s ease;
   width: 45%;
+}
+
+.hoverTransition {
+  color: inherit;
+  transition: color 0.15s ease, border-color 0.15s ease;
+}
+
+.hoverTransition:hover,
+.hoverTransition:focus,
+.hoverTransition:active {
+  color: #0070f3;
+  border-color: #0070f3;
 }
 
 .card:hover,

@@ -3,7 +3,6 @@ import Moment from 'moment';
 import Link from "next/link";
 import {ProfilePicture} from "./picture/ProfilePicture";
 import {DailyChallengeLabel} from "./picture/DailyChallengeLabel";
-import {MAX_NUMBER_CHAR_TO_DISPLAY} from "../common/Constants";
 
 
 function PictureInfo({userInfo, picture}) {
@@ -12,8 +11,8 @@ function PictureInfo({userInfo, picture}) {
 
     return (
         <div className="grid md:place-content-center mb-5">
-            <div className="mt-3 grow md:max-w-screen-md md:min-w-[768px]">
-                <div className="flex flex-row">
+            <div className="grow md:max-w-screen-md md:min-w-[768px] bg-slate-200 mt-3 md:m-3 p-2 md:rounded-2xl">
+                <div className="flex flex-row ">
                     <div className="hidden md:flex">
                     <Link href={`/dailyart/${encodeURIComponent(picture.userName)}`}>
                         <a className="flex flex-row">
@@ -24,8 +23,8 @@ function PictureInfo({userInfo, picture}) {
                     </Link>
                     </div>
                     <div className="flex flex-col ml-3">
-                        <div className="flex flex-row">
-                            <h1 className="">{picture.pictureName.substring(0, MAX_NUMBER_CHAR_TO_DISPLAY)}</h1>
+                        <div className="flex flex-row break-all mx-1">
+                            <h1 className="">{picture.pictureName}</h1>
                         </div>
                         <div className="hidden md:flex flex-row">
                             <p className="text-slate-500 mr-1 text-lg">Posted by:</p>
@@ -39,9 +38,10 @@ function PictureInfo({userInfo, picture}) {
                             <DailyChallengeLabel picture={picture}/>
                             <p>Challenge : {picture.dailyChallenge}</p>
                         </div>
-                    </div>
-                    <div className="hidden md:flex grow justify-end">
-                        <p className="float-right">{date}</p>
+                        <div className="hidden md:flex grow">
+                            <p className="text-slate-500 mr-1 text-sm">Posted on:</p>
+                            <p className="text-slate-500 mr-1 text-sm">{date}</p>
+                        </div>
                     </div>
                 </div>
             </div>

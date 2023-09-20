@@ -7,6 +7,7 @@ import {useRouter} from "next/router";
 import {ImageInput} from "../button/ImageInput";
 import useUploadPicture from "../../common/hooks/useUploadPicture";
 import {PopupForm} from "./PopupForm";
+import {MAX_PICTURE_NAME_SIZE} from "../../common/Constants";
 
 const AddPictureInfo = ({hidePopUp}) => {
 
@@ -35,7 +36,7 @@ const AddPictureInfo = ({hidePopUp}) => {
             <PopupForm onSubmit={uploadPicture} encType="multipart/form-data">
                 <h1>Upload Drawing</h1>
                 <label htmlFor="pictureName">Title</label>
-                <BasicForumInput type="text" id="pictureName" name="pictureName" maxLength="15"/>
+                <BasicForumInput type="text" id="pictureName" name="pictureName" maxLength={MAX_PICTURE_NAME_SIZE}/>
                 <ImageInput file={file} setFile={setFile} loadingMessage={loadingMessage} setLoadingMessage={setLoadingMessage}
                             isLoading={isLoading} setIsLoading={setIsLoading} errorText={errorText} setErrorText={setErrorText}/>
                 <SubmitButton text="Submit"/>

@@ -59,7 +59,7 @@ function _Id({ picture, pictures, _id, foundPicture, initialIndex }) {
         <BasicLayout>
             <div className="mt-5">
                 <div className="flex flex-col justify-center">
-                    <div className="flex ml-2 mb-2 md:hidden">
+                    <div className="flex mb-2 md:hidden p-2 bg-slate-200">
                         <Link href={`/dailyart/${encodeURIComponent(picture.userName)}`}>
                             <a className="flex">
                                 <div className="relative h-16 w-16 md:h-20 md:w-20 self-center">

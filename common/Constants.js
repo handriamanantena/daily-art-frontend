@@ -1,1 +1,2 @@
-export const MAX_NUMBER_CHAR_TO_DISPLAY=24;
+export const MAX_NUMBER_CHAR_TO_DISPLAY=20;
+export const MAX_PICTURE_NAME_SIZE=100;
