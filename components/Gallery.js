@@ -7,7 +7,7 @@ export const Gallery =  ({pictures, setLastElement, isEditable, deletePicture, c
 
     return <div className={dailyArt.dailyArt}>
         {children}
-        {(pictures.map((value, index) => {
+        {(pictures?.map((value, index) => {
             return pictures.length - 1 === index ? (
                     <div className="flex flex-col w-full sm:w-3/10 lg:w-1/4" key={value._id} ref={setLastElement}>
                         <BasicPictureInfo picture={value}/>

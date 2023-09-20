@@ -6,6 +6,7 @@ import SubmitButton from "../forum/inputs/SubmitButton";
 import Moment from "moment";
 import useAxiosPrivate from "../../common/hooks/useAxiosPrivate";
 import {TagInput} from "../forum/inputs/TagInput";
+import {MAX_PICTURE_NAME_SIZE} from "../../common/Constants";
 
 export const EditPicture = ({pictureInfo, userInfo, hidePopUp}) => {
 
@@ -57,7 +58,7 @@ export const EditPicture = ({pictureInfo, userInfo, hidePopUp}) => {
         <span className="text-gray-400 text-xs mb-5">Upload date: {date}</span>
         <p className="text-red-500">{errMsg}</p>
         <label htmlFor="pictureName">Title</label>
-        <BasicForumInput type="text" id="pictureName" name="pictureName" maxLength={32} defaultValue={pictureInfo.pictureName}/>
+        <BasicForumInput type="text" id="pictureName" name="pictureName" maxLength={MAX_PICTURE_NAME_SIZE} defaultValue={pictureInfo.pictureName}/>
         <label htmlFor="tags">Tags</label>
         <TagInput id="tags" name="tags" listTags={listTags} setTagList={setTagList} objectId={pictureInfo._id} setErrMsg={setTagErrMsg}/>
         <span className="text-red-500 text-xs mb-1">{tagErrMsg}</span>

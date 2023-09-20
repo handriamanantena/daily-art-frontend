@@ -10,6 +10,7 @@ import {Button} from "../button/Button";
 import { useRouter } from 'next/router'
 import BasicForumInput from "../forum/inputs/input";
 import {PopupForm} from "./PopupForm";
+import {MAX_PICTURE_NAME_SIZE} from "../../common/Constants";
 
 export const DrawingOftheDay = ({hidePopUp}) => {
 
@@ -40,7 +41,7 @@ export const DrawingOftheDay = ({hidePopUp}) => {
 
     let uploadPicture = async (e) => {
         e.preventDefault();
-        let isAdded = await handleSubmit(e.target.pictureName?.value, word.english);
+        let isAdded = await handleSubmit(e.target.pictureName?.value, word.english + "/" + word.japanese);
         if(isAdded) {
             hidePopUp();
         }
@@ -54,7 +55,7 @@ export const DrawingOftheDay = ({hidePopUp}) => {
             {ctx.isLoggedIn ?
                 <Fragment>
                         <label htmlFor="pictureName">Title</label>
-                        <BasicForumInput type="text" id="pictureName" name="pictureName" maxLength="15"/>
+                        <BasicForumInput type="text" id="pictureName" name="pictureName" maxLength={MAX_PICTURE_NAME_SIZE}/>
                         <ImageInput file={file} setFile={setFile} loadingMessage={loadingMessage}
                                         setLoadingMessage={setLoadingMessage}
                                         isLoading={isLoading} setIsLoading={setIsLoading} errorText={errorText}

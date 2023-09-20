@@ -2,6 +2,7 @@ import React from "react";
 import Moment from "moment";
 import Link from "next/link";
 import Image from "next/dist/client/image";
+import {MAX_NUMBER_CHAR_TO_DISPLAY} from "../../common/Constants";
 
 export const BasicPictureInfo = ({picture}) => {
     let date = Moment(picture.date).format('YYYY年 MMM月 D日');
@@ -28,7 +29,7 @@ export const BasicPictureInfo = ({picture}) => {
             <div className="flex">
                 <Link href="/picture/[picture]" as={`/picture/${picture._id}`}>
                     <a>
-                        <p className="font-bold">{picture.pictureName}</p>
+                        <p className="font-bold">{picture.pictureName.substring(0, MAX_NUMBER_CHAR_TO_DISPLAY)}</p>
                     </a>
                 </Link>
                 <h4 className="flex ml-auto mr-2">{date}</h4>

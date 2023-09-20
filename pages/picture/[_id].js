@@ -13,11 +13,16 @@ import {BasicLayout} from "../../components/common/BasicLayout";
 import {InfiniteScroll} from "../../components/InfiniteScroll";
 import { useRouter } from 'next/router'
 import {LoadingScreen} from "../../components/loading/LoadingScreen";
+import {ProfilePicture} from "../../components/picture/ProfilePicture";
+import Link from "next/link";
+import Moment from "moment";
 
 let pageSize = process.env.NEXT_PUBLIC_PAGE_SIZE;
 
 function _Id({ picture, pictures, _id, foundPicture, initialIndex }) {
 
+    console.log("picture" + JSON.stringify(pictures));
+    console.log("id" + _id);
     let host = process.env.NEXT_PUBLIC_CDN_IMAGES;
     let url = encodeURI(host + picture?.url)
     let profilePic = picture?.profile[0]?.profilePicture ? picture.profile[0]?.profilePicture : "/placeholder/user-solid.svg";
@@ -27,6 +32,7 @@ function _Id({ picture, pictures, _id, foundPicture, initialIndex }) {
     let [isLoading, setIsLoading] = useState(false)
     let [lastElement, setLastElement] = useState(null);
     let [pageIndex, setPageIndex] = useState(initialIndex);
+    let [date, setDate] = useState(Moment(picture?.date).format('YYYY年 MMM月 D日'))
 
     let getPictures = async () => {
         setIsLoading(true)
@@ -52,11 +58,34 @@ function _Id({ picture, pictures, _id, foundPicture, initialIndex }) {
     return (
         <BasicLayout>
             <div className="mt-5">
-                <div className="relative h-[300px] md:h-[1000px]">
-                    <Image className="object-contain"
-                           src={url}
-                           layout="fill"
-                           unoptimized/>
+                <div className="flex flex-col justify-center">
+                    <div className="flex mb-2 md:hidden p-2 bg-slate-200">
+                        <Link href={`/dailyart/${encodeURIComponent(picture.userName)}`}>
+                            <a className="flex">
+                                <div className="relative h-16 w-16 md:h-20 md:w-20 self-center">
+                                    <ProfilePicture profilePicture={userInfo.profilePicture}/>
+                                </div>
+                            </a>
+                        </Link>
+                        <div className="flex flex-col self-center ml-1">
+                            <div className="flex flex-row">
+                                <Link href={`/dailyart/${encodeURIComponent(picture.userName)}`}>
+                                    <a className="flex flex-row">
+                                        <p className="hover:text-cyan-600 font-bold text-lg">{userInfo.userName}</p>
+                                    </a>
+                                </Link>
+                            </div>
+                            <div className="flex flex-row">
+                                <p className="text-slate-500 mr-1 text-sm">Posted on:</p>
+                                <p className="text-slate-500 mr-1 text-sm">{date}</p>
+                            </div>
+                        </div>
+                    </div>
+                        <Image className="flex object-contain"
+                               src={url}
+                               width={1000}
+                               height={1000}
+                               unoptimized/>
                 </div>
                 <PictureInfo picture={picture} userInfo={userInfo}></PictureInfo>
                 <InfiniteScroll getObjects = {getPictures} maxPage = {100} lastElement={lastElement}>
