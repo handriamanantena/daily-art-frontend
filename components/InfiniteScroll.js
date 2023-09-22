@@ -5,7 +5,7 @@ export const InfiniteScroll = ({getObjects, maxPage, lastElement, children}) => 
     const observer = useRef();
 
     useEffect(async () => {
-        if (pageNum < maxPage && pageNum != 1) {
+        if (pageNum < maxPage && pageNum != 1) { // TODO should not have max page. should get objects untill database returns empty
             await getObjects();
         }
     }, [pageNum]);

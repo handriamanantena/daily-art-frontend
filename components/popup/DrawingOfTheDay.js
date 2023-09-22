@@ -1,5 +1,5 @@
 import {Fragment, useContext, useEffect, useState} from "react";
-import {getWordOfTheDay} from "../../common/api/words";
+import {getChallengeOfTheDay} from "../../common/api/challenges";
 import SubmitButton from "../forum/inputs/SubmitButton";
 import React from "react";
 import Loading from "../loading/Loading";
@@ -27,7 +27,7 @@ export const DrawingOftheDay = ({hidePopUp}) => {
 
     useEffect(async () => {
         setLoadingWord(true);
-        let response = await getWordOfTheDay();
+        let response = await getChallengeOfTheDay();
         setLoadingWord(false);
         setWord({
             english: response.english,
