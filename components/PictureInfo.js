@@ -23,7 +23,7 @@ function PictureInfo({userInfo, picture}) {
                     </Link>
                     </div>
                     <div className="flex flex-col ml-3">
-                        <div className="flex flex-row break-all mx-1">
+                        <div className="flex flex-row break-words mx-1">
                             <h1 className="">{picture.pictureName}</h1>
                         </div>
                         <div className="hidden md:flex flex-row">
