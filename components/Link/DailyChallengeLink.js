@@ -7,7 +7,7 @@ import {createPicturePath} from "../../common/api/pictures";
 export const DailyChallengeLink = ({dailyChallenge}) => {
 
     return <div className="flex flex-row hover:bg-gradient-to-r hover:from-indigo-500 hover:to-purple-500 border-t border-x border-black w-full grow">
-        <Link href={`/dailyart`}>
+        <Link href={`/challenge/${encodeURIComponent(dailyChallenge.english)}`}>
             <a className="w-fit">
                 <div className="flex flex-col group w-fit p-5 leading-none grow">
                     <h2 className="border-r-1 w-full leading-none group-hover:text-white break-keep">{dailyChallenge.english}/{dailyChallenge.japanese}</h2>
