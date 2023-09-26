@@ -7,10 +7,10 @@ export const DailyChallengeList =  ({challenges, setLastElement, children}) => {
         {children}
         {(challenges?.map((dailyChallenge, index) => {
             return challenges.length - 1 === index ? (
-                    <div className="w-full" key={dailyChallenge._id} ref={setLastElement}>
+                    <div className="w-full grow" key={dailyChallenge._id} ref={setLastElement}>
                        <DailyChallengeLink dailyChallenge={dailyChallenge}/>
                     </div>) :
-                <div className="w-full" key={dailyChallenge._id}>
+                <div className="w-full grow" key={dailyChallenge._id}>
                     <DailyChallengeLink dailyChallenge={dailyChallenge}/>
                 </div>
         }))}
