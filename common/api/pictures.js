@@ -57,6 +57,22 @@ async function getPicturesByArtist(artist, pageIndex, pageSize) {
 }
 
 async function getPicturesByArtistUserName(userName, pageSize, pageIndex) {
+    let query = createQuery(pageSize, pageIndex);
+    query += "&userName=" + userName
+    const host = process.env.NEXT_PUBLIC_PICTURES_API_HOST + process.env.NEXT_PUBLIC_PICTURES_API_PORT
+    const res = await fetch(host + "/pictures" + query);
+    return await res.json()
+}
+
+async function getPicturesByDailyChallenge(dailyChallenge, pageSize, pageIndex) {
+    let query = createQuery(pageSize, pageIndex);
+    query += "&dailyChallenge=" + dailyChallenge
+    const host = process.env.NEXT_PUBLIC_PICTURES_API_HOST + process.env.NEXT_PUBLIC_PICTURES_API_PORT
+    const res = await fetch(host + "/pictures" + query);
+    return await res.json()
+}
+
+function createQuery(pageSize, pageIndex) {
     let query = "?";
     console.log("getPicturesByArtistUserName getPictures index " + pageIndex);
     if(pageSize) {
@@ -65,10 +81,7 @@ async function getPicturesByArtistUserName(userName, pageSize, pageIndex) {
             query += "&pageIndex=" + pageIndex;
         }
     }
-    query += "&userName=" + userName
-    const host = process.env.NEXT_PUBLIC_PICTURES_API_HOST + process.env.NEXT_PUBLIC_PICTURES_API_PORT
-    const res = await fetch(host + "/pictures" + query);
-    return await res.json()
+    return query;
 }
 
 function createPicturePath(picture) {
@@ -81,4 +94,4 @@ function getPictureIdFromPath(path) {
     return  pathArray[pathArray.length-1];
 }
 
-export {getNextGallery, getPictures, getPictureById, getPicturesByPage, getPicturesByArtistUserName, getPictureWithProfilePicture, createPicturePath, getPictureIdFromPath}
+export {getNextGallery, getPictures, getPictureById, getPicturesByPage, getPicturesByArtistUserName, getPictureWithProfilePicture, createPicturePath, getPictureIdFromPath, getPicturesByDailyChallenge}

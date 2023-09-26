@@ -20,6 +20,12 @@ async function getChallengePage(dateIndex, pageSize) {
     return await res.json();
 }
 
+async function getEnglishChallenge(englishChallenge) {
+    const host = process.env.NEXT_PUBLIC_PICTURES_API_HOST + process.env.NEXT_PUBLIC_PICTURES_API_PORT
+    const res = await fetch(host + "/challenges/" + englishChallenge);
+    return await res.json();
+}
 
 
-export {getChallengeOfTheDay, getChallengePage}
+
+export {getChallengeOfTheDay, getChallengePage, getEnglishChallenge}

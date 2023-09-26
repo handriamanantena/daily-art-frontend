@@ -20,7 +20,7 @@ export const DailyChallengeLink = ({dailyChallenge}) => {
                 if(index > 8) {
                     return <></>
                 }
-                return <Link href={`/picture/${createPicturePath(picture)}`}>
+                return <Link href={`/picture/${createPicturePath(picture)}`} key={"challenge" + picture._id}>
                     <a>
                         <div className={`relative flex w-14 h-14 m-2 ${index > 2 ? `hidden md:flex` : `flex`}`}>
                             <Image className=" md:rounded-lg grow rounded-lg"
