@@ -6,7 +6,7 @@ import {createPicturePath} from "../../common/api/pictures";
 
 export const DailyChallengeLink = ({dailyChallenge}) => {
 
-    return <div className="flex flex-row bg-gradient-to-r from-cyan-500 to-blue-500 hover:bg-gradient-to-r hover:from-indigo-500 hover:to-purple-500 border-t border-x border-black w-full grow">
+    return <div className="flex flex-row hover:bg-gradient-to-r hover:from-indigo-500 hover:to-purple-500 border-t border-x border-black w-full grow">
         <Link href={`/dailyart`}>
             <a className="w-fit">
                 <div className="flex flex-col group w-fit p-5 leading-none grow">
@@ -15,7 +15,7 @@ export const DailyChallengeLink = ({dailyChallenge}) => {
                 </div>
             </a>
         </Link>
-        <div className="flex w-fit grow">
+        <div className="flex w-fit grow z-10">
             {(dailyChallenge?.pictures.map((picture, index) => {
                 if(index > 8) {
                     return <></>

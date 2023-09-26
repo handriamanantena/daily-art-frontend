@@ -16,7 +16,7 @@ import {PopUp} from "../popup/PopUp";
 import {NavDropDownOptions} from "../button/NavDropDownOptions";
 
 
-export function HeaderBar() {
+export function HeaderBar({customHeader}) {
 
     const router = useRouter();
     const ctx = useContext(AuthContext);
@@ -128,8 +128,9 @@ export function HeaderBar() {
                     </li>
                 </ul>
             </div>
+            { customHeader ? customHeader :
             <div className="grid content-center bg-white md:h-24 border-b md:pb-3">
                 <h1 className="text-center md:text-7xl">Daily イラスト</h1>
-            </div>
+            </div>}
         </Fragment>)
 }
