@@ -1,4 +1,4 @@
-import {getChallengePage, getEnglishChallenge} from "../../common/api/challenges";
+import {getChallengePage, getPastEnglishChallenge} from "../../common/api/challenges";
 import {formatDateYYYYMMDD} from "../../common/Utility";
 import {BasicLayout} from "../../components/common/BasicLayout";
 import {InfiniteScroll} from "../../components/InfiniteScroll";
@@ -82,7 +82,8 @@ export async function getStaticPaths() {
 export async function getStaticProps(context) {
     const { params } = context;
     const englishChallenge = params.challenge;
-    const challenge =  await getEnglishChallenge(englishChallenge);
+    const challenge =  await getPastEnglishChallenge(encodeURIComponent(englishChallenge));
+    console.log("this is the challenge " + challenge);
     if(challenge == undefined || challenge.english == undefined) {
         return {
             notFound: true

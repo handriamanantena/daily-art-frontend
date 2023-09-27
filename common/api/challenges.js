@@ -26,6 +26,14 @@ async function getEnglishChallenge(englishChallenge) {
     return await res.json();
 }
 
+async function getPastEnglishChallenge(englishChallenge) {
+    const host = process.env.NEXT_PUBLIC_PICTURES_API_HOST + process.env.NEXT_PUBLIC_PICTURES_API_PORT
+    const res = await fetch(host + "/challenges/" + englishChallenge + "?past=true");
+   // console.log("res.json()" + await res.json());
+    if(!res.ok) { //TODO need to add this check for all fetch await requests
+        return {};
+    }
+    return await res.json();
+}
 
-
-export {getChallengeOfTheDay, getChallengePage, getEnglishChallenge}
+export {getChallengeOfTheDay, getChallengePage, getEnglishChallenge, getPastEnglishChallenge}
