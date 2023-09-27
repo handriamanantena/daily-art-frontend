@@ -9,13 +9,24 @@ import React from "react";
 import {getPicturesByDailyChallenge} from "../../common/api/pictures";
 import {CustomHeader} from "../../components/common/CustomHeader";
 import {RocketSVG} from "../../components/svg/RocketSVG";
+import {useRouter} from "next/router";
+import {LoadingScreen} from "../../components/loading/LoadingScreen";
 
 export const Challenge = ({challenge, pictures}) => {
+
+
 
     let [newPictures, setPictures] = useState(pictures);
     let [isLoading, setIsLoading] = useState(false)
     let [lastElement, setLastElement] = useState(null);
     let [pageIndex, setPageIndex] = useState(pictures?.length > 0 ? pictures[pictures?.length - 1]._id : 0);
+    const router = useRouter();
+
+    // If the page is not yet generated, this will be displayed
+    // initially until getStaticProps() finishes running
+    if (router.isFallback) {
+        return <LoadingScreen isLoadingHidden={false}><p className="text-black">Loading...</p></LoadingScreen>
+    }
 
     let getPictures = async () => {
         if(pageIndex == 0) {
