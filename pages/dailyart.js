@@ -5,7 +5,7 @@ import {BasicLayout} from "../components/common/BasicLayout";
 import {InfiniteScroll} from "../components/InfiniteScroll";
 import Loading from "../components/loading/Loading";
 
-let pageSize = 14;
+let pageSize = process.env.NEXT_PUBLIC_PAGE_SIZE;
 
 
 function DailyArt({ pictures }) {
