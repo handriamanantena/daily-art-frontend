@@ -8,6 +8,7 @@ import {DailyChallengeList} from "../components/scroll/DailyChallengeList";
 import {getChallengePage} from "../common/api/challenges";
 import {formatDateYYYYMMDD} from "../common/Utility";
 import {RocketSVG} from "../components/svg/RocketSVG";
+import {CustomHeader} from "../components/common/CustomHeader";
 
 function Challenges ({challenges}) {
     let pageSize = process.env.NEXT_PUBLIC_PAGE_SIZE;
@@ -34,13 +35,7 @@ function Challenges ({challenges}) {
     }
 
     return (
-        <BasicLayout customHeader={
-            <div className="sticky top-16 z-20 bg-slate-950	h-16 flex flex-row items-center bg-opacity-90">
-                <div className="ml-10 opacity-100 fill-white">
-                    <RocketSVG/>
-                </div>
-                <h1 className="text-white ml-2 opacity-100">Daily Challenges</h1>
-            </div>}>
+        <BasicLayout customHeader={<CustomHeader svg={<RocketSVG/>} text="Daily Challenges"/>}>
             <InfiniteScroll getObjects = {getChallenges} lastElement={lastElement}>
                 <DailyChallengeList challenges = {newChallenges} setLastElement = {setLastElement}/>
                 { isLoading ? <Loading><p>Loading...</p></Loading> : <Fragment></Fragment>}

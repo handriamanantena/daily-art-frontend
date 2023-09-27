@@ -7,6 +7,8 @@ import Loading from "../../components/loading/Loading";
 import {Fragment, useState} from "react";
 import React from "react";
 import {getPicturesByDailyChallenge} from "../../common/api/pictures";
+import {CustomHeader} from "../../components/common/CustomHeader";
+import {RocketSVG} from "../../components/svg/RocketSVG";
 
 export const Challenge = ({challenge, pictures}) => {
 
@@ -31,7 +33,7 @@ export const Challenge = ({challenge, pictures}) => {
     }
 
     return (
-        <BasicLayout>
+        <BasicLayout customHeader={<CustomHeader svg={<RocketSVG/>} text={"Daily Challenge: " + challenge.english + "/" + challenge.japanese}/>}>
             <InfiniteScroll getObjects = {getPictures} maxPage = {10} lastElement={lastElement}>
                 <Gallery pictures = {newPictures} setLastElement = {setLastElement}/>
                 { isLoading ? <Loading><p>Loading...</p></Loading> : <Fragment></Fragment>}
