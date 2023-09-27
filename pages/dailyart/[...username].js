@@ -15,13 +15,14 @@ import {EditButton} from "../../components/button/EditButton";
 import {PopUp} from "../../components/popup/PopUp";
 import Loading from "../../components/loading/Loading";
 import {getPicturesByArtistUserName} from "../../common/api/pictures";
+import {NoPosts} from "../../components/common/NoPosts";
 let pageSize = +(process.env.NEXT_PUBLIC_PAGE_SIZE);
 let maxPage = 100;
 
 function Username({ userInfo }) {
     const ctx = useContext(AuthContext);
 
-    let [isLoading, setIsLoading] = useState(true)
+    let [isLoading, setIsLoading] = useState(false);
 
     let [newPictures, setPictures] = useState([]);
 
@@ -37,6 +38,12 @@ function Username({ userInfo }) {
             setPageIndex(pictures[pictures.length-1]._id);
         }
     }, []);
+
+    const router = useRouter();
+
+    if (router.isFallback) {
+        return <div>Loading...</div>
+    }
 
     let getPictures = async () => {
         setIsLoading(true);
@@ -55,11 +62,6 @@ function Username({ userInfo }) {
         setPictures((newPictures) => newPictures.filter((picture) => picture._id != deleteId));
         setIsLoading(false);
     }
-    const router = useRouter();
-
-    if (router.isFallback) {
-        return <div>Loading...</div>
-    }
 
     let renderPage = (query) => {
         switch(query) {
@@ -68,7 +70,7 @@ function Username({ userInfo }) {
             return (<InfiniteScroll getObjects={getPictures} maxPage={maxPage} lastElement={lastElement}>
                 <Gallery pictures={newPictures} setLastElement={setLastElement} isEditable={userInfo.userName == ctx.userName} deletePicture={pictureDeleted}>
                     {ctx.isAuthorized(userInfo.userName) ?
-                        <StyledAddPicture showPopUp={showPopUp} text="+"/> : <Fragment/>}
+                        <StyledAddPicture showPopUp={showPopUp} text="+"/> : <NoPosts pictures={newPictures}/>}
                 </Gallery>
                 { isLoading ? <Loading><p>Loading...</p></Loading> : <Fragment></Fragment>}
                 <PopUp isShowPopup={isShowPopup} hidePopUp={hidePopUp}>

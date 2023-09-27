@@ -11,6 +11,7 @@ import {CustomHeader} from "../../components/common/CustomHeader";
 import {RocketSVG} from "../../components/svg/RocketSVG";
 import {useRouter} from "next/router";
 import {LoadingScreen} from "../../components/loading/LoadingScreen";
+import {NoPosts} from "../../components/common/NoPosts";
 
 export const Challenge = ({challenge, pictures}) => {
 
@@ -48,6 +49,7 @@ export const Challenge = ({challenge, pictures}) => {
             <InfiniteScroll getObjects = {getPictures} maxPage = {10} lastElement={lastElement}>
                 <Gallery pictures = {newPictures} setLastElement = {setLastElement}/>
                 { isLoading ? <Loading><p>Loading...</p></Loading> : <Fragment></Fragment>}
+                {<NoPosts pictures={newPictures}/>}
             </InfiniteScroll>
         </BasicLayout>);
 
