@@ -5,7 +5,7 @@ import AuthContext from "../../common/context/auth-context";
 import useAxiosPrivate from "../../common/hooks/useAxiosPrivate";
 import React from "react";
 
-export function BasicLayout({children}) {
+export function BasicLayout({children, customHeader}) {
 
     const ctx = useContext(AuthContext);
     const axiosPrivate = useAxiosPrivate();
@@ -53,7 +53,7 @@ export function BasicLayout({children}) {
     }, [ctx.token])
 
     return (<Fragment>
-        <HeaderBar/>
+        <HeaderBar customHeader={customHeader}/>
             <main>{children}</main>
         <Footer/>
     </Fragment>)
