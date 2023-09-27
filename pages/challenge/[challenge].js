@@ -12,6 +12,9 @@ import {RocketSVG} from "../../components/svg/RocketSVG";
 import {useRouter} from "next/router";
 import {LoadingScreen} from "../../components/loading/LoadingScreen";
 import {NoPosts} from "../../components/common/NoPosts";
+import {AddChallenge} from "../../components/popup/AddChallenge";
+import {useShowPopUp} from "../../common/hooks/useShowPopUp";
+import {PopUp} from "../../components/popup/PopUp";
 
 export const Challenge = ({challenge, pictures}) => {
 
@@ -21,6 +24,8 @@ export const Challenge = ({challenge, pictures}) => {
     let [isLoading, setIsLoading] = useState(false)
     let [lastElement, setLastElement] = useState(null);
     let [pageIndex, setPageIndex] = useState(pictures?.length > 0 ? pictures[pictures?.length - 1]._id : 0);
+    let [isShowPopup, hidePopUp , showPopUp] = useShowPopUp();
+
     const router = useRouter();
 
     // If the page is not yet generated, this will be displayed
@@ -49,8 +54,13 @@ export const Challenge = ({challenge, pictures}) => {
             <InfiniteScroll getObjects = {getPictures} maxPage = {10} lastElement={lastElement}>
                 <Gallery pictures = {newPictures} setLastElement = {setLastElement}/>
                 { isLoading ? <Loading><p>Loading...</p></Loading> : <Fragment></Fragment>}
-                {<NoPosts pictures={newPictures}/>}
+                {<div onClick={showPopUp}>
+                    <NoPosts pictures={newPictures} text="Click to add drawing"/>
+                </div>}
             </InfiniteScroll>
+            <PopUp isShowPopup={isShowPopup} hidePopUp={hidePopUp}>
+                <AddChallenge hidePopUp={hidePopUp} word={challenge}/>
+            </PopUp>
         </BasicLayout>);
 
 }
