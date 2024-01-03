@@ -5,7 +5,7 @@ import {InfiniteScroll} from "../components/InfiniteScroll";
 import Loading from "../components/loading/Loading";
 import React from "react";
 import {DailyChallengeList} from "../components/scroll/DailyChallengeList";
-import {getChallengePage} from "../common/api/challenges";
+import {getChallengeOfTheDay, getChallengePage} from "../common/api/challenges";
 import {formatDateYYYYMMDD} from "../common/Utility";
 import {RocketSVG} from "../components/svg/RocketSVG";
 import {CustomHeader} from "../components/common/CustomHeader";
@@ -53,7 +53,8 @@ export async function getStaticProps() {
         await generateThumbnails(challenges);
     }
     else {
-
+        let challengeOfTheDay = await getChallengeOfTheDay();
+        await moveThumbnailToDir(challengeOfTheDay);
     }
     return {
         props: {
@@ -72,21 +73,22 @@ let generateThumbnails =  async (challenges) => {
         thumbnailChallenges.push(...(newThumbnails.map(challenge => challenge.english)));
         newThumbnails =  await getChallengePage(formatDateYYYYMMDD(dateIndex), process.env.NEXT_PUBLIC_PAGE_SIZE);
     }
+    thumbnailChallenges.forEach(async (challenge) => {
+        await moveThumbnailToDir(challenge);
+    })
+};
+
+let moveThumbnailToDir = async (challenge) => {
     if (!fs.existsSync("./public/thumbnail")){
         fs.mkdirSync("./public/thumbnail");
     }
-
-    thumbnailChallenges.forEach(async (challenge)=> {
-        let image = await fetch(`${process.env.NEXT_PUBLIC_THUMBNAIL_URL}/${challenge}`);
-        fs.writeFile(`./public/thumbnail/${challenge}.jpeg`, new Uint8Array(await new Response(image.body).arrayBuffer()), function (err) {
-            if(err) {
-                return console.log(err);
-            }
-            console.log("The file was saved!");
-        });
+    let image = await fetch(`${process.env.NEXT_PUBLIC_THUMBNAIL_URL}/${challenge}`);
+    fs.writeFile(`./public/thumbnail/${challenge}.jpeg`, new Uint8Array(await new Response(image.body).arrayBuffer()), function (err) {
+        if (err) {
+            return console.log(err);
+        }
+        console.log("The file was saved!");
     });
-
-
 };
 
 export default Challenges;
