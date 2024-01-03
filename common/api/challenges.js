@@ -16,7 +16,6 @@ async function getChallengePage(dateIndex, pageSize) {
     }
     const host = process.env.NEXT_PUBLIC_PICTURES_API_HOST + process.env.NEXT_PUBLIC_PICTURES_API_PORT
     const res = await fetch(host + "/challenges" + query);
-    console.log(JSON.stringify(res));
     return await res.json();
 }
 

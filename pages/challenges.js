@@ -9,6 +9,7 @@ import {getChallengePage} from "../common/api/challenges";
 import {formatDateYYYYMMDD} from "../common/Utility";
 import {RocketSVG} from "../components/svg/RocketSVG";
 import {CustomHeader} from "../components/common/CustomHeader";
+import fs from "fs";
 
 function Challenges ({challenges}) {
     let pageSize = process.env.NEXT_PUBLIC_PAGE_SIZE;
@@ -47,7 +48,13 @@ function Challenges ({challenges}) {
 
 export async function getStaticProps() {
     const challenges =  await getChallengePage(formatDateYYYYMMDD(new Date()), process.env.NEXT_PUBLIC_PAGE_SIZE);
-    console.log("getStaticProps: " + JSON.stringify(challenges));
+    console.log(challenges);
+    if (!fs.existsSync("./public/thumbnail")) {
+        await generateThumbnails(challenges);
+    }
+    else {
+
+    }
     return {
         props: {
             challenges : challenges,
@@ -55,4 +62,31 @@ export async function getStaticProps() {
         revalidate: +(process.env.NEXT_PUBLIC_REVALIDATE_SEC)
     }
 }
+
+let generateThumbnails =  async (challenges) => {
+    const thumbnailChallenges = challenges.map(challenge => encodeURIComponent(challenge.english));
+    let dateIndex = formatDateYYYYMMDD(challenges[challenges?.length - 1]?.date);
+    let newThumbnails =  await getChallengePage(formatDateYYYYMMDD(dateIndex), process.env.NEXT_PUBLIC_PAGE_SIZE);
+    while(newThumbnails.length > 0) {
+        dateIndex = formatDateYYYYMMDD(newThumbnails[newThumbnails?.length - 1]?.date);
+        thumbnailChallenges.push(...(newThumbnails.map(challenge => challenge.english)));
+        newThumbnails =  await getChallengePage(formatDateYYYYMMDD(dateIndex), process.env.NEXT_PUBLIC_PAGE_SIZE);
+    }
+    if (!fs.existsSync("./public/thumbnail")){
+        fs.mkdirSync("./public/thumbnail");
+    }
+
+    thumbnailChallenges.forEach(async (challenge)=> {
+        let image = await fetch(`${process.env.NEXT_PUBLIC_THUMBNAIL_URL}/${challenge}`);
+        fs.writeFile(`./public/thumbnail/${challenge}.jpeg`, new Uint8Array(await new Response(image.body).arrayBuffer()), function (err) {
+            if(err) {
+                return console.log(err);
+            }
+            console.log("The file was saved!");
+        });
+    });
+
+
+};
+
 export default Challenges;
