@@ -1,15 +1,14 @@
 import {Fragment, useState} from "react";
-import {getPicturesByPage} from "../common/api/pictures";
 import {BasicLayout} from "../components/common/BasicLayout";
 import {InfiniteScroll} from "../components/InfiniteScroll";
 import Loading from "../components/loading/Loading";
 import React from "react";
-import {DailyChallengeList} from "../components/scroll/DailyChallengeList";
 import {getChallengeOfTheDay, getChallengePage} from "../common/api/challenges";
 import {formatDateYYYYMMDD} from "../common/Utility";
 import {RocketSVG} from "../components/svg/RocketSVG";
 import {CustomHeader} from "../components/common/CustomHeader";
 import fs from "fs";
+import Gallery from "../components/Gallery";
 
 function Challenges ({challenges}) {
     let pageSize = process.env.NEXT_PUBLIC_PAGE_SIZE;
@@ -38,7 +37,7 @@ function Challenges ({challenges}) {
     return (
         <BasicLayout customHeader={<CustomHeader svg={<RocketSVG/>} text="Daily Challenges"/>}>
             <InfiniteScroll getObjects = {getChallenges} lastElement={lastElement}>
-                <DailyChallengeList challenges = {newChallenges} setLastElement = {setLastElement}/>
+                <Gallery pictures = {newChallenges} setLastElement = {setLastElement}/>
                 { isLoading ? <Loading><p>Loading...</p></Loading> : <Fragment></Fragment>}
             </InfiniteScroll>
         </BasicLayout>);

@@ -15,6 +15,7 @@ import {NoPosts} from "../../components/common/NoPosts";
 import {AddChallenge} from "../../components/popup/AddChallenge";
 import {useShowPopUp} from "../../common/hooks/useShowPopUp";
 import {PopUp} from "../../components/popup/PopUp";
+import Moment from "moment";
 
 export const Challenge = ({challenge, pictures}) => {
 
@@ -24,6 +25,7 @@ export const Challenge = ({challenge, pictures}) => {
     let [isLoading, setIsLoading] = useState(false)
     let [lastElement, setLastElement] = useState(null);
     let [pageIndex, setPageIndex] = useState(pictures?.length > 0 ? pictures[pictures?.length - 1]._id : 0);
+    let [date, setDate] = useState(Moment(challenge.date).format('YYYY年 MMM月 D日'));
     let [isShowPopup, hidePopUp , showPopUp] = useShowPopUp();
 
     const router = useRouter();
@@ -50,7 +52,8 @@ export const Challenge = ({challenge, pictures}) => {
     }
 
     return (
-        <BasicLayout customHeader={<CustomHeader svg={<RocketSVG/>} text={"Daily Challenge: " + challenge.english + "/" + challenge.japanese}/>}>
+        <BasicLayout customHeader={<CustomHeader svg={<RocketSVG/>} text={"Daily Challenge: " + challenge.english + "/" + challenge.japanese} leftText={date}>
+        </CustomHeader>}>
             <InfiniteScroll getObjects = {getPictures} maxPage = {10} lastElement={lastElement}>
                 <Gallery pictures = {newPictures} setLastElement = {setLastElement}/>
                 { isLoading ? <Loading><p>Loading...</p></Loading> : <Fragment></Fragment>}

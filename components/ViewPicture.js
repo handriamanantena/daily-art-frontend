@@ -14,6 +14,7 @@ import {EditSVG} from "./svg/EditSVG";
 import {createPicturePath} from "../common/api/pictures";
 import {DailyChallengeLabel} from "./picture/DailyChallengeLabel";
 import {MAX_NUMBER_CHAR_TO_DISPLAY} from "../common/Constants";
+import {InfiniteScrollImage} from "./image/InfiniteScrollImage";
 
 export const ViewPicture = ({picture, isEditable, deletePicture}) => {
 
@@ -39,12 +40,7 @@ export const ViewPicture = ({picture, isEditable, deletePicture}) => {
         <div className="flex items-center justify-center h-96 bg-gray-300 md:rounded-lg dark:bg-gray-700 group">
             <Link href={`/picture/${picturePath}`}>
                 <a>
-                    <Image className="object-cover h-full md:rounded-lg grow md:group-hover:brightness-50"
-                           onLoadingComplete={setLoadingComplete}
-                           layout="fill"
-                           src={picture.url}
-                           objectPosition="center"
-                           unoptimized/>
+                    <InfiniteScrollImage src={picture.url} onLoadingComplete={setLoadingComplete}/>
                 </a>
             </Link>
             <div className="absolute top-0 right-0 mt-3 mr-3 md:hidden" hidden={!isLoadingComplete}>
@@ -52,21 +48,21 @@ export const ViewPicture = ({picture, isEditable, deletePicture}) => {
             </div>
             <div className="hidden md:flex">
                 <div className="absolute top-0 right-0 mt-3 mr-3 hidden group-hover:grid grid-cols-1 justify-items-end">
-                <Link href="/picture/[picture]" as={`/picture/${picturePath}`}>
-                <a>
-                    <h2 className="text-white">{picture.pictureName.substring(0, MAX_NUMBER_CHAR_TO_DISPLAY)}</h2>
-                </a>
-                </Link>
-                <DailyChallengeLabel picture={picture}/>
-            </div>
-            <div className="absolute bottom-0 left-0 m-3 h-[30px] w-[30px] hidden group-hover:flex">
-                <Link href={`/dailyart/${encodeURIComponent(userInfo.userName)}`}>
-                    <a className="flex flex-row">
-                        <ProfilePicture profilePicture={userInfo.profilePicture}/>
-                        <h3 className="text-white ml-9">{userInfo.userName}</h3>
-                    </a>
-                </Link>
-            </div>
+                    <Link href="/picture/[picture]" as={`/picture/${picturePath}`}>
+                        <a>
+                            <h2 className="text-white">{picture.pictureName.substring(0, MAX_NUMBER_CHAR_TO_DISPLAY)}</h2>
+                        </a>
+                    </Link>
+                    <DailyChallengeLabel picture={picture}/>
+                </div>
+                <div className="absolute bottom-0 left-0 m-3 h-[30px] w-[30px] hidden group-hover:flex">
+                    <Link href={`/dailyart/${encodeURIComponent(userInfo.userName)}`}>
+                        <a className="flex flex-row">
+                            <ProfilePicture profilePicture={userInfo.profilePicture}/>
+                            <h3 className="text-white ml-9">{userInfo.userName}</h3>
+                        </a>
+                    </Link>
+                </div>
             </div>
             <svg className="w-10 h-10 text-gray-200 dark:text-gray-600" aria-hidden="true"
                  xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 18">
