@@ -62,7 +62,7 @@ let generateThumbnails =  async (challenges) => {
         console.log("checking if file exists");
         let exist = fs.existsSync(`./public/thumbnail/${challenge}.jpeg`);
         if (!exist) {
-            result.push(encodeURIComponent(challenge.english))
+            result.push(challenge.english)
         }
         return result;
     }, []);
@@ -97,7 +97,7 @@ let moveThumbnailToDir = async (challenge) => {
         }
     }
     else {
-        console.log("could not get image " + image.status + " " + image.body);
+        console.error("could not get image " + image.status + " " + image.body);
     }
 
 };
