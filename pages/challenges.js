@@ -53,7 +53,7 @@ export async function getStaticProps() {
         props: {
             challenges : challenges,
         },
-        revalidate: +(process.env.NEXT_PUBLIC_REVALIDATE_SEC)
+        revalidate: 86400
     }
 }
 
