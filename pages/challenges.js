@@ -75,7 +75,6 @@ let generateThumbnails =  async (challenges) => {
     }
     console.log("thumbnails to be added " + JSON.stringify(thumbnailChallenges));
     thumbnailChallenges.forEach(async (challenge) => {
-        console.log("moving challenge to ./public: " + challenge)
         await moveThumbnailToDir(challenge);
     })
 };
@@ -85,13 +84,20 @@ let moveThumbnailToDir = async (challenge) => {
         fs.mkdirSync("./public/thumbnail");
     }
     let image = await fetch(`${process.env.NEXT_PUBLIC_THUMBNAIL_URL}/${challenge}`);
-    try {
-        fs.writeFileSync(`./public/thumbnail/${challenge}.jpeg`, new Uint8Array(await new Response(image.body).arrayBuffer()));
-        console.log("The file was saved!");
+    if(image.status == 200) {
+        try {
+            console.log("moving challenge to ./public: " + challenge)
+            fs.writeFileSync(`./public/thumbnail/${challenge}.jpeg`, new Uint8Array(await new Response(image.body).arrayBuffer()));
+            console.log("The file was saved!");
+        }
+        catch(e) {
+            console.log(e);
+        }
     }
-    catch(e) {
-        console.log(e);
+    else {
+        console.error("could not get image " + await image.text());
     }
+
 };
 
 export default Challenges;
