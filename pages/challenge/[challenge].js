@@ -4,7 +4,7 @@ import {BasicLayout} from "../../components/common/BasicLayout";
 import {InfiniteScroll} from "../../components/InfiniteScroll";
 import Gallery from "../../components/Gallery";
 import Loading from "../../components/loading/Loading";
-import {Fragment, useState} from "react";
+import {Fragment, useEffect, useState} from "react";
 import React from "react";
 import {getPicturesByDailyChallenge} from "../../common/api/pictures";
 import {CustomHeader} from "../../components/common/CustomHeader";
@@ -25,8 +25,12 @@ export const Challenge = ({challenge, pictures}) => {
     let [isLoading, setIsLoading] = useState(false)
     let [lastElement, setLastElement] = useState(null);
     let [pageIndex, setPageIndex] = useState(pictures?.length > 0 ? pictures[pictures?.length - 1]._id : 0);
-    let [date, setDate] = useState(Moment(challenge.date).format('YYYY年 MMM月 D日'));
+    let [date, setDate] = useState("");
     let [isShowPopup, hidePopUp , showPopUp] = useShowPopUp();
+
+    useEffect(() => {
+        setDate(Moment(challenge.date).format('YYYY年 MMM月 D日'));
+    }, []);
 
     const router = useRouter();
 
@@ -99,7 +103,7 @@ export async function getStaticProps(context) {
     const englishChallenge = params.challenge;
     const challenge =  await getPastEnglishChallenge(encodeURIComponent(englishChallenge));
     console.log("this is the challenge " + challenge);
-    if(challenge == undefined || challenge.english == undefined) {
+    if(challenge == undefined || challenge.english == undefined || challenge.date == undefined) {
         return {
             notFound: true
         };

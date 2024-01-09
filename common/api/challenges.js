@@ -2,7 +2,6 @@ async function getChallengeOfTheDay() {
     const host = process.env.NEXT_PUBLIC_PICTURES_API_HOST + process.env.NEXT_PUBLIC_PICTURES_API_PORT;
     const res = await fetch(host + "/challenges/date");
     let word = await res.json();
-    console.log("the challenge is " + JSON.stringify(word))
     return word
 }
 

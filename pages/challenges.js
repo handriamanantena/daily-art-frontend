@@ -48,13 +48,7 @@ function Challenges ({challenges}) {
 export async function getStaticProps() {
     const challenges =  await getChallengePage(formatDateYYYYMMDD(new Date()), process.env.NEXT_PUBLIC_PAGE_SIZE);
     console.log(challenges);
-    if (!fs.existsSync("./public/thumbnail")) {
-        await generateThumbnails(challenges);
-    }
-    else {
-        let challengeOfTheDay = await getChallengeOfTheDay();
-        await moveThumbnailToDir(challengeOfTheDay);
-    }
+    await generateThumbnails(challenges);
     return {
         props: {
             challenges : challenges,
@@ -64,7 +58,14 @@ export async function getStaticProps() {
 }
 
 let generateThumbnails =  async (challenges) => {
-    const thumbnailChallenges = challenges.map(challenge => encodeURIComponent(challenge.english));
+    const thumbnailChallenges = challenges.reduce((result, challenge) => {
+        console.log("checking if file exists");
+        let exist = fs.existsSync(`./public/thumbnail/${challenge}.jpeg`);
+        if (!exist) {
+            result.push(encodeURIComponent(challenge.english))
+        }
+        return result;
+    }, []);
     let dateIndex = formatDateYYYYMMDD(challenges[challenges?.length - 1]?.date);
     let newThumbnails =  await getChallengePage(formatDateYYYYMMDD(dateIndex), process.env.NEXT_PUBLIC_PAGE_SIZE);
     while(newThumbnails.length > 0) {
