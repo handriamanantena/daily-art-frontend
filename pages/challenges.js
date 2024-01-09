@@ -74,15 +74,16 @@ let generateThumbnails =  async (challenges) => {
         newThumbnails =  await getChallengePage(formatDateYYYYMMDD(dateIndex), process.env.NEXT_PUBLIC_PAGE_SIZE);
     }
     console.log("thumbnails to be added " + JSON.stringify(thumbnailChallenges));
+    if (!fs.existsSync("./public/thumbnail")){
+        fs.mkdirSync("./public/thumbnail");
+    }
     thumbnailChallenges.forEach(async (challenge) => {
+        console.log("moving challenge " + challenge)
         await moveThumbnailToDir(challenge);
     })
 };
 
 let moveThumbnailToDir = async (challenge) => {
-    if (!fs.existsSync("./public/thumbnail")){
-        fs.mkdirSync("./public/thumbnail");
-    }
     let image = await fetch(`${process.env.NEXT_PUBLIC_THUMBNAIL_URL}/${challenge}`);
     console.log("r2 response" + image.status);
     if(image.status == 200) {
