@@ -37,7 +37,6 @@ async function getPicturesByPage(dateIndex, pageSize, pageIndex) {
     }
     const host = process.env.NEXT_PUBLIC_PICTURES_API_HOST + process.env.NEXT_PUBLIC_PICTURES_API_PORT
     const res = await fetch(host + "/pictures" + query);
-    console.log(JSON.stringify(res));
     return await res.json()
 }
 
@@ -74,7 +73,6 @@ async function getPicturesByDailyChallenge(dailyChallenge, pageSize, pageIndex) 
 
 function createQuery(pageSize, pageIndex) {
     let query = "?";
-    console.log("getPicturesByArtistUserName getPictures index " + pageIndex);
     if(pageSize) {
         query += "pageSize=" + pageSize;
         if(pageIndex != 0 && pageIndex != undefined) {

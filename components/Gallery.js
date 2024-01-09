@@ -10,12 +10,12 @@ export const Gallery =  ({pictures, setLastElement, isEditable, deletePicture, c
         {(pictures?.map((value, index) => {
             return pictures.length - 1 === index ? (
                     <div className="flex flex-col w-full sm:w-3/10 lg:w-1/4" key={value._id} ref={setLastElement}>
-                        <BasicPictureInfo picture={value}/>
                         <LinkedPicture picture={value} isEditable={isEditable} deletePicture={deletePicture}/>
+                        <BasicPictureInfo picture={value}/>
                     </div>) :
                 <div className="flex flex-col w-full sm:w-3/10 lg:w-1/4" key={value._id}>
-                    <BasicPictureInfo picture={value}/>
                     <LinkedPicture picture={value} isEditable={isEditable} deletePicture={deletePicture}/>
+                    <BasicPictureInfo picture={value}/>
                 </div>
         }))}
     </div>;
