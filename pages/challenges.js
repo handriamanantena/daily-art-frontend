@@ -84,7 +84,7 @@ let moveThumbnailToDir = async (challenge) => {
         fs.mkdirSync("./public/thumbnail");
     }
     let image = await fetch(`${process.env.NEXT_PUBLIC_THUMBNAIL_URL}/${challenge}`);
-    console.error("r2 response" + await image.text());
+    console.log("r2 response" + image.status);
     if(image.status == 200) {
         try {
             console.log("moving challenge to ./public: " + challenge)
@@ -96,7 +96,7 @@ let moveThumbnailToDir = async (challenge) => {
         }
     }
     else {
-        console.error("could not get image " + await image.text());
+        console.log("could not get image " + image.status + " " + image.body);
     }
 
 };
