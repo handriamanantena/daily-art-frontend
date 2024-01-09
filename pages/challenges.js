@@ -48,7 +48,16 @@ function Challenges ({challenges}) {
 export async function getStaticProps() {
     const challenges =  await getChallengePage(formatDateYYYYMMDD(new Date()), process.env.NEXT_PUBLIC_PAGE_SIZE);
     console.log(challenges);
-    await generateThumbnails(challenges);
+    if (!fs.existsSync("./public/thumbnail")){
+        fs.mkdirSync("./public/thumbnail");
+        await generateThumbnails(challenges);
+    }
+    else {
+        let challenge = await getChallengeOfTheDay();
+        if(challenge.english) {
+            await moveThumbnailToDir(challenge);
+        }
+    }
     return {
         props: {
             challenges : challenges,
