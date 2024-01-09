@@ -77,10 +77,10 @@ let generateThumbnails =  async (challenges) => {
     if (!fs.existsSync("./public/thumbnail")){
         fs.mkdirSync("./public/thumbnail");
     }
-    thumbnailChallenges.forEach(async (challenge) => {
-        console.log("moving challenge " + challenge)
-        await moveThumbnailToDir(challenge);
-    })
+    for(let i = 0; i < thumbnailChallenges.length ; i++) {
+        console.log("moving challenge " + thumbnailChallenges[i])
+        await moveThumbnailToDir(thumbnailChallenges[i]);
+    }
 };
 
 let moveThumbnailToDir = async (challenge) => {
