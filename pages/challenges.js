@@ -62,11 +62,10 @@ let generateThumbnails =  async (challenges) => {
         console.log("checking if file exists");
         let exist = fs.existsSync(`./public/thumbnail/${challenge}.jpeg`);
         if (!exist) {
-            result.push(encodeURIComponent(challenge.english))
+            result.push(challenge.english)
         }
         return result;
     }, []);
-    console.log("thumbnails to be added " + JSON.stringify(thumbnailChallenges));
     let dateIndex = formatDateYYYYMMDD(challenges[challenges?.length - 1]?.date);
     let newThumbnails =  await getChallengePage(formatDateYYYYMMDD(dateIndex), process.env.NEXT_PUBLIC_PAGE_SIZE);
     while(newThumbnails.length > 0) {
@@ -74,24 +73,33 @@ let generateThumbnails =  async (challenges) => {
         thumbnailChallenges.push(...(newThumbnails.map(challenge => challenge.english)));
         newThumbnails =  await getChallengePage(formatDateYYYYMMDD(dateIndex), process.env.NEXT_PUBLIC_PAGE_SIZE);
     }
+    console.log("thumbnails to be added " + JSON.stringify(thumbnailChallenges));
+    if (!fs.existsSync("./public/thumbnail")){
+        fs.mkdirSync("./public/thumbnail");
+    }
     thumbnailChallenges.forEach(async (challenge) => {
-        console.log("moving challenge to ./public: " + challenge)
+        console.log("moving challenge " + challenge)
         await moveThumbnailToDir(challenge);
     })
 };
 
 let moveThumbnailToDir = async (challenge) => {
-    if (!fs.existsSync("./public/thumbnail")){
-        fs.mkdirSync("./public/thumbnail");
-    }
     let image = await fetch(`${process.env.NEXT_PUBLIC_THUMBNAIL_URL}/${challenge}`);
-    fs.writeFile(`./public/thumbnail/${challenge}.jpeg`, new Uint8Array(await new Response(image.body).arrayBuffer()), function (err) {
-        if (err) {
-            console.log(err);
-            return;
+    console.log("r2 response" + image.status);
+    if(image.status == 200) {
+        try {
+            console.log("moving challenge to ./public: " + challenge)
+            fs.writeFileSync(`./public/thumbnail/${challenge}.jpeg`, new Uint8Array(await new Response(image.body).arrayBuffer()));
+            console.log("The file was saved!");
         }
-        console.log("The file was saved!");
-    });
+        catch(e) {
+            console.log(e);
+        }
+    }
+    else {
+        console.error("could not get image " + image.status + " " + image.body);
+    }
+
 };
 
 export default Challenges;

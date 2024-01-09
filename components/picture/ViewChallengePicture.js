@@ -9,7 +9,7 @@ export const ViewChallengePicture = ({challenge}) => {
         <div className="flex items-center justify-center h-96 bg-gray-300 md:rounded-lg dark:bg-gray-700 group">
         <Link href={`/challenge/${challenge.english}`}>
             <a>
-                <InfiniteScrollImage src={`/thumbnail/${challenge.english}.jpeg`} />
+                <InfiniteScrollImage src={`/thumbnail/${decodeURIComponent(challenge.english)}.jpeg`} />
             </a>
         </Link>
         <div className="absolute top-0 right-0 mt-3 mr-3 hidden group-hover:grid grid-cols-1 justify-items-end">
