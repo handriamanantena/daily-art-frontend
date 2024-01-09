@@ -66,7 +66,6 @@ let generateThumbnails =  async (challenges) => {
         }
         return result;
     }, []);
-    console.log("thumbnails to be added " + JSON.stringify(thumbnailChallenges));
     let dateIndex = formatDateYYYYMMDD(challenges[challenges?.length - 1]?.date);
     let newThumbnails =  await getChallengePage(formatDateYYYYMMDD(dateIndex), process.env.NEXT_PUBLIC_PAGE_SIZE);
     while(newThumbnails.length > 0) {
@@ -74,6 +73,7 @@ let generateThumbnails =  async (challenges) => {
         thumbnailChallenges.push(...(newThumbnails.map(challenge => challenge.english)));
         newThumbnails =  await getChallengePage(formatDateYYYYMMDD(dateIndex), process.env.NEXT_PUBLIC_PAGE_SIZE);
     }
+    console.log("thumbnails to be added " + JSON.stringify(thumbnailChallenges));
     thumbnailChallenges.forEach(async (challenge) => {
         console.log("moving challenge to ./public: " + challenge)
         await moveThumbnailToDir(challenge);
@@ -85,13 +85,13 @@ let moveThumbnailToDir = async (challenge) => {
         fs.mkdirSync("./public/thumbnail");
     }
     let image = await fetch(`${process.env.NEXT_PUBLIC_THUMBNAIL_URL}/${challenge}`);
-    fs.writeFile(`./public/thumbnail/${challenge}.jpeg`, new Uint8Array(await new Response(image.body).arrayBuffer()), function (err) {
-        if (err) {
-            console.log(err);
-            return;
-        }
+    try {
+        fs.writeFileSync(`./public/thumbnail/${challenge}.jpeg`, new Uint8Array(await new Response(image.body).arrayBuffer()));
         console.log("The file was saved!");
-    });
+    }
+    catch(e) {
+        console.log(e);
+    }
 };
 
 export default Challenges;
