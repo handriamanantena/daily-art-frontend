@@ -55,14 +55,14 @@ export async function getStaticProps() {
     else {
         let challenge = await getChallengeOfTheDay();
         if(challenge.english) {
-            await moveThumbnailToDir(challenge);
+            await moveThumbnailToDir(challenge.english);
         }
     }
     return {
         props: {
             challenges : challenges,
         },
-        revalidate: 86400
+        revalidate: 10
     }
 }
 
