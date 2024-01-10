@@ -1,4 +1,4 @@
-import {Fragment, useState} from "react";
+import {Fragment, useEffect, useState} from "react";
 import {BasicLayout} from "../components/common/BasicLayout";
 import {InfiniteScroll} from "../components/InfiniteScroll";
 import Loading from "../components/loading/Loading";
@@ -7,7 +7,7 @@ import {getChallengeOfTheDay, getChallengePage} from "../common/api/challenges";
 import {formatDateYYYYMMDD} from "../common/Utility";
 import {RocketSVG} from "../components/svg/RocketSVG";
 import {CustomHeader} from "../components/common/CustomHeader";
-import fs from "fs";
+//import fs from "fs";
 import Gallery from "../components/Gallery";
 
 function Challenges ({challenges}) {
@@ -48,67 +48,12 @@ function Challenges ({challenges}) {
 export async function getStaticProps() {
     const challenges =  await getChallengePage(formatDateYYYYMMDD(new Date()), process.env.NEXT_PUBLIC_PAGE_SIZE);
     console.log(challenges);
-    if (!fs.existsSync("./public/thumbnail")){
-        fs.mkdirSync("./public/thumbnail");
-        await generateThumbnails(challenges);
-    }
-    else {
-        let challenge = await getChallengeOfTheDay();
-        if(challenge.english) {
-            await moveThumbnailToDir(challenge.english);
-        }
-    }
     return {
         props: {
             challenges : challenges,
         },
-        revalidate: 10
+        revalidate: 86400
     }
 }
-
-let generateThumbnails =  async (challenges) => {
-    const thumbnailChallenges = challenges.reduce((result, challenge) => {
-        console.log("checking if file exists");
-        let exist = fs.existsSync(`./public/thumbnail/${challenge}.jpeg`);
-        if (!exist) {
-            result.push(challenge.english)
-        }
-        return result;
-    }, []);
-    let dateIndex = formatDateYYYYMMDD(challenges[challenges?.length - 1]?.date);
-    let newThumbnails =  await getChallengePage(formatDateYYYYMMDD(dateIndex), process.env.NEXT_PUBLIC_PAGE_SIZE);
-    while(newThumbnails.length > 0) {
-        dateIndex = formatDateYYYYMMDD(newThumbnails[newThumbnails?.length - 1]?.date);
-        thumbnailChallenges.push(...(newThumbnails.map(challenge => challenge.english)));
-        newThumbnails =  await getChallengePage(formatDateYYYYMMDD(dateIndex), process.env.NEXT_PUBLIC_PAGE_SIZE);
-    }
-    console.log("thumbnails to be added " + JSON.stringify(thumbnailChallenges));
-    if (!fs.existsSync("./public/thumbnail")){
-        fs.mkdirSync("./public/thumbnail");
-    }
-    for(let i = 0; i < thumbnailChallenges.length ; i++) {
-        console.log("moving challenge " + thumbnailChallenges[i])
-        await moveThumbnailToDir(thumbnailChallenges[i]);
-    }
-};
-
-let moveThumbnailToDir = async (challenge) => {
-    let image = await fetch(`${process.env.NEXT_PUBLIC_THUMBNAIL_URL}/${challenge}`);
-    console.log("r2 response" + image.status);
-    if(image.status == 200) {
-        try {
-            console.log("moving challenge to ./public: " + challenge)
-            fs.writeFileSync(`./public/thumbnail/${challenge}.jpeg`, new Uint8Array(await new Response(image.body).arrayBuffer()));
-            console.log("The file was saved!");
-        }
-        catch(e) {
-            console.log(e);
-        }
-    }
-    else {
-        console.error("could not get image " + image.status + " " + image.body);
-    }
-
-};
 
 export default Challenges;
